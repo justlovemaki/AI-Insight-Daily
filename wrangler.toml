@@ -1,0 +1,41 @@
+# wrangler.toml
+name = "ai-daily"
+main = "src/index.js" # <-- Important: path to your main worker script
+compatibility_date = "2025-05-20" # Or your project's compatibility date
+workers_dev = true
+
+kv_namespaces = [
+  { binding = "DATA_KV", id = "kv数据库的ID" }
+]
+
+[vars]
+OPEN_TRANSLATE = "true"
+USE_MODEL_PLATFORM = "GEMINI" #GEMINI, OPEN
+GEMINI_API_KEY = "xxxxxx-xxxxxx"
+GEMINI_API_URL = "https://gemini-proxy.keyikai.me" #网上公共的代理api
+DEFAULT_GEMINI_MODEL = "gemini-2.5-flash-preview-05-20"
+OPENAI_API_KEY = "sk-xxxxxx" # Replace with your actual OpenAI API Key
+OPENAI_API_URL = "https://api.deepseek.com" # Or your OpenAI compatible API URL
+DEFAULT_OPEN_MODEL = "deepseek-chat"
+FOLO_COOKIE_KV_KEY = "folo_auth_cookie" 
+FOLO_DATA_API = "https://api.follow.is/entries"
+FOLO_FILTER_DAYS = 3
+AIBASE_FEED_ID = "69533603812632576" 
+AIBASE_FETCH_PAGES = "3" 
+XIAOHU_FEED_ID = "151846580097413120" 
+XIAOHU_FETCH_PAGES = "2" 
+HGPAPERS_FEED_ID = "41359648680482832" 
+HGPAPERS_FETCH_PAGES = "2" 
+TWITTER_LIST_ID = "153028784690326528" 
+TWITTER_FETCH_PAGES = "5" 
+PROJECTS_API_URL = "https://git-trending.justlikemaki.vip/topone/?since=daily"
+GITHUB_TOKEN = "github_pat_xxxxxx"
+GITHUB_REPO_OWNER = "justlovemaki"
+GITHUB_REPO_NAME = "CloudFlare-AI-Insight-Daily"
+GITHUB_BRANCH = "main"
+LOGIN_USERNAME = "root"
+LOGIN_PASSWORD = "toor"
+DAILY_TITLE = "AI洞察日报"
+PODCAST_TITLE = "来生小酒馆"
+PODCAST_BEGIN = "嘿，亲爱的V，欢迎收听新一期的来生情报站，我是你们的老朋友，何夕2077"
+PODCAST_END = "今天的情报就到这里，注意隐蔽，赶紧撤离"

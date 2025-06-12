@@ -1,4 +1,4 @@
-name: Build Daily Journal with mdBook
+name: Build Daily Journal
 
 on:
   # 每天UTC时间8点自动触发 (对应北京时间下午4点)

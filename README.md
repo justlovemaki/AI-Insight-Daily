@@ -77,10 +77,12 @@
 
 ## 🚀 快速开始
 
+> [!NOTE]
 > 本项目优先支持从 [Folo](https://app.follow.is/) 数据源抓取内容。
-您只需通过F12获取Folo Cookie，并将其配置到项目中即可在线试用。
-Folo Cookie只保留在浏览器，没有安全隐患。
+> 您只需通过F12获取Folo Cookie，并将其配置到项目中即可在线试用。
+> Folo Cookie只保留在浏览器，没有安全隐患。
 
+> [!WARNING]
 > **注意：** 为了保证项目的正常运行，您需要在项目中配置 Folo Cookie。
 
 1.  **获取Folo Cookie**
@@ -166,3 +168,7 @@ AI 或许能模仿你过去的喜好，却难以捕捉你此刻的灵感与洞�
 5.  **使用风险**：您承诺将合法、合规地使用本项目。任何因您使用不当（如用于商业目的、非法转载、恶意攻击等）而产生的法律责任和风险，均由您自行承担。
 
 6.  **最终解释权**：在法律允许的范围内，本项目团队对本声明拥有最终解释权，并有权根据需要随时进行修改和更新。
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=justlovemaki/CloudFlare-AI-Insight-Daily&type=Timeline)](https://www.star-history.com/#justlovemaki/CloudFlare-AI-Insight-Daily&Timeline)

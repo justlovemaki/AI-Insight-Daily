@@ -15,6 +15,8 @@ fi
 echo "执行首次构建..."
 /app/scripts/build.sh /app/scripts/work
 
+mdbook serve --open -p 4399 -n 0.0.0.0 /app/scripts/work &
+
 echo "--- 初始化完成，启动 cron 服务 ---"
 
 # 2. 执行 Dockerfile CMD 中定义的命令 (即 "crond -f -l 8")

@@ -145,30 +145,83 @@ TWITTER_FETCH_PAGES = "2"
   ```
   部署成功后，Wrangler 会返回一个公开的 `*.workers.dev` 域名，您的 AI 洞察日报服务已在线上运行！
 
-### 🗓️ 定时生成 Pages 站点 (可选)
+### 🗓️ 定时生成日报站点 (可选)
 
-如果您希望将每日报告自动发布为 GitHub Pages 静态网站，可以按照以下步骤配置一个 Docker 定时任务。
+#### 方案一：🌐 使用 GitHub Actions 自动部署 (推荐)
 
-1.  **前提条件**: 确保您的目标 GitHub 仓库已开启 GitHub Actions 和 GitHub Pages 功能。仓库中应包含 `unzip_and_commit.yml` 工作流文件。
+此方案利用 GitHub 的免费资源，实现全自动、零成本的日报站点部署，是大多数用户的首选。
 
-2.  **修改配置**: 进入 `cron-docker` 目录。
-    *   编辑 `Dockerfile`，修改 `ENV` 部分为您自己的仓库信息和可选的图片代理地址。
-    *   编辑 `scripts/work/book.toml`，修改 `title` 和 `src` 路径。
-    *   (可选) 修改 `Dockerfile` 中的 cron 表达式以自定义每日执行时间。
+> **📌 前置要求**：
+> *   您的目标 GitHub 仓库已开通 GitHub Actions 功能。
+> *   在仓库的 `Settings` -> `Pages` 中，选择 `GitHub Actions` 作为部署源 (Source)。
+> *   确保 `.github/workflows/` 目录下已包含 `build-daily-book.yml` 等工作流文件。
 
-3.  **构建并运行 Docker 容器**:
+##### 部署步骤
+
+1.  **🔧 配置工作流文件**
+    *   打开 `.github/workflows/build-daily-book.yml` 文件，找到所有涉及到 `book` 分支的地方，将其修改为您计划用于存放日报站点的分支名称（例如 `gh-pages`）。
+    *   (可选) 修改文件顶部的定时任务时间，以自定义每日执行时间
+
+2.  **🔧 调整mdbook配置文件**
+    *   打开 `book.toml`文件，
+    *   修改 `title` 为您的日报站点标题。
+    *   修改 `git-repository-url` 为您的 GitHub 仓库地址。
+
+3.  **💡 (可选) 配置图片代理**
+    如果遇到部署后图片无法显示的问题，可以配置一个图片代理来解决。
+    *   在您的 GitHub 仓库页面，进入 `Settings` -> `Secrets and variables` -> `Actions`。
+    *   在 `Variables` 标签页，点击 `New repository variable`。
+    *   创建一个名为 `IMAGE_PROXY_URL` 的变量，值为您的代理服务地址，例如 `https://your-proxy.com/`。
+
+4.  **🚀 触发 Action 并验证**
+    *   手动触发一次 `build-daily-book` 工作流，或等待其定时自动执行。
+    *   任务成功后，稍等片刻，即可通过您的 GitHub Pages 地址访问。
+    *   访问地址格式通常为：`https://<你的用户名>.github.io/<你的仓库名>/today/book/`
+
+---
+
+#### 方案二：🐳 使用 Docker 进行本地或服务器部署
+
+此方案适合希望将日报站点部署在自己服务器或本地环境的用户，拥有更高的控制权。
+
+##### 部署步骤
+
+1.  **📝 修改配置文件**
+    在 `cron-docker` 目录下，您需要根据自己的情况修改以下文件：
+
+    *   **`Dockerfile`**:
+        *   修改 GITHUB相关变量 为您自己的 GitHub 仓库地址。
+        *   (可选) 修改 `ENV IMAGE_PROXY_URL` 为您的图片代理地址。
+        *   (可选) 修改第6步的 `cron` 表达式，以自定义每日执行时间 (默认为 UTC 时间)。
+
+    *   **`修改默认分支`**:
+        *   打开`scripts/build.sh`，修改第四步git clone -b book "$REPO_URL"，调整为你的分支
+        *   打开`scripts/work/github.sh`，修改BRANCH="book"，调整为你的分支
+
+    *   **`scripts/work/book.toml`**:
+        *   修改 `title` 为您的日报站点标题。
+        *   修改 `git-repository-url` 为您的 GitHub 仓库地址。
+
+2.  **🛠️ 构建并运行 Docker 容器**
+    在您的终端中执行以下命令：
+
     ```bash
     # 进入 cron-docker 目录
     cd cron-docker
 
-    # 构建 Docker 镜像
+    # 构建 Docker 镜像，并命名为 ai-daily-cron-job
     docker build -t ai-daily-cron-job .
 
-    # 在后台启动容器
-    docker run -d --name ai-daily-cron ai-daily-cron-job
+    # 在后台以守护进程模式 (-d) 启动容器
+    docker run -d --name ai-daily-cron -p 4399:4399 --restart always ai-daily-cron-job
     ```
+    > **提示**：`-p 4399:80` 命令会将容器的 80 端口映射到主机的 4399 端口，您可以根据需要修改主机端口。
 
-4.  **验证部署**: 定时任务触发后，会自动生成内容并推送到您的仓库。稍等片刻，即可通过您的 GitHub Pages 地址（例如 `https://<user>.github.io/<repo>/today/book/`）访问生成的日报。
+3.  **✅ 验证部署**
+    打开浏览器，访问 `http://127.0.0.1:4399`。如果能看到生成的日报站点，则表示本地部署成功。
+
+4.  **🌐 (可选) 配置公网访问**
+    如果您需要让外网也能访问到这个站点，可以将您的服务器端口暴露到公网。推荐使用 [Cloudflare Tunnels](https://www.cloudflare.com/products/tunnel/) 等工具，可以安全、便捷地实现内网穿透。
 
 ### ❓ F.A.Q
 

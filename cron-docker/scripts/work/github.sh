@@ -6,7 +6,7 @@
 GITHUB_TOKEN=${GITHUB_TOKEN}	# 替换 YOUR_GITHUB_PAT 或设置环境变量
 OWNER=${OWNER}                			# 你的 GitHub 用户名或组织名
 REPO=${REPO_NAME}                  		# 你的仓库名称
-BRANCH="main"                                		# 目标分支 (可能是 main, master 等)
+BRANCH="book"                                		# 目标分支 (可能是 main, master 等)
 
 set -e # 如果任何命令失败，脚本将退出
 set -o pipefail # 如果管道中的任何命令失败，则整个管道失败

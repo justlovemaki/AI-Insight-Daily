@@ -1,0 +1,131 @@
+name: Build Daily Journal with mdBook
+
+on:
+  # 每天UTC时间8点自动触发 (对应北京时间下午4点)
+  # 如果需要北京时间早上8点，请设置为 0 0 * * *
+  schedule:
+    # 这里的 cron 表示每5分钟执行一次，用于测试。
+    # 如果要实现 “每天UTC时间8点” ，应改为 '0 8 * * *'
+    - cron: 0 0 * * *
+    
+  # 手动触发
+  workflow_dispatch:
+  
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_PROXY_URL: ${{ vars.IMAGE_PROXY_URL }} # 从仓库变量中读取
+      
+    # 需要写入权限来提交生成的文件
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 明确指定要检出的分支
+          ref: 'book' # <-- (3) 请将 'main' 替换为你的目标分支名
+          
+      - name: Install mdBook
+        run: |
+          mkdir -p $HOME/.cargo/bin
+          export PATH=$HOME/.cargo/bin:$PATH
+          curl -sL https://github.com/rust-lang/mdBook/releases/download/v0.4.51/mdbook-v0.4.51-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C $HOME/.cargo/bin
+
+      - name: Replace image URLs in daily notes
+        run: |
+          echo "开始替换 daily/ 目录下的 Markdown 文件内容..."
+          echo "使用的代理前缀: ${{ env.IMAGE_PROXY_URL }}" # 在日志中打印变量以供调试
+          # 使用 find 和 sed 高效地批量替换
+          # -exec sed ... {} + 会将所有找到的文件传递给一个 sed 命令，效率更高
+          # 使用 `|` 作为 sed 的分隔符，以避免与 URL 中的 `/`冲突
+          find daily -type f -name "*.md" -exec sed -i \
+            -e 's|upload.chinaz.com|pic.chinaz.com|g' \
+            -e 's|https://pic.chinaz.com|${{ env.IMAGE_PROXY_URL }}https://pic.chinaz.com|g' {} +
+          echo "URL 替换完成。"
+
+      - name: Generate SUMMARY.md
+        id: generate_summary
+        run: |
+          # 确保 src 目录存在
+          mkdir -p src
+          # 复制daily到目标目录
+          cp -r daily/ src/
+          # 定义 SUMMARY.md 的路径
+          SUMMARY_FILE="src/SUMMARY.md"
+          
+          # 查找最新的日刊文件
+          LATEST_DAILY_FILE=$(ls -1 daily/*.md | sort -r | head -n 1)
+
+          if [ -z "$LATEST_DAILY_FILE" ]; then
+            echo "错误：在 'daily' 目录中没有找到任何 .md 文件。"
+            exit 1
+          fi
+
+          # 获取最新日刊的文件名，例如 2025-06-12.md
+          LATEST_FILENAME=$(basename "$LATEST_DAILY_FILE")
+
+          # 将最新的日刊复制到 src 目录，作为 "Today" 页面
+          cp "$LATEST_DAILY_FILE" "src/$LATEST_FILENAME"
+
+          # 开始写入 SUMMARY.md
+          echo "# Summary" > "$SUMMARY_FILE"
+          echo "" >> "$SUMMARY_FILE"
+          echo "[Today]($LATEST_FILENAME)" >> "$SUMMARY_FILE"
+          echo "" >> "$SUMMARY_FILE"
+
+          # --- 生成按月分组的列表 ---
+          current_month=""
+          # 反向排序文件列表，实现日期从新到旧
+          for file in $(ls -1 daily/*.md | sort -r); do
+            # 从文件名 'daily/YYYY-MM-DD.md' 中提取月份 'YYYY-MM'
+            month=$(echo "$file" | cut -d'/' -f2 | cut -d'-' -f1,2)
+            
+            # 如果是新的月份，则添加一个月份标题
+            if [ "$month" != "$current_month" ]; then
+              echo "# $month" >> "$SUMMARY_FILE"
+              current_month=$month
+            fi
+
+            # 提取链接标题 'MM-DD'
+            link_title=$(echo "$file" | cut -d'/' -f2 | cut -d'.' -f1 | cut -d'-' -f2,3)
+            
+            # 写入日刊条目
+            echo "- [${link_title}-日刊]($file)" >> "$SUMMARY_FILE"
+          done
+          
+          echo "SUMMARY.md 已成功生成。"
+          cat "$SUMMARY_FILE" # 在日志中打印生成的内容以供调试
+
+      - name: Build the book
+        run: |
+          mdbook build
+
+      - name: Organize output files
+        run: |
+          # 清理旧的 today 目录（如果存在），以防万一
+          rm -rf today
+          # 创建 today 目录并将构建产物移入
+          mkdir -p today
+          mv book today/
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # 添加所有新生成或修改的文件
+          # 包括 src/SUMMARY.md, src/YYYY-MM-DD.md 和 today/book/ 目录
+          git add src/SUMMARY.md today/book
+
+          # 检查是否有文件变更
+          if git diff --staged --quiet; then
+            echo "没有文件变更，无需提交。"
+          else
+            echo "检测到文件变更，正在提交..."
+            git commit -m "docs: 自动构建日刊书籍 (`date -u`)"
+            git push
+          fi

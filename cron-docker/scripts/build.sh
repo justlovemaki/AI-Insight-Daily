@@ -38,7 +38,7 @@ rm -rf "$REPO_NAME"
 
 # 4. Fetch: Clone the latest content from GitHub.
 echo "--> Cloning repository from $REPO_URL..."
-git clone "$REPO_URL"
+git clone -b book "$REPO_URL"
 
 # Define the path to the cloned repository for easier access.
 PROJECT_DIR="$WORK_DIR/$REPO_NAME"
@@ -58,21 +58,21 @@ rm -rf "$PROJECT_DIR/podcast"
 echo "--> Running custom scripts..."
 ./replace.sh "$PROJECT_DIR/daily"
 ./gen.sh "$PROJECT_DIR/daily"
-mdbook build "$WORK_DIR"
+# mdbook build "$WORK_DIR"
 
 # 6. Package & Upload
 echo "--> Waiting for generation to complete..."
 # This pause assumes the generation script might have background tasks.
 # A more robust solution would be to wait for a specific file or process.
-sleep 10
+# sleep 10
 
 echo "--> Packaging the 'book' directory..."
 # Create a gzipped tar archive of the 'book' directory's contents.
-tar -cvf archive.tar.gz book/*
+# tar -cvf archive.tar.gz book/*
 
 echo "--> Uploading the archive..."
 # Upload the archive using a custom script.
 # Note: Ensure github.sh is in the $WORK_DIR or in your PATH.
-./github.sh upload "archive.tar.gz" "today/archive.tar.gz" "pushbook"
+# ./github.sh upload "archive.tar.gz" "today/archive.tar.gz" "pushbook"
 
 echo "--- Workflow completed successfully! ---"

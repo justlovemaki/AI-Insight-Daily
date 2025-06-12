@@ -62,7 +62,7 @@ CMD ["crond", "-f", "-l", "8"]
 
 
 # 构建镜像命令 docker build -t ai-daily-cron-job .
-# 启动容器命令 docker run -d --name ai-daily-cron ai-daily-cron-job
+# 启动容器命令 docker run -d --name ai-daily-cron -p 4399:4399 --restart always ai-daily-cron-job
 # 调试容器命令 docker run -it --rm --entrypoint /bin/sh ai-daily-cron-job
 # 调试生成脚本 /app/scripts/build.sh /app/scripts/work
 # 进容器调试     docker exec -it ai-daily-cron /bin/sh

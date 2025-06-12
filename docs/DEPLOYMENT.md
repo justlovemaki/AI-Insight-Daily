@@ -129,6 +129,9 @@ TWITTER_FETCH_PAGES = "2"
   ```
   该命令会启动一个本地服务器（通常在 `http://localhost:8787`），您可以直接在浏览器中访问以进行调试。
 
+- **默认开始路径**:
+  * 路径：/getContentHtml?date=YYYY-MM-DD (GET) 
+
 #### 4. 部署到 Cloudflare
 
 - **登录 Cloudflare**:

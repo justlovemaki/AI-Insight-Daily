@@ -76,16 +76,6 @@ export default {
             } else if (path === '/commitToGitHub' && request.method === 'POST') {
                 response = await handleCommitToGitHub(request, env);
             }  else {
-                // const availableEndpoints = [
-                //     "/writeData (POST) - Fetches, filters, translates, and stores data for today.",
-                //     "/getContent?date=YYYY-MM-DD (GET) - Retrieves stored data as JSON.",
-                //     "/getContentHtml?date=YYYY-MM-DD (GET) - Displays stored data as HTML with selection.",
-                //     "/genAIContent (POST) - Generates summary from selected items. Expects 'date' and 'selectedItems' form data.",
-                //     "/commitToGitHub (POST) - Commits generated content to GitHub. Triggered from /genAIContent result page.",
-                //     "/logout (GET) - Clears the login cookie and redirects."
-                // ];
-                // let responseBody = `Not Found. Available endpoints:\n\n${availableEndpoints.map(ep => `- ${ep}`).join('\n')}\n\nSpecify a date parameter (e.g., ?date=2023-10-27) for content endpoints or they will default to today.`;
-                // return new Response(responseBody, { status: 404, headers: {'Content-Type': 'text/plain; charset=utf-8'} });
                 return new Response(null, { status: 404, headers: {'Content-Type': 'text/plain; charset=utf-8'} });
             }
         } catch (e) {

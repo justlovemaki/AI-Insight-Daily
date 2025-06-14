@@ -121,9 +121,31 @@ export function stripHtml(html) {
  * @param {string} dateString - The date string to convert.
  * @returns {Date} A Date object set to the specified date in Asia/Shanghai timezone.
  */
-function convertToShanghaiTime(dateString) {
+export function convertToShanghaiTime(dateString) {
     // Create a Date object from the ISO string.
     const date = new Date(dateString);
+
+    // Get the date components in Asia/Shanghai timezone
+    const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false,
+        timeZone: 'Asia/Shanghai'
+    };
+
+    // Format the date to a string in Shanghai timezone, then parse it back to a Date object.
+    // This is a common workaround to get a Date object representing a specific timezone.
+    const shanghaiDateString = new Intl.DateTimeFormat('en-US', options).format(date);
+    return new Date(shanghaiDateString);
+}
+
+export function getShanghaiTime() {
+    // Create a Date object from the ISO string.
+    const date = new Date();
 
     // Get the date components in Asia/Shanghai timezone
     const options = {
@@ -201,6 +223,27 @@ export function formatDateToChineseWithTime(isoDateString) {
     // 使用 'zh-CN' 语言环境以确保中文格式
     return new Intl.DateTimeFormat('zh-CN', options).format(date);
 }
+
+/**
+ * 將日期物件格式化為 RSS 2.0 規範的日期字串 (RFC 822)
+ * 例如: "Thu, 01 Jan 1970 00:00:00 GMT"
+ * @param {Date} date - 日期物件
+ * @returns {string} 格式化後的日期字串
+ */
+export function formatRssDate(date) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+    const dayOfWeek = days[date.getUTCDay()];
+    const dayOfMonth = date.getUTCDate();
+    const month = months[date.getUTCMonth()];
+    const year = date.getUTCFullYear();
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+  
+    return `${dayOfWeek}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
+  }
 
 /**
  * Converts English double quotes (") to Chinese double quotes (“”).

@@ -8,6 +8,7 @@ import { getSystemPromptSummarizationStepOne } from '../prompt/summarizationProm
 import { getSystemPromptSummarizationStepTwo } from '../prompt/summarizationPromptStepTwo.js';
 import { getSystemPromptPodcastFormatting } from '../prompt/podcastFormattingPrompt.js';
 import { getSystemPromptDailyAnalysis } from '../prompt/dailyAnalysisPrompt.js'; // Import new prompt
+import { insertFoot } from '../foot.js';
 
 export async function handleGenAIPodcastScript(request, env) {
     let dateStr;
@@ -228,6 +229,7 @@ export async function handleGenAIContent(request, env) {
         if (fullPromptForCall2_User) promptsMarkdownContent += `### User Input (Output of Call 1)\n\`\`\`\n${fullPromptForCall2_User}\n\`\`\`\n\n`;
 
         let dailySummaryMarkdownContent = `# ${env.DAILY_TITLE} ${formatDateToChinese(dateStr)}\n\n${removeMarkdownCodeBlock(outputOfCall2)}`;
+        if (env.INSERT_FOOT) dailySummaryMarkdownContent += insertFoot() +`\n\n`;
 
         const successHtml = generateGenAiPageHtml(
             env, 

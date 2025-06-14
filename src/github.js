@@ -88,3 +88,34 @@ export async function createOrUpdateGitHubFile(env, filePath, content, commitMes
     }
     return callGitHubApi(env, `/contents/${filePath}`, 'PUT', payload);
 }
+
+/**
+ * Gets the content of a file from GitHub.
+ */
+export async function getDailyReportContent(env, filePath) {
+    const GITHUB_BRANCH = env.GITHUB_BRANCH || 'main';
+    const GITHUB_REPO_OWNER = env.GITHUB_REPO_OWNER;
+    const GITHUB_REPO_NAME = env.GITHUB_REPO_NAME;
+
+    if (!GITHUB_REPO_OWNER || !GITHUB_REPO_NAME) {
+        console.error("GitHub environment variables (GITHUB_REPO_OWNER, GITHUB_REPO_NAME) are not configured.");
+        throw new Error("GitHub API configuration is missing in environment variables.");
+    }
+
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_BRANCH}/${filePath}`;
+    console.log(rawUrl)
+    try {
+        const response = await fetch(rawUrl);
+        if (!response.ok) {
+            if (response.status === 404) {
+                console.log(`File not found: ${filePath} on branch ${GITHUB_BRANCH}`);
+                return null;
+            }
+            throw new Error(`Failed to fetch file from GitHub: ${response.status} ${response.statusText}`);
+        }
+        return await response.text();
+    } catch (error) {
+        console.error(`Error fetching daily report content from ${rawUrl}:`, error);
+        throw error;
+    }
+}

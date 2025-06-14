@@ -1,6 +1,9 @@
 // src/handlers/commitToGitHub.js
-import { getISODate, formatMarkdownText } from '../helpers.js';
+import { getISODate, formatMarkdownText, replaceImageProxy,formatDateToChineseWithTime } from '../helpers.js';
 import { getGitHubFileSha, createOrUpdateGitHubFile } from '../github.js';
+import { storeInKV } from '../kv.js';
+import { marked } from '../marked.esm.js';
+
 export async function handleCommitToGitHub(request, env) {
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({ status: 'error', message: 'Method Not Allowed' }), { status: 405, headers: { 'Content-Type': 'application/json' } });
@@ -10,11 +13,21 @@ export async function handleCommitToGitHub(request, env) {
         const dateStr = formData.get('date') || getISODate();
         const dailyMd = formData.get('daily_summary_markdown');
         const podcastMd = formData.get('podcast_script_markdown');
+        const report = {
+                report_date: dateStr,
+                title: dateStr+'日刊',
+                link:  '/daily/'+dateStr+'.html',
+                content_html: null,
+                // 可以添加其他相關欄位，例如作者、來源等
+                published_date: formatDateToChineseWithTime(new Date()) // 記錄保存時間
+        }
 
         const filesToCommit = [];
 
         if (dailyMd) {
             filesToCommit.push({ path: `daily/${dateStr}.md`, content: formatMarkdownText(dailyMd), description: "Daily Summary File" });
+            report.content_html = marked.parse(formatMarkdownText(replaceImageProxy(env.IMG_PROXY, dailyMd)));
+            storeInKV(env.DATA_KV, `${dateStr}-report`, report);
         }
         if (podcastMd) {
             filesToCommit.push({ path: `podcast/${dateStr}.md`, content: podcastMd, description: "Podcast Script File" });

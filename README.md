@@ -64,8 +64,11 @@
 
 **内容成果展示：**
 
-*   🎙️ **小宇宙**：[来生小酒馆](https://www.xiaoyuzhoufm.com/podcast/683c62b7c1ca9cf575a5030e)
-*   📹 **抖音**：[来生情报站](https://www.douyin.com/user/MS4wLjABAAAAwpwqPQlu38sO38VyWgw9ZjDEnN4bMR5j8x111UxpseHR9DpB6-CveI5KRXOWuFwG)
+| 🎙️ **小宇宙** | 📹 **抖音** |
+| --- | --- |
+| [来生小酒馆](https://www.xiaoyuzhoufm.com/podcast/683c62b7c1ca9cf575a5030e)  |   [来生情报站](https://www.douyin.com/user/MS4wLjABAAAAwpwqPQlu38sO38VyWgw9ZjDEnN4bMR5j8x111UxpseHR9DpB6-CveI5KRXOWuFwG)| 
+| ![小酒馆](docs/images/sm2.png "img") | ![情报站](docs/images/sm1.png "img") |
+
 
 **项目截图：**
 

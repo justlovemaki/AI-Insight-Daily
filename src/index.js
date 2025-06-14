@@ -4,8 +4,10 @@ import { handleGetContent } from './handlers/getContent.js';
 import { handleGetContentHtml } from './handlers/getContentHtml.js';
 import { handleGenAIContent, handleGenAIPodcastScript, handleGenAIDailyAnalysis } from './handlers/genAIContent.js'; // Import handleGenAIPodcastScript and handleGenAIDailyAnalysis
 import { handleCommitToGitHub } from './handlers/commitToGitHub.js';
-import { dataSources } from './dataFetchers.js'; // Import dataSources
-import { handleLogin, isAuthenticated, handleLogout } from './auth.js'; // Import auth functions
+import { handleRss } from './handlers/getRss.js';
+import { handleWriteRssData } from './handlers/writeRssData.js'; 
+import { dataSources } from './dataFetchers.js';
+import { handleLogin, isAuthenticated, handleLogout } from './auth.js';
 
 export default {
     async fetch(request, env) {
@@ -44,6 +46,10 @@ export default {
             return await handleLogout(request, env);
         } else if (path === '/getContent' && request.method === 'GET') {
             return await handleGetContent(request, env);
+        } else if (path.startsWith('/rss') && request.method === 'GET') {
+            return await handleRss(request, env);
+        } else if (path === '/writeRssData' && request.method === 'GET') {
+            return await handleWriteRssData(request, env);
         }
 
         // Authentication check for all other paths
@@ -75,7 +81,7 @@ export default {
                 response = await handleGenAIDailyAnalysis(request, env);
             } else if (path === '/commitToGitHub' && request.method === 'POST') {
                 response = await handleCommitToGitHub(request, env);
-            }  else {
+            } else {
                 return new Response(null, { status: 404, headers: {'Content-Type': 'text/plain; charset=utf-8'} });
             }
         } catch (e) {

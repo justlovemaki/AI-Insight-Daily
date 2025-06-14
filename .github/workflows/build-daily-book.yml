@@ -124,7 +124,7 @@ jobs:
             echo "正在从 ${{ vars.RSS_FEED_URL }} 下载 RSS Feed..."
             # 使用 -q (quiet) 来减少 wget 输出，使用 --show-progress 在必要时显示进度
             # 使用 --timeout 和 --tries 增加健壮性
-            if wget -O rss.xml "${{ env.RSS_FEED_URL }}" --timeout=30 --tries=3; then
+            if wget -O rss.xml "${{ vars.RSS_FEED_URL }}" --timeout=30 --tries=3; then
               echo "RSS Feed 已成功下载到 rss.xml"
             else
               echo "错误: 下载 RSS Feed 失败。wget 返回错误码 $?。"

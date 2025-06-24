@@ -413,7 +413,7 @@ export function generateGenAiPageHtml(env, title, bodyContent, pageDate, isError
             function openContentInNewWindow() {
                 const content = document.getElementById('outContentBox').innerHTML;
                 const newWindow = window.open('', '_blank');
-                newWindow.document.write('<!DOCTYPE html><html><head><title>内容预览</title><style> img{max-width: 100%;} div{max-width: 36%; margin: 0 auto;} body {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 1rem; }</style></head><body>');
+                newWindow.document.write('<!DOCTYPE html><html><head><title>内容预览</title><style> img{max-width: 100%;} video{max-width: 100%;} div{max-width: 36%; margin: 0 auto;} body {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 1rem; }</style></head><body>');
                 newWindow.document.write('<div>'+content+'</div>');
                 newWindow.document.write('</body></html>');
                 newWindow.document.close();

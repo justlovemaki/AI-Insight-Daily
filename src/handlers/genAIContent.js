@@ -4,8 +4,9 @@ import { getFromKV } from '../kv.js';
 import { callChatAPIStream } from '../chatapi.js';
 import { generateGenAiPageHtml } from '../htmlGenerators.js';
 import { dataSources } from '../dataFetchers.js'; // Import dataSources
-import { getSystemPromptSummarizationStepOne } from '../prompt/summarizationPromptStepOne.js';
-import { getSystemPromptSummarizationStepTwo } from '../prompt/summarizationPromptStepTwo.js';
+import { getSystemPromptSummarizationStepOne } from "../prompt/summarizationPromptStepOne";
+import { getSystemPromptSummarizationStepTwo } from "../prompt/summarizationPromptStepTwo";
+import { getSystemPromptSummarizationStepThree } from "../prompt/summarizationPromptStepThree";
 import { getSystemPromptPodcastFormatting, getSystemPromptShortPodcastFormatting } from '../prompt/podcastFormattingPrompt.js';
 import { getSystemPromptDailyAnalysis } from '../prompt/dailyAnalysisPrompt.js'; // Import new prompt
 import { insertFoot } from '../foot.js';
@@ -252,13 +253,33 @@ export async function handleGenAIContent(request, env) {
         if (fullPromptForCall2_System) promptsMarkdownContent += `### System Instruction\n\`\`\`\n${fullPromptForCall2_System}\n\`\`\`\n\n`;
         if (fullPromptForCall2_User) promptsMarkdownContent += `### User Input (Output of Call 1)\n\`\`\`\n${fullPromptForCall2_User}\n\`\`\`\n\n`;
 
-        let dailySummaryMarkdownContent = `# ${env.DAILY_TITLE} ${formatDateToChinese(dateStr)}\n\n${removeMarkdownCodeBlock(outputOfCall2)}`;
+        let dailySummaryMarkdownContent = `# ${env.DAILY_TITLE} ${formatDateToChinese(dateStr)}` + '\n\n';
+        dailySummaryMarkdownContent += '> '+ env.DAILY_TITLE_MIN + '\n\n';
+        let outputOfCall3 = null;
+        console.log("Call 3 to Chat (Processing Call 2 Output): User prompt length:", outputOfCall2.length);
+        try {
+            let processedChunks = [];
+            for await (const chunk of callChatAPIStream(env, outputOfCall2, getSystemPromptSummarizationStepThree())) {
+                processedChunks.push(chunk);
+            }
+            outputOfCall3 = processedChunks.join('');
+            if (!outputOfCall3 || outputOfCall3.trim() === "") throw new Error("Chat processing call returned empty content.");
+            outputOfCall3 = removeMarkdownCodeBlock(outputOfCall3); // Clean the output
+            console.log("Call 3 (Processing Call 2 Output) successful. Output length:", outputOfCall3.length);
+        } catch (error) {
+            console.error("Error in Chat API Call 3 (Processing Call 2 Output):", error);
+            const errorHtml = generateGenAiPageHtml(env, '生成AI日报出错(摘要)', `<p><strong>Failed during processing of summarized content:</strong> ${escapeHtml(error.message)}</p>${error.stack ? `<pre>${escapeHtml(error.stack)}</pre>` : ''}`, dateStr, true, selectedItemsParams, fullPromptForCall1_System, fullPromptForCall1_User, fullPromptForCall2_System, fullPromptForCall2_User);
+            return new Response(errorHtml, { status: 500, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+        }
+        dailySummaryMarkdownContent += '\n\n#### **AI内容摘要**\n\n```\n' + outputOfCall3 + '\n```\n\n';
+
+        dailySummaryMarkdownContent += `\n\n${removeMarkdownCodeBlock(outputOfCall2)}`;
         if (env.INSERT_FOOT=='true') dailySummaryMarkdownContent += insertFoot() +`\n\n`;
 
         const successHtml = generateGenAiPageHtml(
             env, 
             'AI日报', // Title for Call 1 page
-            escapeHtml(outputOfCall2), 
+            escapeHtml(dailySummaryMarkdownContent), 
             dateStr, false, selectedItemsParams,
             fullPromptForCall1_System, fullPromptForCall1_User,
             null, null, // Pass Call 2 prompts

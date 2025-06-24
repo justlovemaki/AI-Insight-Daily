@@ -173,7 +173,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          git add daily/ src/SUMMARY.md today/
+          git add src/SUMMARY.md today/
           if [ -f "rss.xml" ]; then
             git add rss.xml
           else

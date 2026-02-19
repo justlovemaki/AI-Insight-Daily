@@ -1,0 +1,106 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@config "../tailwind.config.js";
+
+@theme {
+  --font-sans: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-display: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-body: 'Inter', 'Noto Sans SC', sans-serif;
+
+  --color-primary: #0cafcf;
+  --color-background-light: #f5f8f8;
+  --color-background-dark: #101f22;
+  --color-surface-dark: #16292d;
+  --color-surface-dark-lighter: #1c3439;
+  --color-surface-darker: #0d1a1c;
+  --color-border-dark: #2a4045;
+  --color-text-secondary: #90c1cb;
+  --color-accent-success: #0bda54;
+  --color-accent-warning: #fbbf24;
+  --color-accent-error: #ef4444;
+
+  --animate-ping-slow: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-white transition-colors duration-300;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-background-light dark:bg-background-dark;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-border-dark rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-surface-dark-lighter;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 24px;
+}
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.text-xs {
+  font-size: 0.75rem !important;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.preview-html-content {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.preview-html-content img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.preview-html-content video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.preview-html-content a {
+  color: #0cafcf;
+  text-decoration: underline;
+}
+
+.preview-html-content p {
+  margin-bottom: 0.75rem;
+}
+
+.preview-html-content ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.preview-html-content ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.preview-html-content li {
+  margin-bottom: 0.5rem;
+}
+
+.preview-html-content h1 { @apply text-2xl font-bold mt-6 mb-4; }
+.preview-html-content h2 { @apply text-xl font-bold mt-5 mb-3; }
+.preview-html-content h3 { @apply text-lg font-bold mt-4 mb-2; }
+.preview-html-content hr { @apply my-8 border-slate-200 dark:border-white/10; }

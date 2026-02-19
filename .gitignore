@@ -1,0 +1,9 @@
+node_modules
+.serena/
+.claude/
+CLAUDE.md
+config.json
+dist/
+app.log
+.env
+

@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: PrismFlowAgent
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - ./data:/app/data
+      - .env:/app/.env
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai

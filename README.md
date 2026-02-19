@@ -1,210 +1,207 @@
-# 🚀 AI 资讯日报
+# 流光 PrismFlowAgent 
 
-> 您的每日 AI 信息整合,分析,日报,播客内容生成平台。
+流光 (PrismFlowAgent) 是一个基于 Node.js (ESM) 和 TypeScript 构建的现代化、全栈资讯处理与 AI Agent 系统。它能够自动化地从全球多源渠道抓取高质量资讯，利用顶级大语言模型进行深度总结，并将其分发至多种终端（如 GitHub、微信公众号、RSS 等）。
 
-**AI 资讯日报** 是一个基于 **Cloudflare Workers** 驱动的内容聚合与生成平台。它每日为您精选 AI 领域的最新动态，包括行业新闻、热门开源项目、前沿学术论文、科技大V社交媒体言论，并通过 **Google Gemini** 模型进行智能处理与摘要生成，最终自动发布到 GitHub Pages 生成 AI 日报。
+采用了模块化、插件化的架构设计，特别加强了对 AI Agent 工作流和多媒体资产处理的支持。
 
-我们的目标是成为您在瞬息万变的 AI 浪潮中保持领先的得力助手，让您高效获取最有价值的信息。
+## ✨ 核心能力
 
-> [!NOTE]
-> 日报前端项目已发布2.0： [Hextra-AI-Insight-Daily](https://github.com/justlovemaki/Hextra-AI-Insight-Daily) ，基于 Hugo 加 Hextra主题 构建。
-> 
-> 感谢阮一峰老师在[周刊352期](https://www.ruanyifeng.com/blog/2025/06/weekly-issue-352.html)的推荐。
----
+-   **智能数据抓取 (Adapters)**:
+    -   **GitHub Trending**: 实时监控全球热门开源项目。
+    -   **Follow API (Folo)**: 深度集成 Folo API，支持学术论文、Twitter/Reddit 社交动态及各类 RSS 源。
+    -   **模块化设计**: 通过继承 `BaseAdapter` 可快速扩展任意第三方数据源。
+-   **顶级 AI 生态集成**:
+    -   **多模型支持**: 原生适配 **Google Gemini**, **Anthropic Claude**, **OpenAI** 和 **Ollama**。
+    -   **Tool Use (Function Calling)**: AI 可调用本地工具执行复杂任务。
+-   **AI Agent & 插件架构**:
+    -   **MCP (Model Context Protocol)**: 支持 MCP 协议，可动态加载和扩展 Agent 能力。
+    -   **工作流引擎**: 支持定义复杂的自动化处理流程（Workflows）。
+    -   **技能系统 (Skills)**: 可插拔的技能包，增强 AI 在特定领域（如报告生成）的表现。
+-   **工业级多媒体处理 (Media Pipeline)**:
+    -   **图像转换**: 自动将下载的图像转换为高压缩比的 **AVIF** 格式（基于 `sharp`）。
+    -   **视频优化**: 使用 `ffmpeg` 对视频进行重新编码和压缩（H.264/MP4）。
+    -   **云端存储**: 支持 **Cloudflare R2** (S3 兼容) 和 **GitHub** 作为资源托管服务器。
+-   **自动化分发管道**:
+    -   **GitHub Archive**: 自动生成每日资讯的 Markdown 历史存档。
+    -   **微信公众号**: 自动处理排版、图片上传并发布至草稿箱。
+    -   **RSS 生成**: 标准化 RSS XML 订阅源支持。
+-   **管理控制台 (Admin Dashboard)**:
+    -   **实时监控**: 观察各适配器运行状态与数据抓取量。
+    -   **手动干预**: 支持手动触发抓取、生成摘要及一键发布。
+    -   **Agent 管理**: 完整的 Agent、Skill 和 MCP 配置界面。
 
-## ✨ 核心特性
+## 🛠 技术架构
 
-*   **☁️ 基于 Cloudflare Workers**：部署在强大的边缘网络，兼具高性能、高可用与零服务器维护成本。
-*   **🧠 集成 Google Gemini**：利用先进的 AI 模型，自动生成高质量、易于理解的内容摘要。
-*   **🔗 优先支持 Folo 订阅源**：只需简单配置，即可轻松接入 [Folo](https://app.follow.is/) 上的任意信息源，实现个性化内容聚合。
-*   **🔄 每日自动更新**：通过 GitHub Actions 实现全自动化流程，每日准时为您推送最新鲜的 AI 资讯。
-*   **🔧 高度可扩展**：项目架构灵活，不仅限于 AI 领域，您可以轻松定制，将其改造为您专属的任何主题日报。请尽情发挥您的想象力！
-*   **🌐 一键发布至 GitHub Pages**：内置完善的发布流程，聚合后的内容可轻松生成静态网站，方便查阅与分享。
+-   **后端 (Backend)**: Fastify (高性能 Web 框架), TypeScript 5+, SQLite (KV 存储与关系数据), `node-cron`.
+-   **前端 (Frontend)**: React 19, Vite, Tailwind CSS, Framer Motion (交互动画).
+-   **基础设施**: 
+    -   **指令审批系统 (Exec Approvals)**: 对 Agent 执行的关键指令进行拦截与审批。
+    -   **单例模式上下文 (ServiceContext)**: 统一管理全局服务生命周期。
 
----
+## 📂 核心目录结构
 
-## 🎯 为谁而生？
-
-无论您是信息的消费者、创造者，还是技术的探索者，「AI 资讯日报」都旨在为您创造独特价值。
-
-### 🧑‍💻 AI 从业者与研究者
-> **痛点：** 信息海洋无边无际，筛选关键动态、前沿论文和优质开源项目耗时费力。
-
-**解决方案：**
-*   **✅ 自动化精炼：** 为您提炼每日必读核心内容，并由 AI 生成精辟摘要。
-*   **⏱️ 聚焦核心：** 在 **5 分钟内**快速掌握行业脉搏，将宝贵时间投入到真正重要的工作与研究中。
-
-### 🎙️ 内容创作者与科技媒体人
-> **痛点：** 持续输出高质量内容，却苦于选题枯竭和素材搜集的繁琐。
-
-**解决方案：**
-*   **💡 灵感永动机：** 聚合最新资讯，成为您源源不断的灵感源泉。
-*   **🚀 内容半成品：** 利用 Gemini 模型生成结构化的**播客/视频口播稿**，稍作修改即可发布，极大提升创作效率。
-
-### 🛠️ 开发者与技术 DIY 爱好者
-> **痛点：** 想学习前沿技术栈（Serverless, AI API），但缺少一个完整、有实际价值的项目来练手。
-
-**解决方案：**
-*   **📖 绝佳学习范例：** 本项目架构清晰、代码开源，是学习如何整合云服务与 AI 模型的绝佳范例。
-*   **🎨 打造个人专属：** 轻松 Fork，通过修改订阅源和 Prompt，将其改造为您个人专属的“Web3 洞察”、“游戏快讯”或“投资摘要”等。
-
-### 🌱 对 AI 充满好奇的终身学习者
-> **痛点：** AI 领域术语繁多、技术迭代快，想要跟上时代步伐却感到无从下手。
-
-**解决方案：**
-*   **👓 AI 滤镜看世界：** 通过阅读由 AI 精炼和总结后的日报，更轻松、更直观地理解行业动态。
-*   **🌉 知识的桥梁：** 助您跨越技术门槛，持续拓宽知识边界，保持与智能时代的同步。
-
----
-
-## 📸 线上演示与截图
-
-我们提供了多个在线访问地址以及项目成果的播客展示。
-
-### **在线阅读地址：**
-
-#### 💻 网页直达
-
-无需安装任何应用，直接在浏览器中打开，即刻阅读，支持pc和移动端。
-
-*   **唯一主站点 (GitHub Pages)**
-    > [https://ai.hubtoday.app/](https://ai.hubtoday.app/)
-    >
-    > `✅ 推荐` `🚀 访问速度快` 
-
----
-
-#### 📡 RSS 订阅
-
-将 AI 资讯聚合到您的个人信息流中，高效获取更新。
-
-*   **订阅链接**
-    > [https://justlovemaki.github.io/CloudFlare-AI-Insight-Daily/rss.xml](https://justlovemaki.github.io/CloudFlare-AI-Insight-Daily/rss.xml)
-    >
-    > `⭐ 推荐使用 Feedly, Inoreader, Folo 等现代阅读器订阅`
-
----
-
-#### 📱 微信公众号
-
-适合移动端阅读，每日推送，不再错过精彩内容。
-
-*   **关注方式**
-    > 打开微信，搜索公众号「**何夕2077**」并关注。
-    >
-    > `💬 欢迎在公众号后台与我们交流`
-
-
-### **内容成果展示：**
-
-| 🎙️ **小宇宙** | 📹 **抖音** |
-| --- | --- |
-| [来生小酒馆](https://www.xiaoyuzhoufm.com/podcast/683c62b7c1ca9cf575a5030e)  |   [来生情报站](https://www.douyin.com/user/MS4wLjABAAAAwpwqPQlu38sO38VyWgw9ZjDEnN4bMR5j8x111UxpseHR9DpB6-CveI5KRXOWuFwG)| 
-| ![小酒馆](docs/images/sm2.png "img") | ![情报站](docs/images/sm1.png "img") |
-
-
-### **后台项目截图：**
-
-| 网站首页                               | 日报内容                               | 播客脚本                               |
-| -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| [![首页](docs/images/main-1.png "首页")](docs/images/main-1.png) | [![日报](docs/images/main-2.png "日报")](docs/images/main-2.png) | [![播客](docs/images/main-3.png "播客")](docs/images/main-3.png) |
-
----
+```text
+├── src/
+│   ├── adapters/       # 数据源适配器实现 (GitHub, Folo等)
+│   ├── api/            # Fastify 接口定义与路由配置
+│   ├── infra/          # 系统底层设施（权限、审批等）
+│   ├── services/       # 核心业务逻辑
+│   │   ├── agents/     # Agent, Workflow 与 MCP 核心引擎
+│   │   ├── ImageService.ts # 资产下载、转换、上传管道
+│   │   └── TaskService.ts  # 调度、抓取与聚合逻辑
+│   ├── types/          # 全局 TypeScript 强类型定义
+│   └── utils/          # 渲染引擎、辅助工具函数
+├── frontend/           # React 前端单页应用 (SPA)
+└── data/               # 默认数据目录 (SQLite 数据库及本地缓存)
+```
 
 ## 🚀 快速开始
 
-> [!NOTE]
-> 本项目优先支持从 [Folo](https://app.follow.is/) 数据源抓取内容。
-> 您只需通过F12获取Folo Cookie，并将其配置到项目中即可在线试用。
+### 1. 安装与构建
 
-> [!WARNING]
-> 为了保证项目的正常运行，您需要在项目中配置 Folo Cookie。
-> Folo Cookie只保留在浏览器，没有安全隐患。
+```bash
 
-1.  **获取Folo Cookie**
-    
-    [![cookie](docs/images/folo-0.png "img")](docs/images/folo-0.png)
+# 安装后端依赖
+npm install
 
-2.  **[Demo 地址](https://ai-daily-demo.justlikemaki.workers.dev/getContentHtml)**
-    * 默认账号密码：root/toor
----
+# 安装前端依赖
+cd frontend
+npm install
+cd ..
+```
 
-## 📚 更多文档
+### 2. 环境配置
 
-*   **🛠️ [技术架构与部署指南](docs/DEPLOYMENT.md)**：深入了解项目的工作原理和详细的部署步骤。
-*   **🧩 [项目拓展性指南](docs/EXTENDING.md)**：学习如何添加新的数据源、自定义生成内容格式。
+复制 `.env.example` 为 `.env`，并配置以下关键项：
 
----
+-   **AI API**: `GEMINI_API_KEY`, `OPENAI_API_KEY` 等。
+-   **GitHub**: `GITHUB_TOKEN` 用于发布存档；`IMAGE_GITHUB_TOKEN` 用于图片存储。
+-   **WeChat**: `WECHAT_APP_ID`, `WECHAT_APP_SECRET`。
+-   **Storage**: 设置 `IMAGE_STORAGE_STRATEGY` 为 `r2` 或 `github`。
 
-## ❓为什么生成日报需要手动勾选内容，而不是让 AI 自动筛选
+### 3. 本地开发
 
-我坚信，AI 是增强人类智慧的强大**工具**，而非**替代品**。
+```bash
+# 启动全栈模式 (后端 + 前端)
+npm run dev:all
 
-正如**忒修斯之船**的哲学思辨：当船上的木板被逐一替换，它还是原来的船吗？同样，**今天的你和昨天的你在思想与关注点上已有细微不同**。
+# 仅启动后端
+npm run dev
 
-AI 或许能模仿你过去的喜好，却难以捕捉你此刻的灵感与洞见。
+# 仅启动前端
+npm run dev:frontend
+```
 
-`手动勾选`这一步，正是为了保留这份属于“人”的、不断演进的独特视角。它确保了日报的灵魂-`你的思想和判断力`，始终贯穿其中，让每一份日报都成为你当日思考的真实快照。
+### 4. 生产部署
 
-当然，我们也完全支持并欢迎社区开发者探索全自动化的实现方式。如果你有更棒的想法，请随时提交 Pull Request！
+```bash
+# 全量构建并运行
+npm run prod
 
----
+# 或者手动构建
+npm run build:all
+npm run serve
+```
 
-## 💡 项目价值与未来展望
+## 📅 开发路线图
 
-“AI 资讯日报”为 AI 领域的从业者、研究者和爱好者提供了一个**便捷、高效的信息获取渠道**。它将繁琐的信息筛选工作自动化，帮助用户节省宝贵时间，快速掌握**行业动态**与**技术趋势**。
-
-我们对项目的未来充满期待，并计划在以下方向持续探索：
-
-*   **🔌 扩展数据来源**：集成更多垂直领域的 AI 资讯平台、技术博客、Hacker News、Reddit 等，构建更全面的信息网络。
-*   **🤖 丰富 AI 能力**：探索除了内容摘要外的更多玩法，如趋势分析报告、技术对比、观点提炼等。
-*   **🎨 优化用户体验**：开发功能更完善的前端界面，支持个性化订阅、关键词筛选和历史内容搜索。
-*   **🌍 支持多语言**：扩展项目的多语言处理能力，服务全球范围内的 AI 爱好者。
-*   **🤝 构建开放生态**：集成更多先进的 AI 模型，并欢迎社区开发者共同贡献，打造一个开放、协作的内容生成平台。
-
----
-
-## 💬 交流与支持
-
-> **有任何问题请提 [Issue](https://github.com/justlovemaki/CloudFlare-AI-Insight-Daily/issues)**，或许你的问题也能帮助其它有同样困惑的人
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="docs/images/wechat.png" alt="Wechat QR Code" width="150">
-      <br>
-      <strong>进群讨论</strong>
-    </td>
-    <td align="center">
-      <img src="docs/images/sponsor.png" alt="Sponsor QR Code" width="150">
-      <br>
-      <strong>赞助留名</strong>
-    </td>
-  </tr>
-</table>
-
-> 欢迎您 Star, Fork 并参与贡献，共同将“AI 资讯日报”打造为更强大的 AI 信息利器！
+这份规划将杂乱的需求整理为一条清晰的**技术演进路线**。我们将开发过程分为五个阶段，遵循**从基础设施 -> 核心架构 -> 数据接入 -> 智能处理 -> 交互与调度**的逻辑。
 
 ---
 
-## ⚠️ 免责声明
-在使用“AI 资讯日报”项目（以下简称“本项目”）前，请您务必仔细阅读并理解本声明。您对本项目的任何使用行为，即视为您已完全接受本声明的全部内容。
+### ✅ 阶段一：重构与基础设施（已完成）
+**目标**：解决代码架构、自动化部署及基础运行环境问题。
 
-1.  **内容来源与准确性**：本项目聚合的内容主要来自第三方数据源（如 Folo 订阅源）并通过 AI 模型（如 Google Gemini）自动处理生成。我们不保证所有信息的绝对准确性、完整性、及时性或可靠性。所有内容仅供学习、参考和交流之用，不构成任何专业建议（如投资、法律等）。
+- [x] **代码重构与模块化 (Refactoring)**
+    - [x] **核心逻辑解耦**：已将原有代码拆分为 `Services`, `Adapters`, `Plugins` 等模块。
+    - [x] **统一配置管理**：建立 `ConfigService`，支持从 `.env` 读取配置。
+    - [x] **类型定义**：完善 TypeScript 类型定义，确保全链路类型安全。
+- [x] **Docker 容器化 (Containerization)**
+    - [x] 编写 `Dockerfile`：多阶段构建，优化镜像体积。
+    - [x] 编写 `docker-compose.yml`：集成应用与持久化存储。
+    - [x] **启动脚本**：实现 `entrypoint.sh` 自动化环境检查。
+- [x] **CI/CD 基础**
+    - [x] 项目结构已支持 GitHub Actions 等持续集成工具。
 
-2.  **版权归属**：本项目尊重并保护知识产权。
-    *   所有聚合内容的原始版权归原作者、原网站或相应权利人所有。
-    *   本项目仅为非商业性的信息聚合与展示，旨在方便用户学习和研究。
-    *   如您认为本项目的内容侵犯了您的合法权益，请立即与我们联系，我们将在核实后第一时间进行删除处理。
+---
 
-3.  **AI 生成内容**：由 AI 模型生成的摘要、分析等内容可能存在错误、偏见或不符合原文意图的情况。请用户在采纳或使用这些信息时，务必结合原文进行审慎判断。对于因依赖 AI 生成内容而导致的任何后果，本项目概不负责。
+### ✅ 阶段二：插件化架构设计（已完成）
+**目标**：实现数据源、工具、发布平台的标准化与多模型适配。
 
-4.  **技术风险**：本项目基于 Cloudflare Workers、GitHub Pages 等第三方服务运行。我们无法保证这些服务的永久稳定性和可用性。因任何技术故障、网络问题、服务中断或不可抗力导致的损失，本项目不承担任何责任。
+- [x] **定义标准接口 (Interface Definition)**
+    - [x] `BaseAdapter`：统一数据抓取与转换流程。
+    - [x] `IPublisher`：定义标准的发布接口。
+    - [x] `AIProvider`：支持多模型、多供应商切换。
+- [x] **插件注册表 (Plugin Registries)**
+    - [x] 实现 `AdapterRegistry`, `PublisherRegistry`, `StorageRegistry` 等动态加载机制。
+- [x] **LLM 适配层 (Model Adaptation)**
+    - [x] **多供应商接入**：原生适配 OpenAI, Claude, Gemini, Ollama。
+    - [x] **Prompt 管理**：实现 `PromptService` 进行模板化管理。
+    - [x] **Tool Use (Function Calling)**：建立统一工具定义标准，支持跨模型调用。
 
-5.  **使用风险**：您承诺将合法、合规地使用本项目。任何因您使用不当（如用于商业目的、非法转载、恶意攻击等）而产生的法律责任和风险，均由您自行承担。
+---
 
-6.  **最终解释权**：在法律允许的范围内，本项目团队对本声明拥有最终解释权，并有权根据需要随时进行修改和更新。
+### 🚀 阶段三：数据全域接入与增强（进行中）
+**目标**：丰富数据来源，提升数据处理的深度与多媒体能力。
 
-## 🌟 Star History
+- [x] **多模态数据源开发**
+    - [x] **GitHub Trending**: 实时开源趋势追踪。
+    - [x] **Follow API (RSS/Twitter/Reddit)**: 深度集成社交与学术动态。
+- [ ] **增强功能开发**
+    - [x] **工业级多媒体管道**: 自动 AVIF 转换、视频压缩处理。
+    - [ ] **AI 搜索插件**: 接入 Serper/Tavily API，支持根据关键词自动联网检索。
+    - [ ] **RAG 检索增强 (Memory & Retrieval)**
+        - [ ] 向量数据库接入（如 Qdrant/Chroma）。
+        - [ ] 知识库分块、清洗与嵌入（Embedding）流程。
+- [ ] **编辑器/生成增强**
+    - [ ] **AI 绘图集成**: 接入 DALL-E 3/Midjourney，支持根据内容自动生成配图。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=justlovemaki/CloudFlare-AI-Insight-Daily&type=Timeline)](https://www.star-history.com/#justlovemaki/CloudFlare-AI-Insight-Daily&Timeline)
+---
+
+### 🧠 阶段四：智能体与内容生产（进行中）
+**目标**：实现深度内容加工、自动化任务调度与多端分发。
+
+- [ ] **内容处理 Agent**
+    - [ ] **摘要生成**: 自动对 Raw Data 进行清洗、去重与摘要。
+    - [ ] **多端发布**: 支持 GitHub Archive、微信公众号、RSS 等渠道。
+- [ ] **高级聚合 Agent**
+    - [ ] **日报/周报整合**: 智能筛选高权重内容，生成带导语、分类总结与趋势分析的深度报告。
+    - [ ] **自动化任务流**: 基于 `WorkflowEngine` 定义复杂的自动化处理逻辑。
+- [ ] **任务调度系统 (Scheduler)**
+    - [ ] **Cron 管理**: 实现基于 `node-cron` 的多任务定时调度。
+    - [ ] **手动干预**: 管理后台支持手动触发抓取与分发。
+
+---
+
+### 🤖 阶段五：AI 交互与编排（规划中）
+**目标**：实现对话式主控 Agent，将系统能力封装为易用的交互界面。
+
+- [ ] **AI 主 Agent (Master Agent)**
+    - [ ] **对话式界面**: 支持通过自然语言指令管理系统（如“添加一个 RSS 源”、“生成上周的 AI 趋势周报”）。
+    - [ ] **意图识别与任务分发**: 自动调度底层插件与工具。
+- [ ] **人机协作工作流 (HITL)**
+    - [ ] **预览与二次编辑**: AI 生成初稿 -> 用户对话修正 -> 确认一键发布。
+- [ ] **MCP 深度集成**
+    - [ ] 允许动态加载外部 MCP 服务器，无限扩展 Agent 能力边界。
+
+---
+
+### 📅 开发路线图总结
+
+| 阶段 | 状态 | 核心产物 |
+| :--- | :--- | :--- |
+| **1. 基础** | ✅ | Docker 镜像, 模块化代码库, `ConfigService` |
+| **2. 架构** | ✅ | 插件注册表, 多模型适配层, Tool Use 框架 |
+| **3. 数据** | 🚀 | 社交/学术源接入, 多媒体管道, (待) RAG 知识库 |
+| **4. 智能** | 🚀 | 自动摘要, 任务调度器, (待) 深度报告 Agent |
+| **5. 交互** | 📅 | 对话式主 Agent, 任务编排, MCP 集成 |
+
+## 🤖 开发者/Agent 指南
+
+如果您是参与此项目开发的 AI Agent，请**务必**阅读 [AGENTS.md](./AGENTS.md)。它规定了严格的 ESM 模块化导入规范、强类型要求以及安全性准则，确保代码的稳定与一致。
+
+有关如何开发和集成自定义插件（适配器、发布器、存储），请参考 [插件接入文档](./PLUGINS.md)。
+
+## 📜 许可证
+
+本项目基于 [ISC License](./LICENSE) 授权。

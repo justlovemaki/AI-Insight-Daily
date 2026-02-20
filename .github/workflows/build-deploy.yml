@@ -3,6 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches: [ "main", "master" ]
+    paths:
+      - 'version'
   workflow_dispatch:
 
 env:
@@ -50,8 +52,16 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Check for Deploy Secret
+        id: check_secret
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          if [ -n "$DEPLOY_HOST" ]; then
+            echo "has_secret=true" >> $GITHUB_OUTPUT
+          fi
       - name: Deploy to Server
-        if: ${{ secrets.DEPLOY_HOST != '' }}
+        if: steps.check_secret.outputs.has_secret == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DEPLOY_HOST }}

@@ -23,7 +23,6 @@ const Generation: React.FC = () => {
   const [status, setStatus] = useState(initialResult ? '草稿已生成' : '');
   const [previewMode, setPreviewMode] = useState<'markdown' | 'preview'>('preview');
   const [imageProxy, setImageProxy] = useState('');
-  const [githubPathPrefix, setGithubPathPrefix] = useState('daily');
 
   // Publishers Metadata
   const [publishers, setPublishers] = useState<any[]>([]);
@@ -184,11 +183,6 @@ const Generation: React.FC = () => {
         const settings = await getSettings();
         if (settings?.IMAGE_PROXY) {
           setImageProxy(settings.IMAGE_PROXY);
-        }
-        // 获取 GitHub 发布器的路径前缀
-        const githubPublisher = settings?.PUBLISHERS?.find((p: any) => p.id === 'github');
-        if (githubPublisher?.config?.pathPrefix) {
-          setGithubPathPrefix(githubPublisher.config.pathPrefix);
         }
       } catch (e) {
         console.error('Failed to load settings:', e);

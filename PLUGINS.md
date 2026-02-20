@@ -23,6 +23,7 @@ PrismFlow 采用 **自动扫描机制**。只需将开发好的插件文件放�
 - `IAdapter`: 数据抓取与转换。
 - `IPublisher`: 将生成的内容发布到外部平台。
 - `IStorageProvider`: 文件（如图片）的云端存储。
+- `BaseTool`: Agent 使用的工具函数。
 
 ---
 
@@ -139,10 +140,42 @@ export class MyStorage implements IStorageProvider {
 
 ---
 
+## 代理工具 (Tools)
+
+Agent 可以调用工具来执行特定的任务。工具插件放置在 `src/plugins/tools/` 目录下。
+
+### 1. 开发步骤
+继承 `BaseTool` 类并实现核心方法。
+
+```typescript
+import { BaseTool } from '../base/BaseTool.js';
+
+export class MyCustomTool extends BaseTool {
+  // 【关键】定义工具的唯一 ID、名称、描述和参数 (JSON Schema)
+  readonly id = 'my_custom_tool';
+  readonly name = 'My Custom Tool';
+  readonly description = '执行我的自定义逻辑';
+  readonly parameters = {
+    type: 'object',
+    properties: {
+      input: { type: 'string', description: '输入参数' }
+    },
+    required: ['input']
+  };
+
+  // 实现执行逻辑
+  async handler(args: { input: string }): Promise<any> {
+    return `Processed: ${args.input}`;
+  }
+}
+```
+
+---
+
 ## 自动扫描机制
 
 系统在启动时会执行以下操作：
-1. 递归扫描 `src/plugins/adapters/`、`src/plugins/publishers/` 和 `src/plugins/storages/` 目录。
+1. 递归扫描 `src/plugins/adapters/`、`src/plugins/publishers/`、`src/plugins/storages/` 和 `src/plugins/tools/` 目录。
 2. 排除 `base` 目录、`.d.ts` 文件以及文件名包含 `Base` 的文件。
 3. 动态加载模块并寻找拥有 `static metadata` 属性的类。
 4. 将找到的类及其元数据注册到对应的 Registry 中。

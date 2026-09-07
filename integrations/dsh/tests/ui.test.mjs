@@ -9,6 +9,7 @@ import AdmZip from 'adm-zip'
 import YAML from 'yaml'
 import { decryptPrismFlowDataBackup, parsePrismFlowDataBackup, PRISMFLOW_DATA_UNITS } from '../lib/data-backup.js'
 import { apply } from '../lib/ui.js'
+import { CategoryError } from '../lib/category-catalog.js'
 import { PublicationReconciliationError } from '../lib/store-production.js'
 import { PublisherOutcomeError } from '../lib/shared/publisher-outcome.js'
 
@@ -30,6 +31,32 @@ test('captured-content bulk delete requires exact IDs, confirmation and same-ori
     assert.equal(calls.length, 0)
     const result = await request(app.origin, '/content/delete', { storeIds: [id], confirm: true })
     assert.equal(result.status, 200); assert.deepEqual(result.value.deletedIds, [id]); assert.deepEqual(calls, [[id]])
+  } finally { await app.close() }
+})
+
+test('category APIs require same-origin writes, strict DTOs, confirmation and exact revisions', async () => {
+  const calls = []
+  const revision = 'a'.repeat(64)
+  const catalog = { revision, categories: [], deletionAvailable: true }
+  const app = await dashboard({ prismSourceSettings: {
+    categoryCatalog() { return catalog },
+    async mutateCategory(body) { calls.push(body); if (body.expectedRevision !== revision) throw new CategoryError('stale', 409); return catalog },
+  } })
+  try {
+    assert.deepEqual((await request(app.origin, '/categories')).value, catalog)
+    assert.equal((await request(app.origin, '/categories?unknown=1')).status, 400)
+    for (const body of [
+      { action: 'delete', id: 'news', expectedRevision: revision },
+      { action: 'archive', id: 'news', expectedRevision: revision, confirm: false },
+      { action: 'restore', id: 'news' },
+      { action: 'delete', id: 'news', expectedRevision: revision, confirm: true, force: true },
+      { action: 'update', id: 'news', expectedRevision: revision, newId: 'new' },
+    ]) assert.equal((await request(app.origin, '/categories/mutate', body)).status, 400)
+    const body = { action: 'archive', id: 'news', expectedRevision: revision, confirm: true }
+    assert.equal((await request(app.origin, '/categories/mutate', body, { origin: 'https://evil.example' })).status, 403)
+    assert.equal(calls.length, 0)
+    assert.equal((await request(app.origin, '/categories/mutate', { ...body, expectedRevision: 'b'.repeat(64) })).status, 409)
+    assert.equal((await request(app.origin, '/categories/mutate', body)).status, 200)
   } finally { await app.close() }
 })
 

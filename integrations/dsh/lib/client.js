@@ -14,7 +14,7 @@ window.__ModuleLoader__.load({
       .pf-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0}.pf-tab,.pf-btn{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);border-radius:8px;padding:8px 13px;font:inherit;font-size:13px;cursor:pointer}.pf-tab:hover,.pf-btn:hover:not(:disabled){border-color:var(--dsw-alias-brand-primary)}.pf-tab-on,.pf-primary{background:var(--dsw-alias-brand-primary);border-color:var(--dsw-alias-brand-primary);color:white}.pf-btn:disabled{opacity:.5;cursor:not-allowed}.pf-danger{color:var(--dsw-alias-label-error)}
       .pf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.pf-overview-page{width:min(100%,1180px);margin-inline:auto}.pf-overview-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;padding:26px 28px;border:1px solid color-mix(in srgb,var(--dsw-alias-brand-primary) 34%,var(--dsw-alias-border-l2));border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--dsw-alias-brand-primary) 12%,var(--dsw-alias-bg-layer-2)),var(--dsw-alias-bg-layer-2) 58%,color-mix(in srgb,#159957 7%,var(--dsw-alias-bg-layer-2)));box-shadow:0 14px 38px rgba(0,0,0,.08)}.pf-overview-hero:after{content:"";position:absolute;right:-70px;top:-90px;width:230px;height:230px;border-radius:50%;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 10%,transparent);pointer-events:none}.pf-overview-eyebrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}.pf-overview-hero h2{margin:0;font-size:25px;line-height:1.25}.pf-overview-hero p{max-width:760px;margin:9px 0 0;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:1.65}.pf-overview-hero-actions{position:relative;z-index:1;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pf-overview-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.pf-overview-metric{padding:16px 18px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-overview-metric span,.pf-overview-metric small{display:block}.pf-overview-metric span{color:var(--dsw-alias-label-secondary);font-size:11px}.pf-overview-metric strong{display:block;margin:5px 0 3px;font-size:26px;line-height:1.1}.pf-overview-metric small{color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-overview-section{margin-top:24px}.pf-overview-section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:11px}.pf-overview-section-head h3{margin:0;font-size:16px}.pf-overview-section-head p{margin:4px 0 0;color:var(--dsw-alias-label-secondary);font-size:12px}.pf-overview-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.pf-overview-flow-card{display:flex;min-height:168px;flex-direction:column;padding:17px 18px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-overview-flow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.pf-overview-step{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 13%,var(--dsw-alias-bg-layer-3));color:var(--dsw-alias-brand-primary);font-size:12px;font-weight:750}.pf-overview-flow-card h4{margin:12px 0 0;font-size:14px}.pf-overview-flow-card p{flex:1;margin:6px 0 13px;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.55}.pf-overview-flow-card .pf-btn{align-self:flex-start}.pf-overview-bottom{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:12px;margin-top:16px}.pf-overview-health,.pf-overview-guardrails{padding:18px 20px}.pf-overview-health-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.pf-overview-health-item{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--dsw-alias-border-l2);border-radius:999px;background:var(--dsw-alias-bg-layer-3);font-size:11px}.pf-overview-dot{width:7px;height:7px;border-radius:50%;background:var(--dsw-alias-label-tertiary)}.pf-overview-dot-on{background:#159957;box-shadow:0 0 0 3px rgba(21,153,87,.12)}.pf-overview-guardrails ul{margin:10px 0 0;padding-left:19px;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.65}.pf-toolset-page{width:min(100%,1180px);margin-inline:auto}.pf-toolset-header{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:20px;margin-bottom:18px}.pf-toolset-header-copy{max-width:720px}.pf-toolset-header-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pf-skill-section .pf-toolset-header-actions{flex:none}.pf-toolset-stack{display:flex;flex-direction:column;gap:16px}.pf-toolset-section{padding:0;overflow:hidden}.pf-toolset-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:17px 20px;border-bottom:1px solid var(--dsw-alias-border-l2)}.pf-toolset-section-title{min-width:0}.pf-toolset-section-title h3{margin:0;font-size:15px}.pf-toolset-section-title p{margin:5px 0 0}.pf-toolset-section-head>.pf-badge{flex:none;white-space:nowrap}.pf-toolset-section-body{padding:18px 20px}.pf-toolset-section-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;padding:13px 20px;border-top:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3)}.pf-image-settings-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start;gap:14px 16px}.pf-image-settings-grid>.pf-field{min-width:0;margin:0;grid-column:span 6}.pf-image-settings-grid>.pf-image-endpoint{grid-column:span 8}.pf-image-settings-grid>.pf-image-protocol{grid-column:span 4}.pf-image-settings-grid>.pf-image-number,.pf-image-settings-grid>.pf-image-compact{grid-column:span 2}.pf-image-settings-grid .pf-input,.pf-image-settings-grid .pf-select{width:100%}.pf-image-credentials{margin:0;border:0;border-top:1px solid var(--dsw-alias-border-l2);border-radius:0;padding:18px 20px;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 4%,var(--dsw-alias-bg-layer-2))}.pf-image-credential-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;margin-bottom:14px}.pf-image-credential-copy strong{display:block;font-size:13px}.pf-image-credential-copy span{display:block;max-width:720px;margin-top:4px;color:var(--dsw-alias-label-tertiary);font-size:11px;line-height:1.5}.pf-image-credential-state{text-align:right;white-space:nowrap}.pf-image-credential-state .pf-badge{margin-bottom:5px}.pf-image-credential-state span:last-child{display:block;font-size:11px}.pf-image-credential-row{display:grid;grid-template-columns:minmax(260px,1fr) auto;align-items:end;gap:12px}.pf-image-credential-row>.pf-field{min-width:0}.pf-image-credential-row .pf-input{width:100%}.pf-image-credential-actions{display:flex;gap:8px;align-items:center}.pf-toolset-mode{max-width:360px;margin:0 0 18px}.pf-toolset-mode .pf-select{width:100%}.pf-toolset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.pf-plugin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}.pf-plugin-card{display:flex;min-width:0;flex-direction:column;padding:15px;border:1px solid var(--dsw-alias-border-l2);border-radius:11px;background:var(--dsw-alias-bg-layer-3);transition:border-color .16s ease,box-shadow .16s ease}.pf-plugin-card-enabled{border-color:color-mix(in srgb,var(--dsw-alias-brand-primary) 38%,var(--dsw-alias-border-l2));box-shadow:inset 3px 0 0 color-mix(in srgb,var(--dsw-alias-brand-primary) 70%,transparent)}.pf-plugin-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.pf-plugin-card-head strong{display:block;font-size:14px}.pf-plugin-id{display:block;margin-top:4px;color:var(--dsw-alias-label-tertiary);font-size:10px;overflow-wrap:anywhere}.pf-plugin-description{flex:1;margin:10px 0!important;font-size:12px!important}.pf-plugin-summary{display:flex;gap:6px 12px;flex-wrap:wrap;color:var(--dsw-alias-label-tertiary);font-size:10px}.pf-plugin-toggle{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--dsw-alias-border-l2);font-size:12px;font-weight:650}.pf-plugin-tools{margin-top:11px}.pf-plugin-tools summary{cursor:pointer;color:var(--dsw-alias-brand-primary);font-size:11px}.pf-plugin-management{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:11px;border-top:1px solid color-mix(in srgb,var(--dsw-alias-label-error) 24%,var(--dsw-alias-border-l2))}.pf-plugin-management span{color:var(--dsw-alias-label-tertiary);font-size:10px}.pf-plugin-management .pf-btn{flex:none}.pf-plugin-tool-list{display:grid;gap:6px;margin-top:9px}.pf-tool-option{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:8px;min-width:0;min-height:34px;box-sizing:border-box;padding:7px 9px;border:1px solid var(--dsw-alias-border-l2);border-radius:7px;background:var(--dsw-alias-bg-layer-2);font-size:11px;cursor:pointer}.pf-tool-option:hover{border-color:var(--dsw-alias-brand-primary)}.pf-tool-option input{margin:2px 0 0}.pf-tool-option .pf-code{min-width:0;line-height:1.45;overflow-wrap:anywhere}.pf-origin-badge{white-space:nowrap;line-height:1.35}.pf-origin-system{color:var(--dsw-alias-brand-primary);background:color-mix(in srgb,var(--dsw-alias-brand-primary) 12%,var(--dsw-alias-bg-layer-2))}.pf-origin-custom{color:#a66300;background:rgba(210,135,0,.13)}.pf-skill-card{display:flex;min-width:0;min-height:154px;flex-direction:column;padding:14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-3)}.pf-skill-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:10px}.pf-skill-card-head strong{min-width:0;line-height:1.45;overflow-wrap:anywhere;font-size:13px}.pf-skill-card-badges{display:grid;justify-items:end;gap:5px}.pf-skill-card-description{flex:1;margin:9px 0 13px!important}.pf-skill-card-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:11px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-skill-card-actions .pf-check{padding:0}.pf-skill-card-actions .pf-btn{flex:none}.pf-skill-editor{margin:0}.pf-skill-editor .pf-preview{max-height:320px;white-space:pre-wrap}.pf-skill-save-actions{padding-top:4px}.pf-skill-danger{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:22px;padding:15px 16px;border:1px solid color-mix(in srgb,var(--dsw-alias-label-error) 38%,var(--dsw-alias-border-l2));border-radius:10px;background:color-mix(in srgb,var(--dsw-alias-label-error) 6%,var(--dsw-alias-bg-layer-2))}.pf-skill-danger-copy{min-width:0}.pf-skill-danger-copy strong,.pf-skill-danger-copy span{display:block}.pf-skill-danger-copy strong{color:var(--dsw-alias-label-error);font-size:13px}.pf-skill-danger-copy span{margin-top:4px;color:var(--dsw-alias-label-secondary);font-size:11px;line-height:1.5}.pf-skill-danger .pf-btn{flex:none}.pf-card{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2);border-radius:12px;padding:16px;min-width:0}.pf-card h3{margin:0 0 8px;font-size:15px}.pf-card p{margin:5px 0;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:1.5}.pf-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.pf-space{justify-content:space-between}.pf-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
       .pf-badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 9px;font-size:11px;background:var(--dsw-alias-bg-module-platform);color:var(--dsw-alias-label-secondary)}.pf-ok{color:#159957;background:rgba(21,153,87,.12)}.pf-off{color:var(--dsw-alias-label-tertiary)}
-      .pf-review-page{width:min(100%,1240px);margin-inline:auto}.pf-review-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}.pf-review-header .pf-section-help{max-width:760px;margin-bottom:0}.pf-review-filter-panel{margin-bottom:16px;padding:14px 16px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-review-filter-form{display:grid;grid-template-columns:minmax(260px,1fr) 180px 110px auto;align-items:end;gap:10px}.pf-review-filter-form .pf-field{min-width:0}.pf-review-filter-actions{display:flex;gap:8px}.pf-review-status-chips{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-review-status-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--dsw-alias-border-l2);border-radius:999px;background:var(--dsw-alias-bg-layer-3);color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;cursor:pointer}.pf-review-status-chip strong{min-width:18px;text-align:center;color:var(--dsw-alias-label-primary)}.pf-review-status-chip-on{border-color:var(--dsw-alias-brand-primary);color:var(--dsw-alias-brand-primary);background:color-mix(in srgb,var(--dsw-alias-brand-primary) 9%,var(--dsw-alias-bg-layer-3))}.pf-review-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:11px}.pf-review-toolbar .pf-actions{margin:0}.pf-review-list{display:flex;flex-direction:column;gap:10px}.pf-review-pagination{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:12px 14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}.pf-review-pagination .pf-actions{margin:0}.pf-draft-card{padding:0;overflow:hidden;border-left:4px solid var(--dsw-alias-border-l2);transition:border-color .16s ease,box-shadow .16s ease}.pf-draft-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08)}.pf-draft-card.pf-draft-status-draft{border-left-color:#d58b08}.pf-draft-card.pf-draft-status-rejected{border-left-color:var(--dsw-alias-label-error)}.pf-draft-card.pf-draft-status-approved{border-left-color:#3478d4}.pf-draft-card.pf-draft-status-publishing{border-left-color:#8b5cf6}.pf-draft-card.pf-draft-status-published{border-left-color:#159957}.pf-draft-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 16px 8px}.pf-draft-heading{min-width:0}.pf-draft-state-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}.pf-draft-status{font-weight:650}.pf-draft-status-draft-badge{color:#9a6200;background:rgba(213,139,8,.14)}.pf-draft-status-rejected-badge{color:var(--dsw-alias-label-error);background:rgba(220,50,47,.1)}.pf-draft-status-approved-badge{color:#3478d4;background:rgba(52,120,212,.13)}.pf-draft-status-publishing-badge{color:#7c3aed;background:rgba(139,92,246,.13)}.pf-draft-status-published-badge{color:#159957;background:rgba(21,153,87,.12)}.pf-draft-dirty{color:var(--dsw-alias-label-error);background:rgba(220,50,47,.1)}.pf-draft-title{margin:0!important;font-size:15px!important;line-height:1.35;overflow-wrap:anywhere}.pf-draft-meta{display:flex;gap:6px 16px;flex-wrap:wrap;padding:0 16px 11px;color:var(--dsw-alias-label-secondary);font-size:11px}.pf-draft-meta-item strong{color:var(--dsw-alias-label-primary);font-weight:600}.pf-draft-technical{margin:0!important;padding:10px 20px;border-top:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3);color:var(--dsw-alias-label-tertiary)!important}.pf-draft-card-expanded{box-shadow:0 10px 30px rgba(0,0,0,.1)}.pf-draft-body{padding:18px 20px 20px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-draft-section-head{margin:18px 0 10px}.pf-draft-section-head:first-child{margin-top:0}.pf-draft-section-head strong{display:block;font-size:14px}.pf-draft-section-head span{display:block;margin-top:3px;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-draft-decision{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:18px;padding:16px;border:1px solid color-mix(in srgb,var(--dsw-alias-brand-primary) 30%,var(--dsw-alias-border-l2));border-radius:10px;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 6%,var(--dsw-alias-bg-layer-2))}.pf-draft-decision-copy{max-width:520px}.pf-draft-decision-copy strong{display:block;font-size:14px}.pf-draft-decision-copy span{display:block;margin-top:4px;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.5}.pf-draft-decision>.pf-actions{margin:0;justify-content:flex-end}.pf-publish-section{flex:1 0 100%;min-width:0;padding-top:16px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-publish-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:11px}.pf-publish-section-head strong{font-size:14px}.pf-publish-section-head span{color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-published-list{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:12px}.pf-published-label{color:var(--dsw-alias-label-secondary);font-size:12px;font-weight:650}.pf-published-chip{color:#159957;background:rgba(21,153,87,.12)}.pf-publish-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.pf-publish-target{display:flex;min-width:0;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}.pf-publish-target-used{border-color:color-mix(in srgb,#159957 48%,var(--dsw-alias-border-l2))}.pf-publish-target-blocked{border-color:color-mix(in srgb,var(--dsw-alias-label-error) 44%,var(--dsw-alias-border-l2))}.pf-publish-target-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.pf-publish-channel{font-weight:700;color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-module-platform)}.pf-publish-target-name{overflow-wrap:anywhere;font-size:13px}.pf-publish-target-meta{min-height:17px;color:var(--dsw-alias-label-tertiary);font-size:11px;overflow-wrap:anywhere}.pf-publish-warning{margin:0;color:var(--dsw-alias-label-error);font-size:11px;line-height:1.45}.pf-publication-feedback{flex:1 0 100%;margin:0}.pf-publish-target .pf-btn{width:100%;margin-top:auto}.pf-draft-attempts{margin-top:18px;padding-top:16px;border-top:1px solid var(--dsw-alias-border-l2)}
+      .pf-review-page{width:min(100%,1240px);margin-inline:auto}.pf-review-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}.pf-review-header .pf-section-help{max-width:760px;margin-bottom:0}.pf-review-filter-panel{margin-bottom:16px;padding:14px 16px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-review-filter-form{display:grid;grid-template-columns:minmax(260px,1fr) 180px 110px auto;align-items:end;gap:10px}.pf-review-filter-form .pf-field{min-width:0}.pf-review-filter-actions{display:flex;gap:8px}.pf-review-status-chips{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-review-status-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--dsw-alias-border-l2);border-radius:999px;background:var(--dsw-alias-bg-layer-3);color:var(--dsw-alias-label-secondary);font:inherit;font-size:11px;cursor:pointer}.pf-review-status-chip strong{min-width:18px;text-align:center;color:var(--dsw-alias-label-primary)}.pf-review-status-chip-on{border-color:var(--dsw-alias-brand-primary);color:var(--dsw-alias-brand-primary);background:color-mix(in srgb,var(--dsw-alias-brand-primary) 9%,var(--dsw-alias-bg-layer-3))}.pf-review-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:11px}.pf-review-toolbar .pf-actions{margin:0}.pf-review-list{display:flex;flex-direction:column;gap:10px}.pf-review-pagination{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:12px 14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}.pf-review-pagination .pf-actions{margin:0}.pf-draft-card{padding:0;overflow:hidden;border-left:4px solid var(--dsw-alias-border-l2);transition:border-color .16s ease,box-shadow .16s ease}.pf-draft-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08)}.pf-draft-card.pf-draft-status-draft{border-left-color:#d58b08}.pf-draft-card.pf-draft-status-rejected{border-left-color:var(--dsw-alias-label-error)}.pf-draft-card.pf-draft-status-approved{border-left-color:#3478d4}.pf-draft-card.pf-draft-status-publishing{border-left-color:#8b5cf6}.pf-draft-card.pf-draft-status-published{border-left-color:#159957}.pf-draft-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:13px 16px 8px}.pf-draft-heading{min-width:0}.pf-draft-state-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}.pf-draft-status{font-weight:650}.pf-draft-status-draft-badge{color:#9a6200;background:rgba(213,139,8,.14)}.pf-draft-status-rejected-badge{color:var(--dsw-alias-label-error);background:rgba(220,50,47,.1)}.pf-draft-status-approved-badge{color:#3478d4;background:rgba(52,120,212,.13)}.pf-draft-status-publishing-badge{color:#7c3aed;background:rgba(139,92,246,.13)}.pf-draft-status-published-badge{color:#159957;background:rgba(21,153,87,.12)}.pf-draft-dirty{color:var(--dsw-alias-label-error);background:rgba(220,50,47,.1)}.pf-draft-title{margin:0!important;font-size:15px!important;line-height:1.35;overflow-wrap:anywhere}.pf-draft-meta{display:flex;gap:6px 16px;flex-wrap:wrap;padding:0 16px 11px;color:var(--dsw-alias-label-secondary);font-size:11px}.pf-draft-meta-item strong{color:var(--dsw-alias-label-primary);font-weight:600}.pf-draft-technical{margin:0!important;padding:10px 20px;border-top:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3);color:var(--dsw-alias-label-tertiary)!important}.pf-draft-card-expanded{box-shadow:0 10px 30px rgba(0,0,0,.1)}.pf-draft-body{padding:18px 20px 20px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-draft-section-head{margin:18px 0 10px}.pf-draft-section-head:first-child{margin-top:0}.pf-draft-section-head strong{display:block;font-size:14px}.pf-draft-section-head span{display:block;margin-top:3px;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-draft-decision{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:18px;padding:16px;border:1px solid color-mix(in srgb,var(--dsw-alias-brand-primary) 30%,var(--dsw-alias-border-l2));border-radius:10px;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 6%,var(--dsw-alias-bg-layer-2))}.pf-draft-decision-copy{max-width:520px}.pf-draft-decision-copy strong{display:block;font-size:14px}.pf-draft-decision-copy span{display:block;margin-top:4px;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.5}.pf-draft-decision>.pf-actions{margin:0;justify-content:flex-end}.pf-publish-section{flex:1 0 100%;min-width:0;padding-top:16px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-publish-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:11px}.pf-publish-section-head strong{font-size:14px}.pf-publish-section-head span{color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-published-list{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:12px}.pf-published-label{color:var(--dsw-alias-label-secondary);font-size:12px;font-weight:650}.pf-published-chip{color:#159957;background:rgba(21,153,87,.12)}.pf-publish-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.pf-publish-target{display:flex;min-width:0;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}.pf-publish-target-used{border-color:color-mix(in srgb,#159957 48%,var(--dsw-alias-border-l2))}.pf-publish-target-blocked{border-color:color-mix(in srgb,var(--dsw-alias-label-error) 44%,var(--dsw-alias-border-l2))}.pf-publish-target-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.pf-publish-channel{font-weight:700;color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-module-platform)}.pf-publish-target-name{overflow-wrap:anywhere;font-size:13px}.pf-publish-target-meta{min-height:17px;color:var(--dsw-alias-label-tertiary);font-size:11px;overflow-wrap:anywhere}.pf-publish-warning{margin:0;color:var(--dsw-alias-label-error);font-size:11px;line-height:1.45}.pf-publication-feedback{flex:1 0 100%;margin:0}.pf-publish-target .pf-btn{width:100%;margin-top:auto}.pf-draft-attempts{margin-top:18px;padding-top:16px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-draft-content-panel,.pf-draft-preview-section{margin-top:16px;border:1px solid var(--dsw-alias-border-l2);border-radius:11px;background:var(--dsw-alias-bg-layer-2);overflow:hidden}.pf-draft-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 14px;border-bottom:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3)}.pf-draft-panel-title{min-width:0}.pf-draft-panel-title strong,.pf-draft-panel-title span{display:block}.pf-draft-panel-title strong{font-size:14px}.pf-draft-panel-title span{margin-top:3px;color:var(--dsw-alias-label-tertiary);font-size:11px;line-height:1.4}.pf-draft-panel-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;flex:none}.pf-draft-panel-actions .pf-btn{padding:6px 10px;font-size:12px}.pf-draft-panel-body{padding:14px}.pf-draft-editor-actions{justify-content:flex-end;margin-top:12px}.pf-draft-preview-body{padding:14px;background:var(--dsw-alias-bg-layer-2)}.pf-draft-preview-note{margin:0 0 12px}.pf-draft-preview-section .pf-preview{max-height:min(72vh,760px);padding:20px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1)}.pf-draft-preview-section .pf-preview>:first-child{margin-top:0}.pf-draft-preview-section .pf-preview>:last-child{margin-bottom:0}.pf-rss-output-section{margin-top:20px}.pf-rss-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px}.pf-rss-section-head strong,.pf-rss-section-head span{display:block}.pf-rss-section-head>div>span{margin-top:3px;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-rss-section-head>.pf-badge{flex:none}.pf-rss-output-card{margin-bottom:10px;padding:12px 14px;border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3)}.pf-rss-output-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.pf-rss-output-identity{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;min-width:0}.pf-rss-output-actions{display:flex;align-items:center;gap:7px;flex:none}.pf-rss-output-actions .pf-btn,.pf-rss-code-head .pf-btn{padding:6px 10px;font-size:12px}.pf-rss-output-meta{margin:9px 0 0!important;color:var(--dsw-alias-label-tertiary)!important}.pf-rss-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.pf-rss-code-panel{min-width:0;padding:10px;border:1px solid var(--dsw-alias-border-l2);border-radius:9px;background:var(--dsw-alias-bg-layer-2)}.pf-rss-code-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.pf-rss-code-head label{font-size:12px;font-weight:650}.pf-rss-code{min-height:280px;max-height:520px;resize:vertical;font-size:11px}
       .pf-form{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin-bottom:16px}.pf-field{display:flex;flex-direction:column;gap:5px;min-width:130px;flex:1}.pf-field label{font-size:12px;color:var(--dsw-alias-label-secondary)}.pf-input,.pf-select,.pf-textarea{border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-3);color:var(--dsw-alias-label-primary);border-radius:8px;padding:0 10px;font:inherit;font-size:13px;box-sizing:border-box}.pf-input,.pf-select{height:36px}.pf-textarea{width:100%;min-height:150px;padding:10px;resize:vertical;line-height:1.5}.pf-draft-markdown{min-height:360px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.pf-input:focus,.pf-select:focus,.pf-textarea:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}.pf-counter{text-align:right;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-preview{padding:16px;border-radius:8px;background:var(--dsw-alias-bg-layer-3);overflow:auto;line-height:1.65}.pf-preview h1,.pf-preview h2,.pf-preview h3,.pf-preview h4,.pf-preview h5,.pf-preview h6{margin:1em 0 .45em}.pf-preview p{color:inherit;margin:.6em 0}.pf-preview img,.pf-preview video{display:block;max-width:100%;height:auto;margin:10px 0}.pf-preview video.pf-preview-video{width:100%;max-width:960px;min-height:180px;background:#000}.pf-link.pf-preview-link{color:var(--dsw-alias-brand-primary);text-decoration:underline;text-decoration-thickness:.12em;text-underline-offset:.16em;background:color-mix(in srgb,var(--dsw-alias-brand-primary) 12%,transparent);font-weight:600;border-radius:3px;padding:0 2px}.pf-link.pf-preview-link:hover{background:color-mix(in srgb,var(--dsw-alias-brand-primary) 22%,transparent);text-decoration-thickness:.16em}.pf-link.pf-preview-link:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:2px}.pf-preview-media{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px dashed var(--dsw-alias-border-l2);border-radius:8px}.pf-preview ol{padding-left:28px}
       .pf-content-page{width:min(100%,1240px);margin-inline:auto}.pf-content-toolbar{display:grid;grid-template-columns:minmax(240px,1fr) minmax(150px,220px) minmax(140px,190px) minmax(100px,140px) auto;align-items:end;gap:10px;margin:14px 0 16px;padding:14px 16px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-content-toolbar .pf-field{min-width:0}.pf-content-table-wrap{overflow:auto;border:1px solid var(--dsw-alias-border-l2);border-radius:12px}.pf-content-table{width:100%;min-width:940px;border-collapse:collapse}.pf-content-table th{position:sticky;top:0;z-index:1;padding:10px 12px;text-align:left;white-space:nowrap;background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);font-size:11px}.pf-content-table td{padding:11px 12px;border-top:1px solid var(--dsw-alias-border-l2);vertical-align:top;font-size:12px}.pf-content-title{display:block;max-width:430px;color:var(--dsw-alias-label-primary);font-size:13px;font-weight:650;line-height:1.4;overflow-wrap:anywhere}.pf-content-title-link{text-decoration:none}.pf-content-title-link:hover{color:var(--dsw-alias-brand-primary);text-decoration:underline}.pf-content-summary{display:-webkit-box;max-width:430px;margin-top:5px;color:var(--dsw-alias-label-tertiary);line-height:1.45;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}.pf-content-source strong,.pf-content-source span{display:block;max-width:190px;overflow-wrap:anywhere}.pf-content-source span{margin-top:4px;color:var(--dsw-alias-label-tertiary);font-size:10px}.pf-content-date{white-space:nowrap;color:var(--dsw-alias-label-secondary);font-size:11px}.pf-content-details{max-width:430px;margin-top:7px}.pf-content-details summary{cursor:pointer;color:var(--dsw-alias-brand-primary);font-size:11px}.pf-content-details-body{margin-top:8px;padding:9px;border-radius:8px;background:var(--dsw-alias-bg-layer-3);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}.pf-content-details-body strong{display:block;margin-top:7px}.pf-content-details-body strong:first-child{margin-top:0}.pf-content-pagination{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;padding:10px 12px}.pf-content-pagination .pf-actions{margin:0}
       .pf-content-toolbar{grid-template-columns:minmax(240px,1fr) minmax(125px,160px) minmax(125px,160px) minmax(115px,145px) 88px 88px auto}.pf-content-toolbar-actions{align-self:end;margin:0;flex-wrap:nowrap}.pf-content-list{display:flex;flex-direction:column;gap:12px}.pf-content-card{overflow:hidden;border:1px solid var(--dsw-alias-border-l2);border-left:4px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2);transition:border-color .16s ease,box-shadow .16s ease}.pf-content-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08)}.pf-content-card-processed{border-left-color:#159957}.pf-content-card-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;padding:15px 17px 10px}.pf-content-heading{min-width:0}.pf-content-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}.pf-content-score{color:var(--dsw-alias-brand-primary);background:color-mix(in srgb,var(--dsw-alias-brand-primary) 12%,var(--dsw-alias-bg-layer-3))}.pf-content-title{max-width:none;font-size:15px;line-height:1.45}.pf-content-open-link{flex:none;color:var(--dsw-alias-brand-primary);font-size:11px;text-decoration:none;white-space:nowrap}.pf-content-open-link:hover{text-decoration:underline}.pf-content-card-body{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.75fr);gap:18px;padding:0 17px 15px}.pf-content-summary-panel{min-width:0;padding:12px 14px;border-radius:9px;background:var(--dsw-alias-bg-layer-3)}.pf-content-summary-label{display:block;margin-bottom:6px;color:var(--dsw-alias-label-secondary);font-size:10px;font-weight:700;letter-spacing:.04em}.pf-content-summary{max-width:none;margin:0;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.62;-webkit-line-clamp:4}.pf-content-meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:10px 16px;margin:0}.pf-content-meta-grid div{min-width:0}.pf-content-meta-grid dt{margin:0 0 3px;color:var(--dsw-alias-label-tertiary);font-size:10px}.pf-content-meta-grid dd{margin:0;color:var(--dsw-alias-label-primary);font-size:11px;line-height:1.4;overflow-wrap:anywhere}.pf-content-details{max-width:none;margin:0;border-top:1px solid var(--dsw-alias-border-l2)}.pf-content-details>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 17px;color:var(--dsw-alias-brand-primary);font-size:11px;list-style-position:inside}.pf-content-details-hint{color:var(--dsw-alias-label-tertiary);font-size:10px}.pf-content-details-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:14px 17px 17px;border-radius:0;background:var(--dsw-alias-bg-layer-3);white-space:normal}.pf-content-detail-section{min-width:0;padding:12px 14px;border:1px solid var(--dsw-alias-border-l2);border-radius:9px;background:var(--dsw-alias-bg-layer-2)}.pf-content-detail-wide{grid-column:1/-1}.pf-content-detail-section strong{display:block;margin:0 0 6px;font-size:11px}.pf-content-detail-section strong+ p+strong{margin-top:12px}.pf-content-detail-section p{margin:0;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}.pf-content-detail-technical p{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px}.pf-content-pagination{padding-inline:2px}
@@ -26,7 +26,7 @@ window.__ModuleLoader__.load({
       .pf-publisher-page{width:min(100%,1240px);margin-inline:auto}.pf-publisher-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}.pf-publisher-toolbar-copy{max-width:780px}.pf-publisher-toolbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pf-publisher-toolbar-actions .pf-actions{margin:0}.pf-publisher-overflow{position:relative}.pf-publisher-overflow>summary{list-style:none}.pf-publisher-overflow>summary::-webkit-details-marker{display:none}.pf-publisher-overflow-panel{position:absolute;right:0;z-index:20;width:min(520px,80vw);max-height:70vh;overflow:auto;margin-top:8px;padding:14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);box-shadow:0 14px 42px rgba(0,0,0,.22)}.pf-publisher-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}.pf-publisher-rail{position:sticky;top:0;padding:12px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-publisher-rail-group+.pf-publisher-rail-group{margin-top:16px;padding-top:14px;border-top:1px solid var(--dsw-alias-border-l2)}.pf-publisher-rail-title{margin:0 6px 8px;color:var(--dsw-alias-label-tertiary);font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.pf-publisher-rail-item{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin-top:5px;padding:10px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--dsw-alias-label-primary);font:inherit;text-align:left;cursor:pointer}.pf-publisher-rail-item:hover{background:var(--dsw-alias-bg-module-platform)}.pf-publisher-rail-item-on{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-3);box-shadow:inset 3px 0 0 var(--dsw-alias-brand-primary)}.pf-publisher-rail-name{display:block;font-size:13px;font-weight:650}.pf-publisher-rail-meta{display:block;margin-top:3px;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-publisher-create{width:100%;margin-top:14px}.pf-publisher-workspace{min-width:0}.pf-publisher-workspace-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 18px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-publisher-workspace-head h3{margin:0;font-size:18px}.pf-publisher-workspace-head p{margin:5px 0 0;color:var(--dsw-alias-label-secondary);font-size:12px}.pf-publisher-targetbar{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-top:12px;padding:12px 14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}.pf-publisher-target-select{max-width:440px;margin:0}.pf-publisher-target-select .pf-select{width:100%}.pf-publisher-editor{margin-top:12px;padding:18px;border:1px solid var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-publisher-editor-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--dsw-alias-border-l2)}.pf-publisher-editor-head h4{margin:0;font-size:15px}.pf-publisher-editor-head p{margin:4px 0 0;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-publisher-section{margin-top:18px}.pf-publisher-section:first-of-type{margin-top:0}.pf-publisher-section-title{margin:0 0 11px;font-size:13px}.pf-publisher-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}.pf-publisher-field-grid>.pf-field{min-width:0}.pf-publisher-disclosure{margin-top:16px;padding:13px 14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-3)}.pf-publisher-disclosure>summary{cursor:pointer;font-size:13px;font-weight:650}.pf-publisher-disclosure-body{margin-top:14px}.pf-publisher-disclosure .pf-publisher-credentials{margin:0}.pf-publisher-danger{border-color:color-mix(in srgb,var(--dsw-alias-label-error) 30%,var(--dsw-alias-border-l2))}.pf-publisher-empty{padding:42px 20px;text-align:center;border:1px dashed var(--dsw-alias-border-l2);border-radius:12px;background:var(--dsw-alias-bg-layer-2)}.pf-publisher-empty h3{margin:0 0 8px}.pf-publisher-empty p{margin:0 auto 15px;max-width:520px;color:var(--dsw-alias-label-secondary);font-size:13px}.pf-publisher-save-footer.pf-publisher-changebar{position:static;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px;padding:13px 16px;box-shadow:inset 3px 0 0 var(--dsw-alias-brand-primary)}.pf-publisher-change-copy strong,.pf-publisher-change-copy span{display:block}.pf-publisher-change-copy span{margin-top:3px;color:var(--dsw-alias-label-secondary);font-size:11px}.pf-publisher-changebar>.pf-actions{margin:0;justify-content:flex-end}.pf-publisher-create-overlay{position:fixed;inset:0;z-index:1150;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.6)}.pf-publisher-create-dialog{width:min(620px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:22px;border:1px solid var(--dsw-alias-border-l2);border-radius:14px;background:var(--dsw-alias-bg-layer-1);box-shadow:0 24px 80px rgba(0,0,0,.4)}.pf-publisher-create-dialog h2{margin:0 0 7px}.pf-publisher-create-dialog>p{margin:0 0 16px;color:var(--dsw-alias-label-secondary);font-size:13px}.pf-publisher-create-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pf-publisher-create-option{padding:14px;border:1px solid var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-primary);font:inherit;text-align:left;cursor:pointer}.pf-publisher-create-option:hover{border-color:var(--dsw-alias-brand-primary)}.pf-publisher-create-option strong,.pf-publisher-create-option span{display:block}.pf-publisher-create-option span{margin-top:4px;color:var(--dsw-alias-label-tertiary);font-size:11px}.pf-publisher-create-dialog>.pf-actions{justify-content:flex-end}.pf-sidebar-action{flex:none;display:flex;align-items:center;box-sizing:border-box;border:0;background:transparent;color:var(--dsw-alias-label-primary);font-family:inherit;font-size:14px;line-height:22px;cursor:pointer;overflow:hidden}.pf-sidebar-footer-stack{flex-direction:column;align-items:stretch}.pf-sidebar-action-wide{width:calc(100% + 8px);height:34px;margin:4px -4px 4px;padding:6px 2px 6px 10px;justify-content:flex-start;gap:8px;border-radius:12px}.pf-sidebar-action-rail{width:36px;height:36px;margin:8px 0 10px;padding:0;justify-content:center;align-self:center;gap:0;border-radius:50%}.pf-sidebar-action:hover{background:var(--dsw-alias-interactive-bg-hover)}.pf-sidebar-icon{display:flex;align-items:center;justify-content:center;flex:none;width:16px;height:16px}.pf-sidebar-action-rail .pf-sidebar-icon{width:18px;height:18px}.pf-sidebar-label{overflow:hidden;white-space:nowrap}.pf-overlay{position:fixed;inset:0;z-index:1000;pointer-events:auto;display:flex;align-items:center;justify-content:center;padding:24px}.pf-backdrop{position:absolute;inset:0;border:0;background:rgba(0,0,0,.52);cursor:default}.pf-panel{position:relative;width:min(1440px,calc(100vw - 48px));height:min(920px,calc(100vh - 48px));border:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-1);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}.pf-panel-head{height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--dsw-alias-border-l2);background:var(--dsw-alias-bg-layer-2)}.pf-panel-head strong{font-size:14px}.pf-close{width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--dsw-alias-label-secondary);font-size:22px;cursor:pointer}.pf-close:hover{background:var(--dsw-alias-bg-module-platform);color:var(--dsw-alias-label-primary)}.pf-panel-body{flex:1;min-height:0}.pf-panel-body .pf-shell{height:100%;box-sizing:border-box}
       @media(max-width:1000px){.pf-content-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-content-search-field{grid-column:1/-1}.pf-content-toolbar>.pf-actions{grid-column:1/-1}.pf-content-card-body{grid-template-columns:1fr}.pf-overview-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-overview-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-workflow-meta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pf-workflow-meta-grid .pf-field:last-child{grid-column:1/-1}.pf-workflow-canvas{gap:16px}.pf-review-filter-form{grid-template-columns:minmax(240px,1fr) 160px 100px}.pf-review-filter-actions{grid-column:1/-1;justify-content:flex-end}}
       @media(max-width:820px){.pf-overview-hero{grid-template-columns:1fr}.pf-overview-hero-actions{justify-content:flex-start}.pf-overview-bottom{grid-template-columns:1fr}.pf-toolset-header{grid-template-columns:1fr}.pf-toolset-header-actions{justify-content:flex-start}.pf-skill-section .pf-toolset-section-head{flex-direction:column}.pf-skill-section .pf-toolset-header-actions{width:100%}.pf-image-settings-grid>.pf-image-endpoint,.pf-image-settings-grid>.pf-image-protocol{grid-column:1/-1}.pf-image-settings-grid>.pf-image-number,.pf-image-settings-grid>.pf-image-compact{grid-column:span 6}.pf-workflow-topbar{grid-template-columns:1fr}.pf-publisher-toolbar{flex-direction:column}.pf-publisher-toolbar-actions{justify-content:flex-start}.pf-publisher-layout{grid-template-columns:1fr}.pf-publisher-rail{position:static}.pf-publisher-rail-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.pf-publisher-rail-group+.pf-publisher-rail-group{margin-top:12px}.pf-publisher-rail-title{grid-column:1/-1}.pf-publisher-create{width:auto}.pf-workflow-topbar .pf-actions{justify-content:flex-start}.pf-workflow-meta-grid{grid-template-columns:1fr}.pf-workflow-meta-grid .pf-field:last-child{grid-column:auto}.pf-workflow-canvas{grid-template-columns:1fr;gap:24px}.pf-step-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}.pf-step-connector{display:none}.pf-workflow-editor{padding-top:18px;border-top:1px solid var(--dsw-alias-border-l2)}}
-      @media(max-width:700px){.pf-content-toolbar{grid-template-columns:1fr}.pf-content-search-field{grid-column:auto}.pf-content-toolbar>.pf-actions{grid-column:auto;flex-wrap:wrap}.pf-content-toolbar-actions .pf-btn{flex:1}.pf-content-card-head{grid-template-columns:1fr}.pf-content-open-link{justify-self:start}.pf-content-card-body{padding-inline:13px}.pf-content-meta-grid,.pf-content-details-body{grid-template-columns:1fr}.pf-content-detail-wide{grid-column:auto}.pf-content-details>summary{align-items:flex-start;flex-direction:column;padding-inline:13px}.pf-content-details-body{padding-inline:13px}.pf-content-pagination{align-items:stretch;flex-direction:column}.pf-content-pagination>.pf-actions{width:100%}.pf-content-pagination .pf-btn{flex:1}.pf-prompt-dock{gap:5px}.pf-prompt-dock-list{width:100%}.pf-prompt-chip{max-width:min(230px,72vw)}.pf-prompt-editor-row{grid-template-columns:1fr}.pf-prompt-editor-order,.pf-prompt-editor-controls{flex-direction:row;align-items:center}.pf-prompt-editor-controls{justify-content:space-between}.pf-overview-hero{padding:21px 18px}.pf-overview-hero h2{font-size:21px}.pf-overview-hero-actions{width:100%}.pf-overview-hero-actions .pf-btn{flex:1}.pf-overview-metrics,.pf-overview-flow{grid-template-columns:1fr}.pf-overview-flow-card{min-height:0}.pf-overview-section-head{align-items:flex-start;flex-direction:column}.pf-toolset-section-head,.pf-image-credential-head{grid-template-columns:1fr;display:grid}.pf-toolset-section-head{padding:15px 14px}.pf-toolset-section-body,.pf-image-credentials{padding:15px 14px}.pf-toolset-section-actions{padding:12px 14px;justify-content:stretch}.pf-toolset-section-actions .pf-btn{flex:1 1 150px}.pf-image-settings-grid>.pf-field{grid-column:1/-1}.pf-image-credential-state{text-align:left}.pf-image-credential-row{grid-template-columns:1fr}.pf-image-credential-actions{flex-wrap:wrap}.pf-image-credential-actions .pf-btn{flex:1 1 140px}.pf-toolset-grid,.pf-plugin-grid{grid-template-columns:1fr}.pf-skill-danger{align-items:stretch;flex-direction:column}.pf-skill-danger .pf-btn{width:100%}.pf-shell-top{padding:18px 14px 14px}.pf-shell-content{padding:16px 14px 50px}.pf-publisher-field-grid,.pf-publisher-create-grid{grid-template-columns:1fr}.pf-publisher-workspace-head,.pf-publisher-targetbar,.pf-publisher-editor-head,.pf-publisher-save-footer.pf-publisher-changebar{align-items:stretch;flex-direction:column}.pf-publisher-target-select{max-width:none}.pf-publisher-changebar>.pf-actions{width:100%}.pf-publisher-changebar>.pf-actions .pf-btn{flex:1 1 160px}.pf-publisher-overflow-panel{position:fixed;inset:70px 14px auto;width:auto}.pf-overlay{padding:0}.pf-panel{width:100vw;height:100vh;border:0;border-radius:0}.pf-head{flex-direction:column}.pf-field{min-width:100%}.pf-table th,.pf-table td{padding:8px}.pf-workflow-meta{padding:14px}.pf-workflow-editor-head{flex-direction:column}.pf-workflow-toolbar{justify-content:flex-start}.pf-workflow-actions{align-items:stretch;flex-direction:column}.pf-workflow-actions-preview{align-items:flex-end}.pf-workflow-actions .pf-actions{width:100%}.pf-workflow-actions .pf-btn{flex:1 1 150px}.pf-workflow-management>.pf-row{align-items:flex-start;flex-direction:column}.pf-workflow-textarea{min-height:42vh}.pf-workflow-process{min-height:170px}.pf-publisher-group-grid{grid-template-columns:minmax(0,1fr)}.pf-publisher-save-footer{padding:15px 14px}.pf-publisher-state-head{align-items:flex-start;flex-direction:column}.pf-publisher-save-footer>.pf-actions{align-items:stretch;flex-direction:column}.pf-publisher-save-footer>.pf-actions .pf-btn{width:100%}.pf-publisher-tool-details,.pf-runtime-details{padding:12px}.pf-review-header,.pf-review-pagination{align-items:stretch;flex-direction:column}.pf-review-filter-form{grid-template-columns:1fr}.pf-review-filter-actions{grid-column:auto}.pf-review-filter-actions .pf-btn{flex:1}.pf-review-pagination>.pf-actions{width:100%}.pf-review-pagination>.pf-actions .pf-btn{flex:1 1 100px}.pf-draft-card-head{padding:15px 14px 10px;grid-template-columns:1fr}.pf-draft-head-actions{width:100%;justify-content:stretch}.pf-draft-head-actions .pf-btn{flex:1}.pf-cover-dialog{padding:16px}.pf-cover-grid{grid-template-columns:1fr;justify-items:center}.pf-original-overlay{padding:0}.pf-original-dialog{width:100vw;height:100vh;border:0;border-radius:0;padding:12px}.pf-draft-meta,.pf-draft-technical{padding-left:14px;padding-right:14px}.pf-draft-body{padding:16px 14px}.pf-draft-decision{padding:14px}.pf-draft-decision>.pf-actions{width:100%;justify-content:flex-start}.pf-draft-decision>.pf-actions .pf-btn{flex:1 1 180px}.pf-publish-section-head{flex-direction:column}.pf-publish-grid{grid-template-columns:1fr}}
+      @media(max-width:700px){.pf-content-toolbar{grid-template-columns:1fr}.pf-content-search-field{grid-column:auto}.pf-content-toolbar>.pf-actions{grid-column:auto;flex-wrap:wrap}.pf-content-toolbar-actions .pf-btn{flex:1}.pf-content-card-head{grid-template-columns:1fr}.pf-content-open-link{justify-self:start}.pf-content-card-body{padding-inline:13px}.pf-content-meta-grid,.pf-content-details-body{grid-template-columns:1fr}.pf-content-detail-wide{grid-column:auto}.pf-content-details>summary{align-items:flex-start;flex-direction:column;padding-inline:13px}.pf-content-details-body{padding-inline:13px}.pf-content-pagination{align-items:stretch;flex-direction:column}.pf-content-pagination>.pf-actions{width:100%}.pf-content-pagination .pf-btn{flex:1}.pf-prompt-dock{gap:5px}.pf-prompt-dock-list{width:100%}.pf-prompt-chip{max-width:min(230px,72vw)}.pf-prompt-editor-row{grid-template-columns:1fr}.pf-prompt-editor-order,.pf-prompt-editor-controls{flex-direction:row;align-items:center}.pf-prompt-editor-controls{justify-content:space-between}.pf-overview-hero{padding:21px 18px}.pf-overview-hero h2{font-size:21px}.pf-overview-hero-actions{width:100%}.pf-overview-hero-actions .pf-btn{flex:1}.pf-overview-metrics,.pf-overview-flow{grid-template-columns:1fr}.pf-overview-flow-card{min-height:0}.pf-overview-section-head{align-items:flex-start;flex-direction:column}.pf-toolset-section-head,.pf-image-credential-head{grid-template-columns:1fr;display:grid}.pf-toolset-section-head{padding:15px 14px}.pf-toolset-section-body,.pf-image-credentials{padding:15px 14px}.pf-toolset-section-actions{padding:12px 14px;justify-content:stretch}.pf-toolset-section-actions .pf-btn{flex:1 1 150px}.pf-image-settings-grid>.pf-field{grid-column:1/-1}.pf-image-credential-state{text-align:left}.pf-image-credential-row{grid-template-columns:1fr}.pf-image-credential-actions{flex-wrap:wrap}.pf-image-credential-actions .pf-btn{flex:1 1 140px}.pf-toolset-grid,.pf-plugin-grid{grid-template-columns:1fr}.pf-skill-danger{align-items:stretch;flex-direction:column}.pf-skill-danger .pf-btn{width:100%}.pf-shell-top{padding:18px 14px 14px}.pf-shell-content{padding:16px 14px 50px}.pf-publisher-field-grid,.pf-publisher-create-grid{grid-template-columns:1fr}.pf-publisher-workspace-head,.pf-publisher-targetbar,.pf-publisher-editor-head,.pf-publisher-save-footer.pf-publisher-changebar{align-items:stretch;flex-direction:column}.pf-publisher-target-select{max-width:none}.pf-publisher-changebar>.pf-actions{width:100%}.pf-publisher-changebar>.pf-actions .pf-btn{flex:1 1 160px}.pf-publisher-overflow-panel{position:fixed;inset:70px 14px auto;width:auto}.pf-overlay{padding:0}.pf-panel{width:100vw;height:100vh;border:0;border-radius:0}.pf-head{flex-direction:column}.pf-field{min-width:100%}.pf-table th,.pf-table td{padding:8px}.pf-workflow-meta{padding:14px}.pf-workflow-editor-head{flex-direction:column}.pf-workflow-toolbar{justify-content:flex-start}.pf-workflow-actions{align-items:stretch;flex-direction:column}.pf-workflow-actions-preview{align-items:flex-end}.pf-workflow-actions .pf-actions{width:100%}.pf-workflow-actions .pf-btn{flex:1 1 150px}.pf-workflow-management>.pf-row{align-items:flex-start;flex-direction:column}.pf-workflow-textarea{min-height:42vh}.pf-workflow-process{min-height:170px}.pf-publisher-group-grid{grid-template-columns:minmax(0,1fr)}.pf-publisher-save-footer{padding:15px 14px}.pf-publisher-state-head{align-items:flex-start;flex-direction:column}.pf-publisher-save-footer>.pf-actions{align-items:stretch;flex-direction:column}.pf-publisher-save-footer>.pf-actions .pf-btn{width:100%}.pf-publisher-tool-details,.pf-runtime-details{padding:12px}.pf-review-header,.pf-review-pagination{align-items:stretch;flex-direction:column}.pf-review-filter-form{grid-template-columns:1fr}.pf-review-filter-actions{grid-column:auto}.pf-review-filter-actions .pf-btn{flex:1}.pf-review-pagination>.pf-actions{width:100%}.pf-review-pagination>.pf-actions .pf-btn{flex:1 1 100px}.pf-draft-card-head{padding:15px 14px 10px;grid-template-columns:1fr}.pf-draft-head-actions{width:100%;justify-content:stretch}.pf-draft-head-actions .pf-btn{flex:1}.pf-cover-dialog{padding:16px}.pf-cover-grid{grid-template-columns:1fr;justify-items:center}.pf-original-overlay{padding:0}.pf-original-dialog{width:100vw;height:100vh;border:0;border-radius:0;padding:12px}.pf-draft-meta,.pf-draft-technical{padding-left:14px;padding-right:14px}.pf-draft-body{padding:16px 14px}.pf-draft-decision{padding:14px}.pf-draft-decision>.pf-actions{width:100%;justify-content:flex-start}.pf-draft-decision>.pf-actions .pf-btn{flex:1 1 180px}.pf-publish-section-head{flex-direction:column}.pf-publish-grid{grid-template-columns:1fr}.pf-draft-panel-head,.pf-rss-output-head,.pf-rss-section-head{align-items:stretch;flex-direction:column}.pf-draft-panel-actions,.pf-rss-output-actions{width:100%;justify-content:stretch}.pf-draft-panel-actions .pf-btn,.pf-rss-output-actions .pf-btn{flex:1 1 140px}.pf-draft-panel-body,.pf-draft-preview-body{padding:12px}.pf-draft-preview-section .pf-preview{padding:14px;max-height:64vh}.pf-rss-detail-grid{grid-template-columns:1fr}.pf-rss-code{min-height:220px}.pf-draft-editor-actions .pf-btn{flex:1 1 140px}}
     `
     if (typeof document !== 'undefined' && document.querySelector('style[data-plugin-css="@prismflow/dsh/ui/dashboard"]') === null) {
       const tag = document.createElement('style')
@@ -208,6 +208,41 @@ window.__ModuleLoader__.load({
     function ariaProps(props) {
       return Object.fromEntries(Object.entries(props).filter(([key]) => key.startsWith('aria-')))
     }
+    async function writeClipboardText(value) {
+      const text = String(value ?? '')
+      let fallbackError
+      if (typeof document !== 'undefined' && typeof document.execCommand === 'function' && document.body) {
+        const textarea = document.createElement('textarea')
+        const activeElement = document.activeElement
+        textarea.value = text
+        textarea.setAttribute('readonly', '')
+        textarea.setAttribute('aria-hidden', 'true')
+        textarea.style.position = 'fixed'
+        textarea.style.top = '0'
+        textarea.style.left = '-9999px'
+        textarea.style.width = '1px'
+        textarea.style.height = '1px'
+        textarea.style.opacity = '0'
+        document.body.appendChild(textarea)
+        try {
+          textarea.focus({ preventScroll: true })
+          textarea.select()
+          textarea.setSelectionRange(0, text.length)
+          if (document.execCommand('copy')) return
+          fallbackError = new Error('浏览器拒绝了复制命令')
+        } catch (error) {
+          fallbackError = error
+        } finally {
+          textarea.remove()
+          try { activeElement?.focus?.({ preventScroll: true }) } catch { try { activeElement?.focus?.() } catch {} }
+        }
+      }
+      if (typeof window.navigator?.clipboard?.writeText === 'function') {
+        await window.navigator.clipboard.writeText(text)
+        return
+      }
+      throw fallbackError ?? new Error('当前浏览器不支持剪贴板写入')
+    }
     function Button(props) {
       return h('button', {
         type: 'button',
@@ -269,9 +304,41 @@ window.__ModuleLoader__.load({
       published: { label: '已发布', hint: '可查看回执或显式再次发布' },
     }
     function draftStatus(value) { return DRAFT_STATUS[value] ?? { label: value || '未知状态', hint: '请检查草稿状态' } }
-    function displayDraftTime(value) {
-      const date = new Date(value)
-      return Number.isNaN(date.getTime()) ? '时间未知' : new Intl.DateTimeFormat('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date)
+    const DASHBOARD_TIME_ZONE = 'Asia/Shanghai'
+    function parseDashboardTime(value) {
+      if (value instanceof Date) return value
+      if (typeof value !== 'string' && typeof value !== 'number') return null
+      let normalized = typeof value === 'string' ? value.trim() : value
+      // Legacy timestamp strings without an offset are Shanghai wall-clock time,
+      // never browser-local time. Canonical ISO strings retain their instant.
+      if (typeof normalized === 'string' && /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?$/u.test(normalized)) {
+        normalized = `${normalized.replace(' ', 'T')}+08:00`
+      } else if (typeof normalized === 'string' && /^\d{4}-\d{2}-\d{2}$/u.test(normalized)) {
+        normalized = `${normalized}T00:00:00+08:00`
+      }
+      const date = new Date(normalized)
+      return Number.isNaN(date.getTime()) ? null : date
+    }
+    function dashboardTimeParts(value) {
+      const date = parseDashboardTime(value)
+      if (!date) return null
+      return Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+        timeZone: DASHBOARD_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+      }).formatToParts(date).filter(part => part.type !== 'literal').map(part => [part.type, part.value]))
+    }
+    function displayDashboardTime(value, { compact = false, empty = '—' } = {}) {
+      if (value === undefined || value === null || value === '') return empty
+      const part = dashboardTimeParts(value)
+      if (!part) return '时间未知'
+      return compact
+        ? `${part.year}-${part.month}-${part.day} ${part.hour}:${part.minute} +08:00`
+        : `${part.year}-${part.month}-${part.day} ${part.hour}:${part.minute}:${part.second} +08:00`
+    }
+    function displayDraftTime(value) { return displayDashboardTime(value, { compact: true, empty: '时间未知' }) }
+    function shanghaiCalendarDate(value = new Date()) {
+      const part = dashboardTimeParts(value)
+      return part ? `${part.year}-${part.month}-${part.day}` : 'unknown-date'
     }
     const PUBLISHER_CHANNEL_LABELS = Object.freeze({
       'local-markdown': '本地 Markdown', 'github-markdown': 'GitHub', 'r2-markdown': 'Cloudflare R2', 'wechat-draft': '微信公众号草稿',
@@ -494,13 +561,6 @@ window.__ModuleLoader__.load({
       { value: 'ai-search', label: 'AI 搜索' },
       { value: 'rss', label: 'RSS 订阅' },
     ]
-    const categoryOptions = [
-      { value: 'news', label: '新闻资讯 (news)' },
-      { value: 'githubTrending', label: 'GitHub 热门 (githubTrending)' },
-      { value: 'paper', label: '学术论文 (paper)' },
-      { value: 'socialMedia', label: '社交媒体 (socialMedia)' },
-      { value: 'rss', label: 'RSS 订阅 (rss)' },
-    ]
     function defaultManagedSource(type = 'github-trending') {
       const category = type === 'github-trending' ? 'githubTrending' : type === 'ai-search' ? 'news' : type === 'follow' ? 'paper' : 'rss'
       const common = { type, id: '', name: '', category, enabled: true, limit: type === 'github-trending' ? '25' : type === 'ai-search' ? '10' : type === 'follow' ? '50' : '20' }
@@ -516,8 +576,8 @@ window.__ModuleLoader__.load({
       return Number.isInteger(parsed) && parsed >= minimum && parsed <= maximum
     }
     function sourceLimitMaximum(type) { return type === 'follow' ? 2000 : type === 'rss' ? 1000 : type === 'ai-search' ? 50 : 100 }
-    function sourceEditorValid(source) {
-      if (!/^[a-zA-Z0-9_-]{1,64}$/.test(source.id.trim()) || !source.name.trim() || !categoryOptions.some(item => item.value === source.category)) return false
+    function sourceEditorValid(source, categories) {
+      if (!/^[a-zA-Z0-9_-]{1,64}$/.test(source.id.trim()) || !source.name.trim() || !categories.some(item => item.value === source.category)) return false
       if (!integerInRange(source.limit, 1, sourceLimitMaximum(source.type))) return false
       if (source.type === 'rss') return !!source.url.trim()
       if (source.type === 'ai-search') return !!source.keyword.trim()
@@ -848,6 +908,18 @@ window.__ModuleLoader__.load({
       const [contentPage, setContentPage] = React.useState({ records: [], total: 0, categories: [] })
       const [ffmpegStatus, setFfmpegStatus] = React.useState(null)
       const [selectedContentIds, setSelectedContentIds] = React.useState([])
+      const [copyFeedback, setCopyFeedback] = React.useState(null)
+      const [categoryCatalog, setCategoryCatalog] = React.useState(null)
+      const [categoryEditor, setCategoryEditor] = React.useState(null)
+      const [categorySearch, setCategorySearch] = React.useState('')
+      const categoryRows = categoryCatalog?.categories ?? []
+      const sourceCategoryOptions = categoryRows.filter(row => !row.archived || sourceSettings.some(source => source.settingsId === editingSourceId && source.category === row.id))
+        .map(row => ({ value: row.id, label: `${row.name} (${row.id})${row.archived ? ' · 已归档' : ''}` }))
+      const categoryName = id => categoryRows.find(row => row.id === id)?.name || id || '未分类'
+      const categoryBadge = id => {
+        const row = categoryRows.find(row => row.id === id)
+        return h('span', { className: 'pf-badge', title: id, style: row ? { borderLeft: `4px solid ${row.color}` } : undefined }, `${categoryName(id)}${row?.archived ? ' · 已归档' : ''}`)
+      }
       const publisherApplyRequest = React.useRef(null)
       const publisherCompletedOperation = React.useRef(null)
       const editingSourceRevision = React.useRef('')
@@ -927,7 +999,10 @@ window.__ModuleLoader__.load({
       }, [run])
       const loadSourceSettings = React.useCallback(async () => {
         const value = await run('source-settings', signal => api('/source-settings', { signal }), '数据源配置已刷新')
-        if (value) { setSourceSettings(value.sources); setCredentialSlots(value.credentialSlots); setAdapterStates(value.adapters) }
+        if (value) {
+          setSourceSettings(value.sources); setCredentialSlots(value.credentialSlots); setAdapterStates(value.adapters)
+          setCategoryCatalog(value.categoryCatalog ?? null)
+        }
       }, [run])
       const loadReview = React.useCallback(async ({ resetEditors = false, queryState = draftQuery } = {}) => {
         const value = await run('review', async signal => {
@@ -955,7 +1030,10 @@ window.__ModuleLoader__.load({
         if (query.category) params.set('category', query.category)
         if (query.aiProcessed) params.set('aiProcessed', query.aiProcessed)
         const value = await run('content', signal => api(`/content?${params.toString()}`, { signal }), '已抓取数据已刷新')
-        if (value) setContentPage({ records: value.records ?? [], total: value.total ?? 0, categories: value.categories ?? [] })
+        if (value) {
+          setContentPage({ records: value.records ?? [], total: value.total ?? 0, categories: value.categories ?? [] })
+          setCategoryCatalog(value.categoryCatalog ?? null)
+        }
       }, [run, contentQuery])
       const refreshReceipts = React.useCallback(async () => {
         const value = await run('receipts', signal => api('/receipts/query', { body: { limit: 50 }, signal }), '发布记录已刷新')
@@ -1006,7 +1084,8 @@ window.__ModuleLoader__.load({
           void refreshOverview()
           return
         }
-        if (tab === 'source-settings' && status?.services.sourceSettings) void loadSourceSettings()
+        if (tab === 'categories' && status?.services.sourceSettings) void loadCategories()
+        else if (tab === 'source-settings' && status?.services.sourceSettings) void loadSourceSettings()
         else if (tab === 'content' && status?.services.contentStore) void loadContent(contentQuery)
         else if (tab === 'review' && status?.services.production) void loadReview()
         else if (tab === 'receipts' && status?.services.receipts) void refreshReceipts()
@@ -1016,7 +1095,7 @@ window.__ModuleLoader__.load({
       }, [tab, status?.services.sourceSettings, status?.services.contentStore, status?.services.production, status?.services.receipts, status?.services.generatorWorkflows, status?.services.publishers, status?.services.toolsets, status?.services.imageGenerationSettings])
 
       const tabs = [
-        ['overview', '总览'], ['toolsets', '工具集'], ['source-settings', '数据源配置'], ['content', '已抓取数据'], ['publisher-profile', '发布与存储'], ['workflows', '工作流生成器'], ['review', '草稿审核与发布'], ['receipts', '发布审计'],
+        ['overview', '总览'], ['toolsets', '工具集'], ['categories', '分类管理'], ['source-settings', '数据源配置'], ['content', '已抓取数据'], ['publisher-profile', '发布与存储'], ['workflows', '工作流生成器'], ['review', '草稿审核与发布'], ['receipts', '发布审计'],
       ]
       const serviceCards = status ? [
         ['数据源配置', status.services.sourceSettings, status.services.sourceSettings ? `${status.counts.sourceSettings} 项` : '未启用'],
@@ -1128,7 +1207,7 @@ window.__ModuleLoader__.load({
           const profileGeneratorCount = Number(response.headers?.get?.('x-prismflow-profile-generator-count') ?? '0')
           const deletedWorkflowIdCount = Number(response.headers?.get?.('x-prismflow-deleted-workflow-id-count') ?? '0')
           const blob = await response.blob()
-          const date = new Date().toISOString().slice(0, 10)
+          const date = shanghaiCalendarDate()
           downloadBlob(blob, `prismflow-configuration-backup-${date}.pfbackup`)
           return { size: blob.size, workflowHistoryCount, workflowIdCount, profileGeneratorCount, deletedWorkflowIdCount }
         }, '加密配置备份已导出。')
@@ -1394,8 +1473,71 @@ window.__ModuleLoader__.load({
         )
       }
 
+      async function loadCategories() {
+        const value = await run('categories:load', signal => api('/categories', { signal }))
+        if (value) setCategoryCatalog(value)
+      }
+      function editCategoryField(key, value) { setCategoryEditor(current => ({ ...current, [key]: value })) }
+      async function mutateCategory(action, row) {
+        if (['archive', 'delete'].includes(action) && !window.confirm(action === 'archive'
+          ? `归档分类“${row.name}”？历史内容保留，现有数据源仍可使用，但不能新增绑定。`
+          : `永久删除分类“${row.name}” (${row.id})？此操作不可撤销。`)) return
+        const body = { action, id: row.id, expectedRevision: ['create', 'update'].includes(action) ? row.expectedRevision : categoryCatalog.revision,
+          ...(['create', 'update'].includes(action) ? { name: row.name, color: row.color, order: Number(row.order) } : { confirm: true }) }
+        const value = await run('categories:save', async signal => {
+          try { return await api('/categories/mutate', { body, signal }) }
+          catch (error) {
+            if (error?.status === 409) {
+              const fresh = await api('/categories', { signal })
+              setCategoryCatalog(fresh)
+              throw new Error(`${error.message || '分类发生冲突或仍有引用'} 列表已刷新；未保存输入保留。`)
+            }
+            throw error
+          }
+        }, '分类已保存；历史内容与分类 ID 均未改写。')
+        if (value) { setCategoryCatalog(value); setCategoryEditor(null) }
+      }
+      function categoriesView() {
+        if (!status?.services.sourceSettings) return h(Empty, null, '分类管理需要启用可视化数据源配置服务。')
+        const filtered = categoryRows.filter(row => `${row.id} ${row.name}`.toLocaleLowerCase().includes(categorySearch.trim().toLocaleLowerCase()))
+        const valid = categoryEditor && categoryEditor.name.trim() && categoryEditor.name.trim().length <= 64
+          && (categoryEditor.mode === 'update' || /^[a-zA-Z0-9_-]{1,64}$/u.test(categoryEditor.id))
+          && /^#[0-9a-fA-F]{6}$/u.test(categoryEditor.color) && integerInRange(categoryEditor.order, 0, 9999)
+        return h(React.Fragment, null,
+          h('h2', { className: 'pf-section-title' }, '分类管理'),
+          h('p', { className: 'pf-section-help' }, '分类 ID 创建后不可修改。名称、颜色和排序不改写历史内容。无引用的分类可直接永久删除，无需先归档；仍有引用时可归档，已有数据源与历史筛选保留。'),
+          h('div', { className: 'pf-form' },
+            h(Field, { label: '搜索分类', value: categorySearch, onChange: setCategorySearch, placeholder: '分类名称或 ID' }),
+            h(Button, { onClick: loadCategories, disabled: !!busy }, '刷新分类'),
+            h(Button, { primary: true, disabled: !!busy || !categoryCatalog, onClick: () => setCategoryEditor({ mode: 'create', id: '', name: '', color: '#2563eb', order: '0', expectedRevision: categoryCatalog.revision }) }, '新增分类')),
+          categoryEditor ? h('section', { className: 'pf-card', style: { margin: '16px 0' } },
+            h('h3', null, categoryEditor.mode === 'create' ? '新增分类' : '编辑分类'),
+            h('div', { className: 'pf-form' },
+              h(Field, { label: '分类 ID', value: categoryEditor.id, disabled: categoryEditor.mode === 'update' || !!busy, maxLength: 64, onChange: value => editCategoryField('id', value) }),
+              h(Field, { label: '分类名称', value: categoryEditor.name, maxLength: 64, disabled: !!busy, onChange: value => editCategoryField('name', value) }),
+              h(Field, { label: '分类颜色', type: 'color', value: categoryEditor.color, disabled: !!busy, onChange: value => editCategoryField('color', value) }),
+              h(Field, { label: '分类排序', type: 'number', min: 0, max: 9999, value: categoryEditor.order, disabled: !!busy, onChange: value => editCategoryField('order', value) })),
+            h('div', { className: 'pf-actions' }, h(Button, { primary: true, disabled: !!busy || !valid, onClick: () => mutateCategory(categoryEditor.mode, categoryEditor) }, '保存分类'), h(Button, { disabled: !!busy, onClick: () => setCategoryEditor(null) }, '取消分类编辑'))) : null,
+          categoryCatalog && !categoryCatalog.deletionAvailable ? h('p', { className: 'pf-notice' }, categoryCatalog.deletionUnavailableReason || '删除时将核对持久化历史引用。') : null,
+          h('div', { className: 'pf-grid' }, ...filtered.map(row => h('article', { className: 'pf-card', key: row.id },
+            categoryBadge(row.id), h('p', { className: 'pf-code' }, row.id),
+            h('p', null, `排序 ${row.order} · 数据源 ${row.references.sources} · 内容 ${row.references.contents} · 历史 ${row.references.history}`),
+            h('div', { className: 'pf-actions' },
+              h(Button, { disabled: !!busy, onClick: () => setCategoryEditor({ ...row, mode: 'update', order: String(row.order), expectedRevision: categoryCatalog.revision }) }, '编辑分类'),
+              h(Button, { disabled: !!busy, onClick: () => mutateCategory(row.archived ? 'restore' : 'archive', row) }, row.archived ? '恢复分类' : '归档分类'),
+              h(Button, { danger: true, disabled: !!busy || !row.canDelete, title: row.deleteBlockedReason || '点击后核对持久化引用；确认无引用才会执行永久删除', onClick: () => mutateCategory('delete', row) }, '永久删除分类')),
+            row.deleteBlockedReason ? h('p', { className: 'pf-muted' }, `不可删除：${row.deleteBlockedReason}`)
+              : row.deleteCheckRequired ? h('p', { className: 'pf-muted' }, '可点击删除；提交时直接核对持久化历史记录。') : null))),
+          !filtered.length ? h(Empty, null, categoryCatalog ? '没有匹配的分类。' : '正在加载分类。') : null)
+      }
+
       function editSourceField(key, value) { setSourceEditor(current => ({ ...current, [key]: value })) }
-      function beginCreateSource(type = 'github-trending') { editingSourceRevision.current = ''; setEditingSourceId(''); setSourceEditor(defaultManagedSource(type)) }
+      function beginCreateSource(type = 'github-trending') {
+        editingSourceRevision.current = ''; setEditingSourceId('')
+        const source = defaultManagedSource(type)
+        if (!categoryRows.some(row => row.id === source.category && !row.archived)) source.category = categoryRows.find(row => !row.archived)?.id ?? ''
+        setSourceEditor(source)
+      }
       function beginEditSource(source) {
         const values = { ...source, selectorType: source.feedId ? 'feed' : 'list', listId: source.listId || '', feedId: source.feedId || '', credentialSlotId: source.credentialSlotId || '' }
         for (const key of ['limit', 'fetchDays', 'fetchPages', 'view', 'pageDelayMs', 'detailDelayMs']) if (values[key] !== undefined) values[key] = String(values[key])
@@ -1411,7 +1553,7 @@ window.__ModuleLoader__.load({
         return { ...common, ...selector, fetchDays: optionalInteger(source.fetchDays), fetchPages: optionalInteger(source.fetchPages), view: optionalInteger(source.view), pageDelayMs: optionalInteger(source.pageDelayMs), detailDelayMs: optionalInteger(source.detailDelayMs), credentialSlotId: source.credentialSlotId || undefined }
       }
       async function saveSourceSetting() {
-        if (!sourceEditorValid(sourceEditor)) { setNotice({ type: 'error', text: '请补全并检查当前 Item 的配置项' }); return }
+        if (!sourceEditorValid(sourceEditor, sourceCategoryOptions)) { setNotice({ type: 'error', text: '请补全并检查当前 Item 的配置项' }); return }
         if (editingSourceId && !editingSourceRevision.current) { setNotice({ type: 'error', text: '当前 Item 缺少编辑版本，请重新进入编辑' }); return }
         const body = editingSourceId
           ? { mode: 'update', source: sourcePayload(), expectedSettingsId: editingSourceId, expectedUpdatedAt: editingSourceRevision.current }
@@ -1475,7 +1617,7 @@ window.__ModuleLoader__.load({
               h(Field, { label: 'Adapter', value: sourceEditor.type, disabled: !!editingSourceId, options: sourceAdapters, onChange: beginCreateSource }),
               h(Field, { label: 'ID', value: sourceEditor.id, disabled: !!editingSourceId, placeholder: '例如 daily / rss-example', onChange: v => editSourceField('id', v) }),
               h(Field, { label: '名称', value: sourceEditor.name, placeholder: 'Item 显示名称', onChange: v => editSourceField('name', v) }),
-              h(Field, { label: '分类', value: sourceEditor.category, options: categoryOptions, onChange: v => editSourceField('category', v) }),
+              h(Field, { label: '分类', value: sourceEditor.category, options: [{ value: '', label: '请选择分类' }, ...sourceCategoryOptions], onChange: v => editSourceField('category', v) }),
               h(Field, { label: '启用', value: sourceEditor.enabled ? 'true' : 'false', options: [{ value: 'true', label: '启用' }, { value: 'false', label: '停用' }], onChange: v => editSourceField('enabled', v === 'true') }),
               h(Field, { label: '抓取上限', type: 'number', min: 1, max: sourceLimitMaximum(sourceEditor.type), value: sourceEditor.limit, onChange: v => editSourceField('limit', v) }),
               sourceEditor.type === 'github-trending' ? h(Field, { label: '时间范围 (since)', value: sourceEditor.since, options: [{ value: 'daily', label: '每日 daily' }, { value: 'weekly', label: '每周 weekly' }, { value: 'monthly', label: '每月 monthly' }], onChange: v => editSourceField('since', v) }) : null,
@@ -1488,7 +1630,7 @@ window.__ModuleLoader__.load({
               sourceEditor.type === 'follow' ? h(Field, { label: '抓取页数', type: 'number', min: 1, max: 20, value: sourceEditor.fetchPages, onChange: v => editSourceField('fetchPages', v) }) : null,
               sourceEditor.type === 'follow' ? h(Field, { label: '视图模式 (view)', type: 'number', min: 0, max: 100, value: sourceEditor.view, onChange: v => editSourceField('view', v) }) : null,
               sourceEditor.type === 'follow' ? h(Field, { label: '凭证槽位（可选）', value: sourceEditor.credentialSlotId, options: [{ value: '', label: '不使用凭证' }, ...followSlots.map(slot => ({ value: slot.id, label: `${slot.name}${slot.configured ? '（已配置）' : '（未配置）'}` }))], onChange: v => editSourceField('credentialSlotId', v) }) : null,
-              h(Button, { primary: true, onClick: saveSourceSetting, disabled: !!busy || !sourceEditorValid(sourceEditor) }, editingSourceId ? '保存 Item 修改' : '新增 Item')),
+              h(Button, { primary: true, onClick: saveSourceSetting, disabled: !!busy || !sourceEditorValid(sourceEditor, sourceCategoryOptions) }, editingSourceId ? '保存 Item 修改' : '新增 Item')),
             sourceEditor.type === 'follow' ? h('details', null, h('summary', null, '高级延迟设置'), h('div', { className: 'pf-form', style: { marginTop: 10 } },
               h(Field, { label: '分页延迟 ms', type: 'number', min: 0, max: 60000, value: sourceEditor.pageDelayMs, onChange: v => editSourceField('pageDelayMs', v) }),
               h(Field, { label: '详情延迟 ms', type: 'number', min: 0, max: 60000, value: sourceEditor.detailDelayMs, onChange: v => editSourceField('detailDelayMs', v) }))) : null,
@@ -1502,18 +1644,14 @@ window.__ModuleLoader__.load({
             h('div', { className: 'pf-actions' }, h(Button, { onClick: () => setAdapterEnabled(adapter, !adapter.enabled), disabled: !!busy }, adapter.enabled ? '停用 Adapter' : '启用 Adapter')),
             adapter.sources.length ? adapter.sources.map(source => h('div', { key: source.settingsId, style: { borderTop: '1px solid var(--dsw-alias-border-l2)', paddingTop: 10, marginTop: 10 } },
               h('div', { className: 'pf-row pf-space' }, h('strong', null, source.name), h(Badge, { enabled: source.enabled && adapter.enabled }, source.enabled ? (adapter.enabled ? 'Item 已启用' : 'Item 已启用 / Adapter 停用') : 'Item 已停用')),
-              h('p', { className: 'pf-code' }, `${source.id} · ${source.category} · 上限 ${source.limit}`),
+              h('p', { className: 'pf-code' }, `${source.id} · ${categoryName(source.category)} (${source.category}) · 上限 ${source.limit}`),
               source.type === 'rss' ? h('p', { className: 'pf-code' }, source.url) : null,
               source.type === 'ai-search' ? h('p', null, `关键词：${source.keyword}`) : null,
               h('div', { className: 'pf-actions' }, h(Button, { onClick: () => beginEditSource(source), disabled: !!busy }, '编辑 Item'), h(Button, { onClick: () => toggleSourceSetting(source), disabled: !!busy }, source.enabled ? '停用' : '启用'), h(Button, { danger: true, onClick: () => deleteSourceSetting(source.settingsId), disabled: !!busy }, '删除')))) : h('p', { className: 'pf-muted' }, '暂无 Item'),
             h('div', { className: 'pf-actions' }, h(Button, { onClick: () => beginCreateSource(adapter.value), disabled: !!busy }, `新增 ${adapter.label} Item`))))))
       }
 
-      function contentDate(value) {
-        if (!value) return '—'
-        const date = new Date(value)
-        return Number.isNaN(date.getTime()) ? value : date.toLocaleString('zh-CN', { hour12: false })
-      }
+      function contentDate(value) { return displayDashboardTime(value) }
       function updateContentQuery(field, value) { setContentQuery(current => ({ ...current, [field]: value })) }
       function commitContentQuery(patch = {}) {
         const next = { ...contentQuery, ...patch }
@@ -1535,7 +1673,7 @@ window.__ModuleLoader__.load({
       function contentView() {
         if (!status?.services.contentStore) return h(Empty, null, 'Content Store 未启用。请由部署者启用 prismflow-store-content。')
         const totalPages = Math.max(1, Math.ceil(contentPage.total / contentQuery.pageSize))
-        const categoryOptions = [{ value: '', label: '全部分类' }, ...contentPage.categories.map(row => ({ value: row.category, label: `${row.category} (${row.count})` }))]
+        const categoryOptions = [{ value: '', label: '全部分类' }, ...contentPage.categories.map(row => ({ value: row.category, label: `${categoryName(row.category)} (${row.count})` }))]
         const aiProcessedOptions = [{ value: '', label: '全部数据' }, { value: 'true', label: '已被 AI 处理' }, { value: 'false', label: '尚未被 AI 处理' }]
         const sortOptions = [
           { value: 'publishedAt', label: '发布时间' }, { value: 'fetchedAt', label: '抓取时间' }, { value: 'updatedAt', label: '更新时间' },
@@ -1568,7 +1706,7 @@ window.__ModuleLoader__.load({
                     h('input', { type: 'checkbox', 'aria-label': `选择记录：${record.title}`, disabled: !!busy,
                       checked: selectedContentIds.includes(record.storeId),
                       onChange: event => setSelectedContentIds(current => event.target.checked ? [...new Set([...current, record.storeId])] : current.filter(id => id !== record.storeId)) }),
-                    h('span', { className: 'pf-badge' }, record.category || '未分类'),
+                    categoryBadge(record.category),
                     h(Badge, { enabled: record.aiProcessed === true }, record.aiProcessed === true ? 'AI 已处理' : 'AI 未处理'),
                     Number.isInteger(record.aiScore) ? h('span', { className: 'pf-badge pf-content-score' }, `评分 ${record.aiScore}`) : null),
                   record.url ? h('a', { className: 'pf-content-title pf-content-title-link', href: record.url, target: '_blank', rel: 'noopener noreferrer' }, record.title) : h('span', { className: 'pf-content-title' }, record.title)),
@@ -2018,13 +2156,36 @@ window.__ModuleLoader__.load({
       }
       async function applyDraftFilters() { await queryDraftPage({ ...draftQuery, page: 1 }) }
       async function resetDraftFilters() { await queryDraftPage({ status: '', query: '', page: 1, pageSize: draftQuery.pageSize }) }
+      async function copyReviewContent(value, label, feedbackKey) {
+        try {
+          await writeClipboardText(value)
+          setCopyFeedback({ key: feedbackKey, ok: true })
+          setNotice({ type: 'ok', text: `${label}已复制到剪贴板。` })
+          return true
+        } catch (error) {
+          setCopyFeedback({ key: feedbackKey, ok: false })
+          setNotice({ type: 'error', text: `${label}复制失败：${error instanceof Error ? error.message : '浏览器拒绝了剪贴板访问'}` })
+          return false
+        }
+      }
+      async function loadRssOutputDetail(outputId, operation = 'view') {
+        const cached = rssOutputDetails[outputId]
+        if (cached) return cached
+        const value = await run(`rss-output:${operation}:${outputId}`, signal => api(`/production/rss-output?outputId=${encodeURIComponent(outputId)}`, { signal }))
+        if (!value?.record) return undefined
+        setRssOutputDetails(current => ({ ...current, [outputId]: value.record }))
+        return value.record
+      }
       async function toggleRssOutput(outputId) {
         if (rssOutputDetails[outputId]) {
           setRssOutputDetails(current => { const next = { ...current }; delete next[outputId]; return next })
           return
         }
-        const value = await run(`rss-output:${outputId}`, signal => api(`/production/rss-output?outputId=${encodeURIComponent(outputId)}`, { signal }))
-        if (value?.record) setRssOutputDetails(current => ({ ...current, [outputId]: value.record }))
+        await loadRssOutputDetail(outputId)
+      }
+      async function copyRssOutput(outputId) {
+        const detail = await loadRssOutputDetail(outputId, 'copy')
+        if (detail) await copyReviewContent(detail.xml, 'RSS XML', `rss:${outputId}`)
       }
       async function reviewDraft(draft, decision) {
         if (draftDirty(draft)) { setNotice({ type: 'error', text: '请先保存或放弃当前修改，再执行审批。' }); return }
@@ -2282,7 +2443,7 @@ window.__ModuleLoader__.load({
                   }, expanded ? '收起' : '展开'))),
               h('div', { className: 'pf-draft-meta' },
                 h('span', { className: 'pf-draft-meta-item' }, '生成器：', h('strong', null, draft.generatorId)),
-                h('span', { className: 'pf-draft-meta-item' }, '更新时间：', h('strong', null, displayDraftTime(draft.updatedAt))),
+                h('span', { className: 'pf-draft-meta-item' }, '更新时间（北京时间）：', h('strong', null, displayDraftTime(draft.updatedAt))),
                 draft.publishedPublisherIds?.length ? h('span', { className: 'pf-draft-meta-item' }, '已发布渠道：', h('strong', null, String(draft.publishedPublisherIds.length))) : null),
               expanded ? h('p', { className: 'pf-code pf-draft-technical' }, `${draft.draftId} · 修订 ${draft.version} · SHA-256 ${draft.sha256}`) : null,
               draft.reconciliationRequired ? h('div', { className: 'pf-notice pf-notice-error', style: { margin: '14px 20px 0' } },
@@ -2311,40 +2472,56 @@ window.__ModuleLoader__.load({
                         h('img', { src: draftMediaUrl(draft.draftId, first.assetId), alt: '非正文图片列表第一张（封面）',
                           className: 'pf-cover-thumb', referrerPolicy: 'no-referrer' })) : null)
                   })) : null,
-                h('div', { className: 'pf-draft-section-head' },
-                  h('strong', null, '内容编辑'),
-                  h('span', null, editable ? '修改后需保存为新版本，再重新审核。' : '当前状态内容只读。')),
-                h('div', { className: 'pf-field' },
-                  h('label', { htmlFor: titleInputId }, '标题'),
-                  h('input', { id: titleInputId, className: 'pf-input', value: editor.title, disabled: !!busy || !editable, maxLength: 300, onChange: event => editDraftField(draft.draftId, 'title', event.target.value) }),
-                  h('div', { className: 'pf-counter' }, `${editor.title.length} / 300`)),
-                h('div', { className: 'pf-field', style: { marginTop: 12 } },
-                  h('label', { htmlFor: markdownInputId }, 'Markdown 正文'),
-                  h('textarea', { id: markdownInputId, className: 'pf-textarea pf-draft-markdown', value: editor.markdown, disabled: !!busy || !editable, maxLength: 100000, onChange: event => editDraftField(draft.draftId, 'markdown', event.target.value) }),
-                  h('div', { className: 'pf-counter' }, `${editor.markdown.length} / 100000`)),
-                h('div', { className: 'pf-actions' },
-                  h(Button, { primary: true, onClick: () => saveDraftRevision(draft), disabled: !!busy || !editable || !dirty || invalid }, '保存新版本'),
-                  h(Button, { onClick: () => setDraftEditors(current => ({ ...current, [draft.draftId]: { title: draft.title, markdown: draft.markdown } })), disabled: !!busy || !editable || !dirty }, '放弃修改')),
-                h('div', { className: 'pf-field pf-draft-preview-section', style: { marginTop: 12 } },
-                  h('div', { className: 'pf-draft-section-head' },
-                    h('strong', { id: previewLabelId }, '安全渲染预览（Markdown）'),
-                    h('button', { type: 'button', className: 'pf-btn', 'aria-expanded': previewExpanded, 'aria-controls': `pf-draft-preview-${draftIndex}`,
-                      onClick: () => setExpandedDrafts(current => ({ ...current, [`preview:${draft.draftId}`]: !previewExpanded })) }, previewExpanded ? '收起预览' : '展开预览')),
-                  previewExpanded && hasNewspicPresentation ? h('p', { className: 'pf-muted' }, '当前绑定包含微信图片消息（newspic）：微信接口只接受纯文本，发布时会移除 Markdown 样式和正文图片，但保留段落空行、列表编号、项目符号及行内空格。此处不是微信像素级预览。') : null,
-                  previewExpanded ? h('div', { id: `pf-draft-preview-${draftIndex}`, className: 'pf-preview', role: 'region', 'aria-labelledby': previewLabelId }, ...renderMarkdownPreview(editor.markdown, draft.draftId)) : null),
-                h('section', { className: 'pf-draft-attempts', 'aria-label': '本地 RSS 生成内容' },
-                  h('strong', null, '本地 RSS 生成内容'),
+                h('section', { className: 'pf-draft-content-panel', 'aria-label': '草稿 Markdown 原文' },
+                  h('header', { className: 'pf-draft-panel-head' },
+                    h('div', { className: 'pf-draft-panel-title' }, h('strong', null, '内容编辑'), h('span', null, editable ? '修改后需保存为新版本，再重新审核。' : '当前状态内容只读。')),
+                    h('div', { className: 'pf-draft-panel-actions' }, h(Button, { onClick: () => copyReviewContent(editor.markdown, 'Markdown 原文', `markdown:${draft.draftId}`), disabled: !editor.markdown, 'aria-live': 'polite' }, copyFeedback?.key === `markdown:${draft.draftId}` ? (copyFeedback.ok ? '已复制 Markdown' : '复制失败，请重试') : '复制 Markdown 原文'))),
+                  h('div', { className: 'pf-draft-panel-body' },
+                    h('div', { className: 'pf-field' },
+                      h('label', { htmlFor: titleInputId }, '标题'),
+                      h('input', { id: titleInputId, className: 'pf-input', value: editor.title, disabled: !!busy || !editable, maxLength: 300, onChange: event => editDraftField(draft.draftId, 'title', event.target.value) }),
+                      h('div', { className: 'pf-counter' }, `${editor.title.length} / 300`)),
+                    h('div', { className: 'pf-field', style: { marginTop: 12 } },
+                      h('label', { htmlFor: markdownInputId }, 'Markdown 正文'),
+                      h('textarea', { id: markdownInputId, className: 'pf-textarea pf-draft-markdown', value: editor.markdown, disabled: !!busy || !editable, maxLength: 100000, onChange: event => editDraftField(draft.draftId, 'markdown', event.target.value) }),
+                      h('div', { className: 'pf-counter' }, `${editor.markdown.length} / 100000`)),
+                    h('div', { className: 'pf-actions pf-draft-editor-actions' },
+                      h(Button, { primary: true, onClick: () => saveDraftRevision(draft), disabled: !!busy || !editable || !dirty || invalid }, '保存新版本'),
+                      h(Button, { onClick: () => setDraftEditors(current => ({ ...current, [draft.draftId]: { title: draft.title, markdown: draft.markdown } })), disabled: !!busy || !editable || !dirty }, '放弃修改')))),
+                h('section', { className: 'pf-draft-preview-section', 'aria-labelledby': previewLabelId },
+                  h('header', { className: 'pf-draft-panel-head' },
+                    h('div', { className: 'pf-draft-panel-title' }, h('strong', { id: previewLabelId }, '安全渲染预览（Markdown）'), h('span', null, '仅渲染受支持的安全 Markdown；不执行原始 HTML。')),
+                    h('div', { className: 'pf-draft-panel-actions' },
+                      h(Button, { onClick: () => copyReviewContent(editor.markdown, 'Markdown 原文', `markdown:${draft.draftId}`), disabled: !editor.markdown, 'aria-live': 'polite' }, copyFeedback?.key === `markdown:${draft.draftId}` ? (copyFeedback.ok ? '已复制 Markdown' : '复制失败，请重试') : '复制 Markdown'),
+                      h('button', { type: 'button', className: 'pf-btn', 'aria-expanded': previewExpanded, 'aria-controls': `pf-draft-preview-${draftIndex}`,
+                        onClick: () => setExpandedDrafts(current => ({ ...current, [`preview:${draft.draftId}`]: !previewExpanded })) }, previewExpanded ? '收起预览' : '展开预览'))),
+                  previewExpanded ? h('div', { className: 'pf-draft-preview-body' },
+                    hasNewspicPresentation ? h('p', { className: 'pf-notice pf-draft-preview-note' }, '当前绑定包含微信图片消息（newspic）：微信接口只接受纯文本，发布时会移除 Markdown 样式和正文图片，但保留段落空行、列表编号、项目符号及行内空格。此处不是微信像素级预览。') : null,
+                    h('div', { id: `pf-draft-preview-${draftIndex}`, className: 'pf-preview', role: 'region', 'aria-labelledby': previewLabelId }, ...renderMarkdownPreview(editor.markdown, draft.draftId))) : null),
+                h('section', { className: 'pf-draft-attempts pf-rss-output-section', 'aria-label': '本地 RSS 生成内容' },
+                  h('header', { className: 'pf-rss-section-head' },
+                    h('div', null, h('strong', null, '本地 RSS 生成内容'), h('span', null, '保留完整 RSS XML 与 content:encoded HTML，支持直接复制。')),
+                    h('span', { className: 'pf-badge' }, `${draftRssOutputs.length} 份`)),
                   draftRssOutputs.length ? draftRssOutputs.map(output => {
                     const detail = rssOutputDetails[output.outputId]
-                    return h('article', { className: 'pf-notice', key: output.outputId },
-                      h('div', { className: 'pf-row' },
-                        h('span', { className: 'pf-code' }, `${output.outputId.slice(0, 12)}… · Draft 修订 ${output.draftVersion}`),
-                        h('span', null, displayDraftTime(output.generatedAt)),
-                        h(Button, { onClick: () => toggleRssOutput(output.outputId), disabled: !!busy }, detail ? '收起内容' : '查看内容')),
-                      h('p', { className: 'pf-code' }, `XML SHA-256 ${output.xmlSha256} · ${output.itemUrl}`),
-                      detail ? h('div', null,
-                        h('div', { className: 'pf-field' }, h('label', null, 'RSS XML'), h('textarea', { className: 'pf-textarea pf-draft-markdown', value: detail.xml, readOnly: true })),
-                        h('div', { className: 'pf-field', style: { marginTop: 12 } }, h('label', null, 'content:encoded HTML'), h('textarea', { className: 'pf-textarea pf-draft-markdown', value: detail.htmlContent, readOnly: true }))) : null)
+                    const xmlInputId = `pf-rss-xml-${output.outputId}`
+                    const htmlInputId = `pf-rss-html-${output.outputId}`
+                    return h('article', { className: 'pf-notice pf-rss-output-card', key: output.outputId },
+                      h('div', { className: 'pf-rss-output-head' },
+                        h('div', { className: 'pf-rss-output-identity' },
+                          h('span', { className: 'pf-code' }, `${output.outputId.slice(0, 12)}… · Draft 修订 ${output.draftVersion}`),
+                          h('span', null, displayDraftTime(output.generatedAt))),
+                        h('div', { className: 'pf-rss-output-actions' },
+                          h(Button, { onClick: () => copyRssOutput(output.outputId), disabled: !!busy, 'aria-live': 'polite' }, copyFeedback?.key === `rss:${output.outputId}` ? (copyFeedback.ok ? '已复制 RSS XML' : '复制失败，请重试') : '复制 RSS XML'),
+                          h(Button, { onClick: () => toggleRssOutput(output.outputId), disabled: !!busy }, detail ? '收起内容' : '查看内容'))),
+                      h('p', { className: 'pf-code pf-rss-output-meta' }, `XML SHA-256 ${output.xmlSha256} · ${output.itemUrl}`),
+                      detail ? h('div', { className: 'pf-rss-detail-grid' },
+                        h('section', { className: 'pf-rss-code-panel' },
+                          h('div', { className: 'pf-rss-code-head' }, h('label', { htmlFor: xmlInputId }, 'RSS XML'), h(Button, { onClick: () => copyReviewContent(detail.xml, 'RSS XML', `rss:${output.outputId}`), 'aria-live': 'polite' }, copyFeedback?.key === `rss:${output.outputId}` ? (copyFeedback.ok ? '已复制 XML' : '复制失败，请重试') : '复制 XML')),
+                          h('textarea', { id: xmlInputId, className: 'pf-textarea pf-draft-markdown pf-rss-code', value: detail.xml, readOnly: true })),
+                        h('section', { className: 'pf-rss-code-panel' },
+                          h('div', { className: 'pf-rss-code-head' }, h('label', { htmlFor: htmlInputId }, 'content:encoded HTML'), h(Button, { onClick: () => copyReviewContent(detail.htmlContent, 'RSS HTML', `rss-html:${output.outputId}`), 'aria-live': 'polite' }, copyFeedback?.key === `rss-html:${output.outputId}` ? (copyFeedback.ok ? '已复制 HTML' : '复制失败，请重试') : '复制 HTML')),
+                          h('textarea', { id: htmlInputId, className: 'pf-textarea pf-draft-markdown pf-rss-code', value: detail.htmlContent, readOnly: true }))) : null)
                   }) : h('p', { className: 'pf-muted' }, '该草稿尚未调用 prismflow_generate_rss_content。')),
                 h('div', { className: 'pf-draft-decision' },
                   h('div', { className: 'pf-draft-decision-copy' },
@@ -2383,12 +2560,12 @@ window.__ModuleLoader__.load({
                 h('div', { className: 'pf-draft-attempts' },
                   h('strong', null, '发布尝试历史'),
                   draft.publicationAttempts?.length ? h('div', { className: 'pf-table-wrap' }, h('table', { className: 'pf-table' },
-                    h('thead', null, h('tr', null, ['尝试', '意图', '意图令牌', '发布器', '状态', '回执', '目标', '开始', '完成'].map(label => h('th', { key: label }, label)))),
+                    h('thead', null, h('tr', null, ['尝试', '意图', '意图令牌', '发布器', '状态', '回执', '目标', '开始（北京时间）', '完成（北京时间）'].map(label => h('th', { key: label }, label)))),
                     h('tbody', null, draft.publicationAttempts.map(attempt => h('tr', { key: attempt.attemptId },
                       h('td', { className: 'pf-code' }, attempt.legacy ? '历史回执（无尝试编号）' : `#${attempt.attemptNumber} ${attempt.attemptId}`), h('td', null, attempt.intent),
                       h('td', { className: 'pf-code' }, attempt.intentId || '-'), h('td', { className: 'pf-code' }, attempt.publisherId), h('td', null, attemptStateLabel(attempt)),
                       h('td', { className: 'pf-code' }, `${attempt.receiptId}${attempt.receiptStatus ? ` (${attempt.receiptStatus})` : ''}`),
-                      h('td', { className: 'pf-code' }, attempt.targetIdentifier || '-'), h('td', null, attempt.createdAt), h('td', null, attempt.completedAt || '-'))))))
+                      h('td', { className: 'pf-code' }, attempt.targetIdentifier || '-'), h('td', null, displayDashboardTime(attempt.createdAt)), h('td', null, displayDashboardTime(attempt.completedAt)))))))
                     : h('p', { className: 'pf-muted' }, '暂无尝试记录；升级前回执显示为“历史回执（无尝试编号）”。'))
               ) : null)
           })) : h(Empty, null, draftQuery.status || draftQuery.query ? '当前筛选条件下没有草稿。' : '尚无草稿。请先在 DSH Chat 中完成数据处理与 AI 生成。'),
@@ -2825,9 +3002,9 @@ window.__ModuleLoader__.load({
         return h(React.Fragment, null,
           h('div', { className: 'pf-actions', style: { marginBottom: 14 } }, h(Button, { onClick: refreshReceipts, disabled: !!busy }, '刷新审计记录')),
           receipts.length ? h('div', { className: 'pf-table-wrap' }, h('table', { className: 'pf-table' },
-            h('thead', null, h('tr', null, ['时间', '发布器', '尝试', '模式', '状态', '条数', '草稿版本', 'Artifact SHA-256', '触发方式', '验证', '目标'].map(x => h('th', { key: x }, x)))),
+            h('thead', null, h('tr', null, ['时间（北京时间）', '发布器', '尝试', '模式', '状态', '条数', '草稿版本', 'Artifact SHA-256', '触发方式', '验证', '目标'].map(x => h('th', { key: x }, x)))),
             h('tbody', null, receipts.map(item => h('tr', { key: item.receiptId },
-              h('td', null, item.recordedAt), h('td', { className: 'pf-code' }, item.publisherId),
+              h('td', null, displayDashboardTime(item.recordedAt)), h('td', { className: 'pf-code' }, item.publisherId),
               h('td', { className: 'pf-code' }, item.publicationAttemptId ? `#${item.publicationAttemptNumber} ${item.publicationAttemptId}` : '历史回执（无尝试编号）'),
               h('td', null, item.articleType || '-'), h('td', null, h(Badge, { enabled: ['created', 'updated'].includes(item.status) }, item.status)), h('td', null, item.itemCount),
               h('td', { className: 'pf-code' }, item.draftId ? `${item.draftId} · 修订 ${item.draftVersion ?? '-'}` : '-'), h('td', { className: 'pf-code' }, item.artifactSha256 || '-'),
@@ -2976,7 +3153,7 @@ window.__ModuleLoader__.load({
               h(Button, { danger: true, disabled: !!busy || publisherPendingOperation.canCancel !== true, onClick: () => reconcilePendingPublisherOperation('cancel') }, '取消（暂停任务前）'))) : null)
       }
 
-      const views = { overview: overviewView, 'source-settings': sourceSettingsView, content: contentView, toolsets: toolsetsView, workflows: workflowBuilderView, review: reviewView, 'publisher-profile': publisherProfileManagerView, receipts: receiptsView }
+      const views = { overview: overviewView, 'source-settings': sourceSettingsView, categories: categoriesView, content: contentView, toolsets: toolsetsView, workflows: workflowBuilderView, review: reviewView, 'publisher-profile': publisherProfileManagerView, receipts: receiptsView }
       return h('div', { className: 'pf-shell' },
         h('div', { className: 'pf-shell-top' },
           h('div', { className: 'pf-head' }, h('div', null, h('h1', { className: 'pf-title' }, 'PrismFlow 流光'), h('p', { className: 'pf-sub' }, '受控配置、不可变草稿审核、可信 Artifact 发布与审计'), h('p', { className: 'pf-version' }, `@prismflow/dsh · ${status?.pluginVersion ?? '加载中…'}`)), busy ? h(Badge, { enabled: true }, '处理中…') : h(Badge, { enabled: true }, '就绪')),

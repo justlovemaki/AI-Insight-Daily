@@ -37,6 +37,14 @@ export class PrismSourceRegistry extends Service {
     }))
   }
 
+  /** Category metadata is owned by providers, not inferred from source IDs. */
+  categoryBindings() {
+    return Array.from(this.providers.values(), provider => ({
+      sourceId: provider.id,
+      category: typeof provider.category === 'string' ? provider.category : null,
+    }))
+  }
+
   async fetch(sourceId, request, execution) {
     const provider = this.providers.get(sourceId)
     if (!provider) {

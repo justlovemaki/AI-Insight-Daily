@@ -3,6 +3,7 @@ import Schema from '@deepseek-ai/schemastery'
 import { Service } from '@deepseek-ai/cordis'
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
+import { CATEGORY_CATALOG_KEY, CategoryError, readCategoryCatalog, mutateCategoryCatalog, referencedCategories } from './category-catalog.js'
 import { fetchParsedRssFeed, normalizeParsedRssFeed, validateRssFeedDefinition } from './shared/rss-source.js'
 import { isPublicAddress, managedRssFetch } from './secure-rss-fetch.js'
 import { fetchGitHubTrending, normalizeGitHubTrending, validateGitHubTrendingDefinition } from './shared/github-trending-source.js'
@@ -152,6 +153,7 @@ export class PrismSourceSettings extends Service {
     this.sources = this.domain.table('sources')
     try {
       if (Array.from(this.sources.entries()).length === 0) await this.bootstrap()
+      readCategoryCatalog(this.sources)
       for (const type of SOURCE_TYPES) {
         const value = this.sources.get(adapterStateKey(type))
         if (value === undefined) continue
@@ -162,7 +164,7 @@ export class PrismSourceSettings extends Service {
         this.adapterEnabled.set(type, value.enabled)
       }
       for (const [settingsId, value] of this.sources.entries()) {
-        if (typeof settingsId === 'string' && settingsId.startsWith(ADAPTER_STATE_PREFIX)) continue
+        if (settingsId === CATEGORY_CATALOG_KEY || typeof settingsId === 'string' && settingsId.startsWith(ADAPTER_STATE_PREFIX)) continue
         try {
           const updatedAt = value && typeof value === 'object' && !Array.isArray(value) && typeof value.updatedAt === 'string' ? new Date(value.updatedAt) : new Date(0)
           const record = normalizeManagedSource(value, value, updatedAt)
@@ -237,7 +239,7 @@ export class PrismSourceSettings extends Service {
   list() {
     const records = []
     for (const [settingsId, value] of this.requireSources().entries()) {
-      if (typeof settingsId === 'string' && settingsId.startsWith(ADAPTER_STATE_PREFIX)) continue
+      if (settingsId === CATEGORY_CATALOG_KEY || typeof settingsId === 'string' && settingsId.startsWith(ADAPTER_STATE_PREFIX)) continue
       try {
         const updatedAt = typeof value?.updatedAt === 'string' ? new Date(value.updatedAt) : new Date(0)
         const record = normalizeManagedSource(value, value, updatedAt)
@@ -246,6 +248,108 @@ export class PrismSourceSettings extends Service {
       } catch {}
     }
     return records.sort((a, b) => a.settingsId.localeCompare(b.settingsId))
+  }
+  categoryUsage(borrowed = new Map()) {
+    const usage = new Map()
+    const collect = (records, field) => {
+      for (const record of records) for (const id of referencedCategories(record)) {
+        if (!usage.has(id)) usage.set(id, { sources: 0, contents: 0, history: 0 })
+        usage.get(id)[field] += 1
+      }
+    }
+    collect([...this.requireSources().entries()].filter(([key]) => key !== CATEGORY_CATALOG_KEY).map(([, value]) => value), 'sources')
+    const content = this.ctx.get('prismContentStore')
+    const production = this.ctx.get('prismProduction')
+    const selections = this.ctx.get('prismContentSelections')
+    // The facility owns the authoritative domain handles even when the owning service
+    // is disabled or not visible in this Cordis scope. Never use service readiness as
+    // evidence that persisted history is absent.
+    const domain = name => this.ctx.storageDomain?.get?.(name) ?? borrowed.get(name)
+    const items = domain('prismflow_content')?.table('items')
+    const requests = domain('prismflow_production')?.table('requests') ?? production?.requests
+    const drafts = domain('prismflow_production')?.table('drafts') ?? production?.drafts
+    const selectionRows = domain('prismflow_content_selection')?.table('selections') ?? selections?.selections
+    if (items) collect([...items.entries()].map(([, value]) => value), 'contents')
+    else if (content?.records) collect(content.records(), 'contents')
+    for (const table of [requests, drafts, selectionRows]) {
+      if (table) collect([...table.entries()].map(([, value]) => value), 'history')
+    }
+    const knownSources = new Set(this.list().map(row => row.settingsId))
+    const bindings = this.ctx.prismSources.categoryBindings?.() ?? this.ctx.prismSources.list().map(row => ({ sourceId: row.id, category: null }))
+    let unknownSources = false
+    for (const binding of bindings) {
+      if (knownSources.has(binding.sourceId)) continue
+      if (typeof binding.category !== 'string') unknownSources = true
+      else collect([{ category: binding.category }], 'sources')
+    }
+    const missingDomains = [
+      !(items || content?.records) && 'prismflow_content',
+      !(requests && drafts) && 'prismflow_production',
+      !selectionRows && 'prismflow_content_selection',
+    ].filter(Boolean)
+    const deletionUnavailableReason = unknownSources
+      ? '存在未声明分类的自定义数据源，无法完整核对其引用。'
+      : missingDomains.length ? '部分历史尚未加载；点击删除后会直接读取持久化数据核对，不要求启用历史服务。' : ''
+    return { usage, missingDomains, unknownSources, deletionAvailable: !deletionUnavailableReason, deletionUnavailableReason }
+  }
+  categoryCatalog() {
+    const { usage, deletionAvailable, deletionUnavailableReason } = this.categoryUsage()
+    const current = readCategoryCatalog(this.requireSources(), usage.keys())
+    return {
+      revision: current.revision,
+      categories: current.catalog.categories.map(row => {
+        const references = usage.get(row.id) ?? { sources: 0, contents: 0, history: 0 }
+        const referenced = Object.values(references).some(count => count > 0)
+        const deleteBlockedReason = referenced ? '仍被数据源、内容或历史记录引用；可归档，不能永久删除。' : ''
+        return { ...row, references, canDelete: !referenced, deleteCheckRequired: !deletionAvailable, deleteBlockedReason }
+      }),
+      deletionAvailable, deletionUnavailableReason,
+    }
+  }
+  /** Borrow cold domains for the check only; never close handles owned by other services. */
+  async withCategoryDeletionCheck(id, commit) {
+    const borrowed = new Map()
+    const owned = []
+    try {
+      const initial = this.categoryUsage()
+      const loaders = {
+        prismflow_content: async () => (await import('./store-content.js')).prismContentDomain,
+        prismflow_production: async () => (await import('./store-production.js')).prismProductionDomain,
+        prismflow_content_selection: async () => (await import('./store-content-selection.js')).prismContentSelectionDomain,
+      }
+      for (const name of initial.missingDomains) {
+        const facility = this.ctx.storageDomain
+        if (!facility?.open) throw new CategoryError('无法读取持久化历史：存储服务不可用。未执行删除。', 503)
+        let handle = facility.get?.(name)
+        if (!handle) {
+          try { handle = await facility.open(await loaders[name]()); owned.push(handle) }
+          catch (error) {
+            handle = facility.get?.(name)
+            if (!handle) throw new CategoryError(`无法读取持久化历史 ${name}，未执行删除；请检查存储状态。`, 503)
+          }
+        }
+        borrowed.set(name, handle)
+      }
+      const checked = this.categoryUsage(borrowed)
+      if (checked.unknownSources) throw new CategoryError(checked.deletionUnavailableReason, 409)
+      if (checked.missingDomains.length) throw new CategoryError('历史引用检查未完成，未执行删除。', 503)
+      if (Object.values(checked.usage.get(id) ?? {}).some(count => count > 0)) throw new CategoryError('分类仍被数据源、内容或历史记录引用，不能永久删除。', 409)
+      await commit()
+    } finally {
+      const closed = await Promise.allSettled(owned.map(handle => handle.close()))
+      if (closed.some(result => result.status === 'rejected')) this.ctx.logger?.warn('Category reference-check domain cleanup failed')
+    }
+  }
+  mutateCategory(input) {
+    return this.enqueue(async () => {
+      const { usage } = this.categoryUsage()
+      const current = readCategoryCatalog(this.requireSources(), usage.keys())
+      const next = mutateCategoryCatalog(current, input)
+      const commit = () => this.requireSources().put(CATEGORY_CATALOG_KEY, next)
+      if (input.action === 'delete') await this.withCategoryDeletionCheck(input.id, commit)
+      else await commit()
+      return this.categoryCatalog()
+    })
   }
   isAdapterEnabled(type) { return this.adapterEnabled.get(type) !== false }
   adapterStates() { return SOURCE_TYPES.map(type => ({ type, enabled: this.isAdapterEnabled(type) })) }
@@ -348,6 +452,11 @@ export class PrismSourceSettings extends Service {
       const now = new Date()
       if (existing?.updatedAt && now.toISOString() <= existing.updatedAt) now.setTime(Date.parse(existing.updatedAt) + 1)
       const record = normalizeManagedSource(input, existing, now)
+      if (!existing || existing.category !== record.category) {
+        const { usage } = this.categoryUsage()
+        const category = readCategoryCatalog(table, usage.keys()).catalog.categories.find(row => row.id === record.category)
+        if (!category || category.archived) throw new ManagedSourceValidationError('请选择已存在且未归档的分类。')
+      }
       if (record.credentialSlotId && !this.slots.has(record.credentialSlotId)) throw new ManagedSourceValidationError('Unknown credential slot')
       if (existing && existing.type !== record.type) throw new ManagedSourceValidationError('Source identity cannot change')
       const wasRegistered = this.registrations.has(record.settingsId)
@@ -366,7 +475,9 @@ export class PrismSourceSettings extends Service {
   }
   delete(settingsId) {
     return this.enqueue(async () => {
-      if (typeof settingsId !== 'string' || settingsId.length > 96) throw new ManagedSourceValidationError('settingsId is invalid')
+      if (typeof settingsId !== 'string' || !SOURCE_TYPES.some(type => settingsId.startsWith(`${type}:`) && ID_PATTERN.test(settingsId.slice(type.length + 1)))) {
+        throw new ManagedSourceValidationError('settingsId is invalid; reserved configuration records cannot be deleted as sources')
+      }
       const table = this.requireSources(); const existing = table.get(settingsId)
       if (!existing) throw new ManagedSourceValidationError('Unknown managed source')
       if (existing.enabled) await this.stop(settingsId)
@@ -383,7 +494,7 @@ export class PrismSourceSettings extends Service {
   start(record) {
     if (this.registrations.has(record.settingsId)) throw new Error(`Managed PrismFlow source is already registered: ${record.settingsId}`)
     const provider = this.provider(record)
-    const dispose = this.ctx.prismSources.register({ ...provider, fetch: (request = {}, execution = {}) => this.trackFetch(record.settingsId, provider.fetch, request, execution) })
+    const dispose = this.ctx.prismSources.register({ ...provider, category: record.category, fetch: (request = {}, execution = {}) => this.trackFetch(record.settingsId, provider.fetch, request, execution) })
     this.registrations.set(record.settingsId, dispose)
   }
   async stop(settingsId) {

@@ -39,6 +39,7 @@ export function apply(ctx, config) {
     ctx.effect(() => ctx.prismSources.register({
       id: sourceId,
       name: source.name,
+      category: source.category,
       description: `Fetch GitHub Trending repositories for the ${source.since} range.`,
       async fetch(request = {}, execution) {
         const repositories = await fetchGitHubTrending(source, {

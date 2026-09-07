@@ -52,6 +52,7 @@ export function apply(ctx, config) {
     ctx.effect(() => ctx.prismSources.register({
       id: sourceId,
       name: source.name,
+      category: source.category,
       description: `Fetch configured Follow ${source.listId ? 'list' : 'feed'} ${source.name}.`,
       async fetch(request = {}, execution) {
         const requestedLimit = request.limit ?? source.limit

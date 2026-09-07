@@ -61,6 +61,7 @@ async function loadClient(overrides = new Map(), environment = {}) {
   SandboxURL.createObjectURL = blob => { const href = `blob:test-${objectUrlBlobs.size + 1}`; objectUrlBlobs.set(href, blob); return href }
   SandboxURL.revokeObjectURL = () => {}
   let activeElement = environment.activeElement ?? null
+  let fallbackTextarea = null
   const React = {
     Fragment: Symbol('Fragment'),
     createElement(type, props, ...children) { return { type, props: { ...(props ?? {}), children } } },
@@ -85,7 +86,7 @@ async function loadClient(overrides = new Map(), environment = {}) {
       crypto: { subtle: webcrypto.subtle, randomUUID() { return environment.randomUUID ?? '77777777-7777-4777-8777-777777777777' } },
       confirm(message) { confirmCalls.push(message); return environment.confirmResult ?? true },
       prompt(message, initialValue) { promptCalls.push({ message, initialValue }); return environment.promptResult ?? null },
-      navigator: { clipboard: { async writeText(value) { clipboardWrites.push(value) } } },
+      navigator: environment.disableClipboard ? {} : { clipboard: { async writeText(value) { clipboardWrites.push(value) } } },
       addEventListener(name, listener) { eventListeners.set(name, listener) },
       removeEventListener(name, listener) { if (eventListeners.get(name) === listener) eventListeners.delete(name) },
       requestAnimationFrame(callback) { animationFrameId += 1; animationFrames.set(animationFrameId, callback); return animationFrameId },
@@ -93,10 +94,16 @@ async function loadClient(overrides = new Map(), environment = {}) {
     },
     document: {
       querySelector() { return null },
-      createElement(tag) { return tag === 'a' ? { click() { downloads.push({ href: this.href, download: this.download, blob: objectUrlBlobs.get(this.href) }) } } : { dataset: {}, textContent: '' } },
+      createElement(tag) {
+        if (tag === 'a') return { click() { downloads.push({ href: this.href, download: this.download, blob: objectUrlBlobs.get(this.href) }) } }
+        if (tag === 'textarea') return { value: '', style: {}, setAttribute() {}, focus() {}, select() {}, setSelectionRange() {}, remove() { if (fallbackTextarea === this) fallbackTextarea = null } }
+        return { dataset: {}, textContent: '', style: {} }
+      },
       getElementById(id) { return environment.elementsById?.get(id) ?? null },
       get activeElement() { return activeElement },
       head: { appendChild(value) { appendedStyle = value } },
+      body: { appendChild(value) { fallbackTextarea = value } },
+      ...(environment.execCommandResult === undefined ? {} : { execCommand(command) { assert.equal(command, 'copy'); if (environment.execCommandResult) clipboardWrites.push(fallbackTextarea.value); return environment.execCommandResult } }),
     },
     AbortController, URL: SandboxURL, URLSearchParams, Blob, TextEncoder, setTimeout, console,
     fetch(url, options) {
@@ -167,7 +174,7 @@ test('dashboard client is exported by the owning package without a generated fil
   assert.doesNotMatch(installer, /file:\.prismflow\/dashboard/u)
 })
 
-test('dashboard client is an eight-tab controlled admin, local Profile planning, and trusted publication plane', async () => {
+test('dashboard client is a nine-tab controlled admin, local Profile planning, and trusted publication plane', async () => {
   const client = await loadClient(new Map([[3, status]]))
   assert.equal(client.exports.inject[0], 'slots')
   assert.equal(client.registrations.get('conversation.input.dock').options.id, 'prismflow-prompt-suggestions')
@@ -204,7 +211,7 @@ test('dashboard client is an eight-tab controlled admin, local Profile planning,
   assert.equal(descendants(scrollingContent).some(node => node?.props?.className === 'pf-tabs'), false)
   const values = descendants(dashboard)
   const tabs = values.filter(node => node?.type === 'button' && node?.props?.className?.split?.(' ').includes('pf-tab')).map(node => childrenOf(node)[0])
-  assert.deepEqual(tabs, ['总览', '工具集', '数据源配置', '已抓取数据', '发布与存储', '工作流生成器', '草稿审核与发布', '发布审计'])
+  assert.deepEqual(tabs, ['总览', '工具集', '分类管理', '数据源配置', '已抓取数据', '发布与存储', '工作流生成器', '草稿审核与发布', '发布审计'])
   assert.match(client.source, /PrismFlowPublisherProfileDocument\/v2/)
   assert.match(client.source, /保存配置并准备重启/)
   assert.match(client.source, /api\('\/publisher-profile\/apply'/)
@@ -212,6 +219,68 @@ test('dashboard client is an eight-tab controlled admin, local Profile planning,
   assert.ok(values.includes('实际工作链路')); assert.ok(values.includes('服务健康')); assert.ok(values.includes('关键安全边界'))
   assert.ok(values.includes('Dashboard 或 Chat 只能将精确批准的 Artifact 发布到 Profile 预配置的 Local、GitHub、R2 或微信目标。'))
   assert.equal(values.includes('并且只能在 Dashboard 发布。'), false)
+})
+
+const customCategoryCatalog = { revision: 'a'.repeat(64), deletionAvailable: true, categories: [
+  { id: 'robotics', name: '机器人', color: '#123456', order: 0, archived: false, references: { sources: 1, contents: 2, history: 0 }, canDelete: false },
+  { id: 'old', name: '旧分类', color: '#654321', order: 1, archived: true, references: { sources: 0, contents: 0, history: 0 }, canDelete: true },
+] }
+
+test('category editor keeps immutable IDs and a pinned revision, supports search, create and guarded deletion', async () => {
+  const client = await loadClient(new Map([[0, 'categories'], [3, status], [56, customCategoryCatalog]]))
+  const button = (values, label) => values.find(node => node?.type?.name === 'Button' && childrenOf(node).includes(label))
+  let values = descendants(client.renderDashboard())
+  assert.ok(values.includes('机器人')); assert.ok(values.includes('old'))
+  assert.equal(button(values, '永久删除分类').props.disabled, true)
+  button(values, '编辑分类').props.onClick()
+  values = descendants(client.renderDashboard())
+  assert.equal(values.find(node => node?.props?.label === '分类 ID').props.disabled, true)
+  values.find(node => node?.props?.label === '分类名称').props.onChange('具身智能')
+  values = descendants(client.renderDashboard())
+  const saving = button(values, '保存分类').props.onClick()
+  assert.deepEqual(JSON.parse(client.fetchCalls[0].body), { action: 'update', id: 'robotics', expectedRevision: customCategoryCatalog.revision, name: '具身智能', color: '#123456', order: 0 })
+  client.pendingFetches[0]({ ok: true, async json() { return customCategoryCatalog } }); await saving
+  values = descendants(client.renderDashboard())
+  button(values, '新增分类').props.onClick()
+  values = descendants(client.renderDashboard())
+  assert.equal(values.find(node => node?.props?.label === '分类 ID').props.disabled, false)
+  assert.ok(button(values, '保存分类').props.disabled)
+  values.find(node => node?.props?.label === '搜索分类').props.onChange('old')
+  values = descendants(client.renderDashboard())
+  assert.equal(values.includes('robotics'), false)
+  const deleting = button(values, '永久删除分类').props.onClick()
+  assert.match(client.confirmCalls[0], /不可撤销/)
+  assert.equal(JSON.parse(client.fetchCalls[1].body).confirm, true)
+  client.pendingFetches[1]({ ok: true, async json() { return customCategoryCatalog } }); await deleting
+})
+
+test('unused active categories expose direct deletion and blocked categories explain why inline', async () => {
+  const unused = { ...customCategoryCatalog.categories[0], id: 'unused', references: { sources: 0, contents: 0, history: 0 }, archived: false, canDelete: true, deleteBlockedReason: '' }
+  const catalog = { ...customCategoryCatalog, deletionAvailable: false, deletionUnavailableReason: '删除时核对持久化历史。', categories: [{ ...unused, deleteCheckRequired: true }] }
+  const client = await loadClient(new Map([[0, 'categories'], [3, status], [56, catalog]]))
+  const values = descendants(client.renderDashboard())
+  assert.ok(values.includes('可点击删除；提交时直接核对持久化历史记录。'))
+  const remove = values.find(node => node?.type?.name === 'Button' && childrenOf(node).includes('永久删除分类'))
+  assert.equal(remove.props.disabled, false)
+  const deleting = remove.props.onClick()
+  assert.equal(JSON.parse(client.fetchCalls[0].body).action, 'delete')
+  assert.match(client.confirmCalls[0], /不可撤销/)
+  client.pendingFetches[0]({ ok: true, async json() { return { ...catalog, categories: [] } } }); await deleting
+  assert.equal(descendants(client.renderDashboard()).includes('unused'), false)
+  const reason = '无法核对草稿生产历史：请启用相应服务后刷新。'
+  const blocked = await loadClient(new Map([[0, 'categories'], [3, status], [56, { ...catalog, deletionAvailable: false, deletionUnavailableReason: reason, categories: [{ ...unused, canDelete: false, deleteBlockedReason: reason }] }]]))
+  assert.ok(descendants(blocked.renderDashboard()).includes(`不可删除：${reason}`))
+})
+
+test('source categories are dynamic, exclude archived options for new sources and retain existing archived bindings', async () => {
+  const source = { settingsId: 'rss:one', type: 'rss', id: 'one', name: 'One', category: 'old', enabled: true, url: 'https://example.com/feed', limit: 20 }
+  const client = await loadClient(new Map([[0, 'source-settings'], [3, status], [7, [source]], [56, customCategoryCatalog]]))
+  let values = descendants(client.renderDashboard())
+  assert.deepEqual(Array.from(values.find(node => node?.props?.label === '分类').props.options, row => row.value), ['', 'robotics'])
+  values.find(node => node?.type?.name === 'Button' && childrenOf(node).includes('编辑 Item')).props.onClick()
+  values = descendants(client.renderDashboard())
+  assert.deepEqual(Array.from(values.find(node => node?.props?.label === '分类').props.options, row => row.value), ['', 'robotics', 'old'])
+  assert.equal(values.find(node => node?.props?.label === '分类').props.value, 'old')
 })
 
 test('captured-content tab renders server-paged searchable sortable category-filtered records', async () => {
@@ -241,7 +310,9 @@ test('captured-content tab renders server-paged searchable sortable category-fil
   assert.equal(values.some(node => node?.type === 'table'), false)
   assert.equal(values.includes('未读'), false); assert.equal(values.includes('已读'), false); assert.equal(values.includes('已归档'), false)
   for (const value of ['来源 AI 摘要', '来源摘要', 'AI 审核', 'AI 摘要', '评分理由', '四维加权评分理由', '记录标识']) assert.ok(values.includes(value), value)
-  assert.ok(values.some(value => typeof value === 'string' && value.startsWith('评分：85 / 100\n审核时间：')))
+  assert.ok(values.includes('2026-01-01 08:00:00 +08:00'))
+  assert.ok(values.includes('2026-01-02 08:00:00 +08:00'))
+  assert.ok(values.includes('评分：85 / 100\n审核时间：2026-01-02 09:02:03 +08:00'))
   assert.equal(values.includes('AI摘要'), false)
   assert.match(client.source, /标题、原始摘要、AI 摘要、来源或作者/u)
   assert.match(client.source, /params\.set\('aiProcessed', query\.aiProcessed\)/u)
@@ -904,7 +975,7 @@ test('dashboard review shows exact markdown and only version/hash review plus co
   const draft = { draftId: 'draft-1', requestId: 'request-1', generatorId: 'brief', generatorPromptVersion: 7, generatorPromptSha256: 'b'.repeat(64), title: 'Full draft', markdown, sha256: 'a'.repeat(64), version: 2, status: 'draft', publishedPublisherIds: [] }
   const client = await loadClient(new Map([
     [0, 'review'], [3, status], [4, [{ id: 'local-markdown:daily', name: 'Daily', description: '' }]], [5, [draft]],
-  ]))
+  ]), { disableClipboard: true, execCommandResult: true })
   const collapsedValues = descendants(client.renderDashboard())
   const expand = collapsedValues.find(node => node?.type === 'button' && childrenOf(node).includes('展开'))
   assert.ok(expand)
@@ -938,6 +1009,14 @@ test('dashboard review shows exact markdown and only version/hash review plus co
   const titleEditor = values.find(node => node?.type === 'input' && node?.props?.maxLength === 300)
   const markdownEditor = values.find(node => node?.type === 'textarea' && node?.props?.maxLength === 100000)
   assert.equal(titleEditor.props.value, draft.title); assert.equal(markdownEditor.props.value, markdown)
+  const copyMarkdown = values.find(node => typeof node?.type === 'function' && node.type.name === 'Button' && childrenOf(node).includes('复制 Markdown 原文'))
+  await copyMarkdown.props.onClick()
+  assert.deepEqual(client.clipboardWrites, [markdown])
+  const copiedValues = descendants(client.renderDashboard())
+  assert.ok(copiedValues.includes('已复制 Markdown'))
+  assert.ok(copiedValues.includes('Markdown 原文已复制到剪贴板。'))
+  assert.match(client.appendedStyle.textContent, /\.pf-draft-panel-head\{display:flex;align-items:center;justify-content:space-between/u)
+  assert.match(client.appendedStyle.textContent, /\.pf-draft-preview-section \.pf-preview\{max-height:min\(72vh,760px\)/u)
   assert.match(client.source, /expectedVersion: draft\.version, expectedSha256: draft\.sha256/)
   assert.match(client.source, /production\/draft\?draftId=/)
   assert.ok(client.source.includes('你的修改仍保留在编辑器中'))
@@ -977,12 +1056,24 @@ test('dashboard review displays locally persisted RSS XML and content-encoded HT
   const output = { outputId: '9'.repeat(64), draftId: draft.draftId, draftVersion: 2, artifactSha256: draft.sha256, title: draft.title,
     xmlSha256: '8'.repeat(64), itemUrl: 'https://example.com/docs/draft-rss/', generatedAt: '2026-01-01T00:00:00.000Z' }
   const detail = { ...output, markdown: '# RSS', htmlContent: '<h1>RSS</h1>', xml: '<?xml version="1.0"?><rss><channel/></rss>' }
-  const client = await loadClient(new Map([[0, 'review'], [3, status], [4, []], [5, [draft]], [14, { [draft.draftId]: true }], [42, [output]], [43, { [output.outputId]: detail }]]))
-  const values = descendants(client.renderDashboard())
-  assert.ok(values.includes('本地 RSS 生成内容')); assert.ok(values.includes('收起内容'))
+  const client = await loadClient(new Map([[0, 'review'], [3, status], [4, []], [5, [draft]], [14, { [draft.draftId]: true }], [42, [output]]]))
+  let values = descendants(client.renderDashboard())
+  assert.ok(values.includes('本地 RSS 生成内容')); assert.ok(values.includes('查看内容'))
+  const copyRss = values.find(node => typeof node?.type === 'function' && node.type.name === 'Button' && childrenOf(node).includes('复制 RSS XML'))
+  const copying = copyRss.props.onClick()
+  assert.match(client.fetchCalls[0].url, new RegExp(`/production/rss-output\\?outputId=${output.outputId}`))
+  client.pendingFetches[0]({ ok: true, async json() { return { record: detail } } })
+  await copying
+  assert.deepEqual(client.clipboardWrites, [detail.xml])
+  values = descendants(client.renderDashboard())
+  assert.ok(values.includes('收起内容'))
+  assert.ok(values.includes('已复制 RSS XML'))
   const readonly = values.filter(node => node?.type === 'textarea' && node.props.readOnly === true)
   assert.deepEqual(readonly.map(node => node.props.value), [detail.xml, detail.htmlContent])
+  await values.find(node => typeof node?.type === 'function' && node.type.name === 'Button' && childrenOf(node).includes('复制 HTML')).props.onClick()
+  assert.deepEqual(client.clipboardWrites, [detail.xml, detail.htmlContent])
   assert.ok(values.some(value => typeof value === 'string' && value.includes(`XML SHA-256 ${output.xmlSha256}`)))
+  assert.match(client.appendedStyle.textContent, /\.pf-rss-detail-grid\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/u)
 })
 
 test('dashboard disables an unready WeChat news target and explains its missing cover before creating an attempt', async () => {
@@ -1336,16 +1427,34 @@ test('dashboard review disables editing for approved, publishing, and published 
   }
 })
 
-test('dashboard audit renders immutable draft provenance', async () => {
+test('dashboard renders all visible timestamps in explicit Asia/Shanghai time, including audit and attempt history', async () => {
   const receipt = {
     receiptId: 'receipt-1', recordedAt: '2026-01-01T00:00:00.000Z', publisherId: 'local-markdown:daily',
     status: 'created', itemCount: 1, trigger: 'manual', verification: 'verified', fileName: 'brief.md',
     draftId: 'draft-1', draftVersion: 3, artifactSha256: 'f'.repeat(64),
   }
-  const client = await loadClient(new Map([[0, 'receipts'], [3, status], [6, [receipt]]]))
+  const client = await loadClient(new Map([[0, 'receipts'], [3, status], [6, [receipt, { ...receipt, receiptId: 'receipt-2', recordedAt: '2026-01-01 06:07:08' }]]]))
   const values = descendants(client.renderDashboard())
   assert.ok(values.includes('draft-1 · 修订 3'))
   assert.ok(values.includes('f'.repeat(64)))
+  assert.ok(values.includes('时间（北京时间）'))
+  assert.ok(values.includes('2026-01-01 08:00:00 +08:00'))
+  assert.equal(values.includes(receipt.recordedAt), false)
+  assert.ok(values.includes('2026-01-01 06:07:08 +08:00'), 'offset-less legacy timestamps are Shanghai wall-clock values')
+
+  const draft = { draftId: 'draft-time', requestId: 'request-time', generatorId: 'brief', title: 'Time', markdown: '# Time', sha256: 'a'.repeat(64),
+    version: 1, status: 'published', publishedPublisherIds: [], updatedAt: '2026-01-01T23:30:00.000Z', publicationAttempts: [{
+      attemptId: 'attempt-time', attemptNumber: 1, intent: 'initial', intentId: 'intent-time', publisherId: 'local-markdown:daily',
+      state: 'completed', receiptId: 'receipt-time', targetIdentifier: 'target', createdAt: '2026-01-01T23:30:00.000Z', completedAt: '',
+    }] }
+  const output = { outputId: 'output-time', draftId: draft.draftId, draftVersion: 1, generatedAt: '2026-01-01T23:30:00.000Z', xmlSha256: 'b'.repeat(64), itemUrl: 'https://example.com' }
+  const review = await loadClient(new Map([[0, 'review'], [3, status], [4, []], [5, [draft]], [14, { [draft.draftId]: true }], [42, [output]]]))
+  const reviewValues = descendants(review.renderDashboard())
+  assert.ok(reviewValues.includes('更新时间（北京时间）：'))
+  assert.equal(reviewValues.filter(value => value === '2026-01-02 07:30 +08:00').length, 2, 'draft and RSS instant cross the Shanghai calendar boundary')
+  assert.ok(reviewValues.includes('2026-01-02 07:30:00 +08:00'))
+  assert.ok(reviewValues.includes('—'))
+  assert.ok(reviewValues.includes('开始（北京时间）')); assert.ok(reviewValues.includes('完成（北京时间）'))
 })
 
 test('dashboard aborts a previous review refresh before starting another', async () => {

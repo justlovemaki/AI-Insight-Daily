@@ -12,17 +12,26 @@ function harness(runtimeConfig = config, services = {}) {
   const tools = new Map(); const calls = []
   const draft = { draftId: 'draft-1', version: 2, sha256: 'a'.repeat(64), status: 'approved', title: 'A & B', markdown: '# Safe & sound\n\n**Bold** and [source](https://example.com/a?x=1&y=2).', approvedAt: '2026-01-02T00:00:00.000Z' }
   const history = { draftId: 'draft-0', version: 1, sha256: 'b'.repeat(64), status: 'published', title: 'Historical item', markdown: '# Earlier', approvedAt: '2026-01-01T00:00:00.000Z', publishedPublisherIds: ['github-markdown:daily'] }
+  const ungenerated = { draftId: 'draft-ungenerated', version: 1, sha256: 'e'.repeat(64), status: 'approved', title: 'Never generated', markdown: '# Never generated', approvedAt: '2026-01-02T01:00:00.000Z' }
   const unapproved = { draftId: 'draft-pending', version: 1, sha256: 'c'.repeat(64), status: 'draft', title: 'Pending item', markdown: '# Pending', updatedAt: '2026-01-03T00:00:00.000Z' }
-  const drafts = [draft, history, unapproved]
+  const drafts = services.drafts ?? [draft, history, ungenerated, unapproved, ...(services.extraDrafts ?? [])]
+  const deletedDraftIds = new Set(services.deletedDraftIds ?? [])
+  const visibleDrafts = () => drafts.filter(item => !deletedDraftIds.has(item.draftId))
   const toolsets = { isToolEnabled: () => true }
   const persistedRss = []
+  const rssHistory = services.rssHistory ?? [{
+    outputId: '0'.repeat(64), draftId: history.draftId, draftVersion: history.version, artifactSha256: history.sha256,
+    title: history.title, markdown: history.markdown, htmlContent: '<h1>Earlier</h1>', xml: '<rss />', xmlSha256: '1'.repeat(64),
+    itemUrl: 'https://example.com/docs/2026-01/2026-01-01/', generatedAt: '2026-01-01T00:00:01.000Z',
+  }]
   const prismRssOutputs = services.prismRssOutputs ?? {
     async save(value) { const record = { ...value, outputId: 'd'.repeat(64), xmlSha256: createHash('sha256').update(value.xml).digest('hex'), generatedAt: '2026-01-02T00:00:01.000Z' }; persistedRss.push(record); return record },
-    get(outputId) { return persistedRss.find(item => item.outputId === outputId) },
+    get(outputId) { return [...persistedRss, ...rssHistory].find(item => item.outputId === outputId) },
+    list({ limit = 50 } = {}) { return [...persistedRss, ...rssHistory].sort((a, b) => b.generatedAt.localeCompare(a.generatedAt)).slice(0, limit) },
   }
   const ctx = { get: key => key === 'prismToolsets' ? toolsets : services[key], prismRssOutputs,
     prismImageGenerationSettings: services.prismImageGenerationSettings ?? { runtime() { return { imageApiUrl: runtimeConfig.imageApiUrl, imageApiProtocol: runtimeConfig.imageApiProtocol, imageModel: runtimeConfig.imageModel, imageSize: runtimeConfig.imageSize, avifQuality: runtimeConfig.avifQuality, avifEffort: runtimeConfig.avifEffort, ffmpegPath: runtimeConfig.ffmpegPath } }, async resolveCredential() { return { value: 'secret' } } },
-    prismPublishers: { resolveMediaUploaderId() { throw new Error('R2 media destination is not configured') }, list() { return [{ id: 'github-markdown:daily', name: 'GitHub Daily', kind: 'github-markdown', description: 'Daily' }] } }, tools: { register(tool) { tools.set(tool.name, tool); return () => {} } }, credentials: { async resolve() { return { value: 'secret' } } }, prismProductionMedia: { async ingest() { throw new Error('not used') } }, prismProduction: { getDraft: id => drafts.find(item => item.draftId === id), listDrafts: ({ status, limit }) => drafts.filter(item => !status || item.status === status).slice(0, limit), async publish(...args) { calls.push(args); return { status: 'created', receiptId: 'receipt-1' } }, async republishExact(...args) { calls.push(args); return { status: 'created', receiptId: 'receipt-2' } } } }
+    prismPublishers: { resolveMediaUploaderId() { throw new Error('R2 media destination is not configured') }, list() { return [{ id: 'github-markdown:daily', name: 'GitHub Daily', kind: 'github-markdown', description: 'Daily' }] } }, tools: { register(tool) { tools.set(tool.name, tool); return () => {} } }, credentials: { async resolve() { return { value: 'secret' } } }, prismProductionMedia: { async ingest() { throw new Error('not used') } }, prismProduction: { getDraft: id => visibleDrafts().find(item => item.draftId === id), listDrafts: ({ status, limit }) => visibleDrafts().filter(item => !status || item.status === status).slice(0, limit), async publish(...args) { calls.push(args); return { status: 'created', receiptId: 'receipt-1' } }, async republishExact(...args) { calls.push(args); return { status: 'created', receiptId: 'receipt-2' } } } }
   apply(ctx, runtimeConfig); return { tools, calls, persistedRss }
 }
 const execution = { signal: new AbortController().signal }
@@ -66,7 +75,7 @@ test('compatibility and publication tools are native, and RSS generation convert
   assert.match(parsed.items[0].contentEncoded, /<h1>Safe &amp; sound<\/h1>/u)
   assert.match(parsed.items[0].contentEncoded, /<strong>Bold<\/strong>/u)
   assert.match(parsed.items[1].contentEncoded, /<h1>Earlier<\/h1>/u)
-  assert.doesNotMatch(rss.content, /Pending item/u)
+  assert.doesNotMatch(rss.content, /Never generated|Pending item/u)
   await assert.rejects(tools.get('prismflow_process_markdown_media').execute({ content: '# no media' }, execution), /R2 media destination is not configured/)
   await assert.rejects(tools.get('prismflow_generate_rss_content').execute({ draftId: 'draft-1', draftVersion: 1, artifactSha256: 'a'.repeat(64) }, execution), /does not match/)
 })
@@ -76,6 +85,31 @@ test('RSS history limit still includes the exact approved Draft requested by the
   const rss = await tools.get('prismflow_generate_rss_content').execute({ draftId: 'draft-0', draftVersion: 1, artifactSha256: 'b'.repeat(64) }, execution)
   const parsed = await new Parser().parseString(rss.content)
   assert.deepEqual(parsed.items.map(item => item.title), ['2026-01-01日刊'])
+})
+
+test('RSS keeps only previously generated Draft snapshots inside the current Draft seven-day window', async () => {
+  const output = (id, date, markdown, generatedAt = `${date}T00:00:01.000Z`) => ({
+    outputId: id.repeat(64), draftId: `draft-${id}`, draftVersion: 1, artifactSha256: id.repeat(64), title: date,
+    markdown, htmlContent: `<p>${markdown}</p>`, xml: '<rss />', xmlSha256: 'f'.repeat(64),
+    itemUrl: `https://example.com/docs/${date.slice(0, 7)}/${date}/`, generatedAt,
+  })
+  const rssHistory = [
+    output('6', '2026-01-01', 'missing-draft-output'),
+    output('5', '2026-01-01', 'deleted-draft-output'),
+    output('4', '2025-12-27', 'inclusive-boundary'),
+    output('3', '2025-12-26', 'expired-output'),
+    output('2', '2026-01-03', 'future-output'),
+  ]
+  const extraDrafts = rssHistory.filter(item => item.draftId !== 'draft-6').map(item => ({
+    draftId: item.draftId, version: item.draftVersion, sha256: item.artifactSha256, status: 'approved',
+    title: item.title, markdown: item.markdown, approvedAt: item.generatedAt,
+  }))
+  const { tools } = harness(config, { rssHistory, extraDrafts, deletedDraftIds: ['draft-5'] })
+  const rss = await tools.get('prismflow_generate_rss_content').execute({ draftId: 'draft-1', draftVersion: 2, artifactSha256: 'a'.repeat(64) }, execution)
+  const parsed = await new Parser().parseString(rss.content)
+  assert.deepEqual(parsed.items.map(item => item.title), ['2026-01-02日刊', '2025-12-27日刊'])
+  assert.match(rss.content, /inclusive-boundary/u)
+  assert.doesNotMatch(rss.content, /missing-draft-output|deleted-draft-output|expired-output|future-output/u)
 })
 
 test('prismflow_process_markdown_media ports linked images, HTML images, proxying, blacklists, AVIF conversion, and R2 rewriting', async () => {

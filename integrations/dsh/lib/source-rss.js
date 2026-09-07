@@ -37,6 +37,7 @@ export function apply(ctx, config) {
     ctx.effect(() => ctx.prismSources.register({
       id: sourceId,
       name: feed.name,
+      category: feed.category,
       description: `Fetch configured RSS/Atom feed ${feed.name}.`,
       async fetch(request = {}, execution) {
         const parsed = await fetchParsedRssFeed(feed, {

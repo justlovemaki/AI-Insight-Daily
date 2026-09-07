@@ -92,6 +92,7 @@ export function apply(ctx, config) {
     ctx.effect(() => ctx.prismSources.register({
       id: sourceId,
       name: source.name,
+      category: source.category,
       description: `Research current information for the configured keyword: ${source.keyword}.`,
       requiresAgent: true,
       async fetch(request = {}, execution) {

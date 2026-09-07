@@ -14,6 +14,7 @@ import {
   PRISMFLOW_DATA_UNITS, PrismFlowDataBackupError, restorePrismFlowDataBackup,
 } from '../lib/data-backup.js'
 import { normalizePublisherConfig } from '../lib/shared/publisher-profile.js'
+import { CATEGORY_CATALOG_KEY, readCategoryCatalog } from '../lib/category-catalog.js'
 
 function tableName(unit, table) { return `u_${unit}_${table}` }
 function createDatabase(path, marker = 'source') {
@@ -45,6 +46,8 @@ test('configuration backup round-trips source and operator settings while exclud
     createDatabase(source, 'source'); createDatabase(target, 'target'); await mkdir(targetProfile, { recursive: true }); await writeFile(join(targetProfile, 'package.json'), '{}\n')
     await writeFile(targetPatch, '- id: prismflow-store-source-settings\n  disabled: false\n  config:\n    credentialSlots: []\n    bootstrap:\n      - type: rss\n        id: target-default\n- id: prismflow-generator-subagent\n  disabled: false\n  config:\n    generators:\n      - id: target-only\n        name: Target only\n')
     const sourceDb = new DatabaseSync(source)
+    const categoryCatalog = { kind: 'category-catalog', version: 1, revision: 3, categories: [{ id: 'custom', name: '自定义分类', color: '#abcdef', order: 4, archived: true }] }
+    sourceDb.prepare('UPDATE u_prismflow_source_settings_sources SET key = ?, value = ?').run(CATEGORY_CATALOG_KEY, JSON.stringify(categoryCatalog))
     sourceDb.prepare('INSERT INTO u_prismflow_generator_workflows_history (key, value) VALUES (?, ?)').run('@workflow:10', JSON.stringify({ marker: 'binary-order' }))
     sourceDb.prepare('INSERT INTO u_prismflow_generator_workflows_history (key, value) VALUES (?, ?)').run('workflow:02', JSON.stringify({ marker: 'binary-order' }))
     sourceDb.prepare('INSERT INTO u_prismflow_toolsets_records (key, value) VALUES (?, ?)').run('skill:prismflow-ai-shortreport:01', JSON.stringify({ marker: 'source-personal-skill' }))
@@ -81,6 +84,9 @@ test('configuration backup round-trips source and operator settings while exclud
     assert.throws(() => decryptPrismFlowDataBackup(encrypted, 'incorrect password'), /incorrect|modified/u)
     const decrypted = decryptPrismFlowDataBackup(encrypted, 'correct horse battery staple')
     const parsed = parsePrismFlowDataBackup(decrypted)
+    const categoryRecords = parsed.payload.units.find(unit => unit.name === 'prismflow_source_settings').tables[0].records
+    const restoredCatalog = new Map(categoryRecords.map(row => [row.key, JSON.parse(row.value)]))
+    assert.deepEqual(readCategoryCatalog(restoredCatalog).catalog, categoryCatalog)
     assert.equal(parsed.fingerprint, exported.document.fingerprint); assert.deepEqual(parsed.payload.sourceCredentialSlots, slots); assert.deepEqual(parsed.payload.credentials, credentials)
     assert.deepEqual(parsed.payload.profileGenerators, profileGenerators)
     assert.equal(parsed.payload.publisherRows[1].config.destinations[0].repository, 'owner/repository')

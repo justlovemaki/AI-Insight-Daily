@@ -111,6 +111,28 @@ async function convertVideoForR2(bytes, config, signal, ffmpegPath) {
   } finally { await rm(directory, { recursive: true, force: true }).catch(() => {}) }
 }
 function rssCdata(value) { return String(value).replace(/\]\]>/gu, ']]]]><![CDATA[>') }
+function assertRssDailyDate(value, message) {
+  if (!/^(?:19|20)\d{2}-\d{2}-\d{2}$/u.test(value)) throw new Error(message)
+  const parsed = new Date(`${value}T00:00:00.000Z`)
+  if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) throw new Error(message)
+  return value
+}
+function rssRecentWindowStart(dailyDate, days = 7) {
+  const date = new Date(`${assertRssDailyDate(dailyDate, 'RSS current Draft has an invalid daily date')}T00:00:00.000Z`)
+  date.setUTCDate(date.getUTCDate() - (days - 1))
+  return date.toISOString().slice(0, 10)
+}
+function rssOutputDate(output) {
+  let pathname = ''
+  try { pathname = new URL(output.itemUrl).pathname } catch {}
+  const match = /(?:^|\/)((?:19|20)\d{2}-\d{2}-\d{2})(?:\/|$)/u.exec(pathname)
+  if (match) return assertRssDailyDate(match[1], `Persisted RSS Output has an invalid item date: ${output.outputId}`)
+  const timestamp = Date.parse(output.generatedAt ?? '')
+  if (!Number.isFinite(timestamp)) throw new Error(`Persisted RSS Output has no usable item date: ${output.outputId}`)
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(timestamp))
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]))
+  return `${values.year}-${values.month}-${values.day}`
+}
 function rssDraftDate(draft) {
   const match = /(?:^|\D)((?:19|20)\d{2})[/-](\d{1,2})[/-](\d{1,2})(?:\D|$)/u.exec(String(draft.title ?? ''))
   if (match) {
@@ -457,7 +479,7 @@ export function apply(ctx, config) {
   }))
 
   registerPrismFlowTool(ctx, defineTool({
-    name: 'prismflow_generate_rss_content', description: 'Build and persist an original-compatible RSS 2.0 feed from approved and published Drafts. Each item contains the full Markdown-derived HTML in content:encoded CDATA and uses the dated hex2077.dev/docs/YYYY-MM/YYYY-MM-DD URL. For the persisted publication path, pass the returned rssOutputId so XML is transferred losslessly without model reconstruction.',
+    name: 'prismflow_generate_rss_content', description: 'Build and persist an original-compatible RSS 2.0 feed from the exact current Draft plus non-deleted, exact-matching Draft snapshots that previously generated persisted RSS Outputs within the latest 7 calendar days. Each item contains the full Markdown-derived HTML in content:encoded CDATA and uses the dated hex2077.dev/docs/YYYY-MM/YYYY-MM-DD URL. For the persisted publication path, pass the returned rssOutputId so XML is transferred losslessly without model reconstruction.',
     parameters: { draftId: { type: 'string', required: true }, draftVersion: { type: 'integer', required: true }, artifactSha256: { type: 'string', required: true } },
     output: { schema: { type: 'object', additionalProperties: false, properties: { content: { type: 'string', required: true }, rssOutputId: { type: 'string', required: true }, xmlSha256: { type: 'string', required: true }, xmlBytes: { type: 'integer', required: true }, draftId: { type: 'string', required: true }, draftVersion: { type: 'integer', required: true }, artifactSha256: { type: 'string', required: true } } }, render: (_args, value) => [{ type: 'text', text: `Saved complete RSS output ${value.rssOutputId} (${value.xmlBytes} UTF-8 bytes, SHA-256 ${value.xmlSha256}). Publish it with prismflow_github_push using this rssOutputId; do not copy or reconstruct XML.` }] },
     async execute(args) {
@@ -467,31 +489,51 @@ export function apply(ctx, config) {
         if (url.protocol !== 'https:' || url.username || url.password || url.hash) throw new Error(`${name} must be credential-free HTTPS`)
       }
       const siteUrl = new URL('/', docsUrl).toString()
-      const maxItems = Number.isInteger(config.rssMaxItems) && config.rssMaxItems >= 1 && config.rssMaxItems <= 100 ? config.rssMaxItems : 7
-      const candidates = [
-        ...ctx.prismProduction.listDrafts({ status: 'approved', limit: Number.MAX_SAFE_INTEGER }),
-        ...ctx.prismProduction.listDrafts({ status: 'published', limit: Number.MAX_SAFE_INTEGER }),
-      ]
-      const uniqueDrafts = new Map(candidates.map(item => [item.draftId, item]))
-      uniqueDrafts.set(draft.draftId, draft)
-      const newestFirst = (a, b) => {
-        const dateOrder = String(b.approvedAt ?? b.updatedAt).localeCompare(String(a.approvedAt ?? a.updatedAt))
-        return dateOrder || a.draftId.localeCompare(b.draftId) || b.version - a.version
+      const configuredMaxItems = Number.isInteger(config.rssMaxItems) && config.rssMaxItems >= 1 && config.rssMaxItems <= 100 ? config.rssMaxItems : 7
+      const maxItems = Math.min(configuredMaxItems, 7)
+      const currentDailyDate = rssDraftDate(draft)
+      const oldestDailyDate = rssRecentWindowStart(currentDailyDate)
+      const currentTimestamp = draft.approvedAt ?? draft.updatedAt
+      if (!Number.isFinite(Date.parse(currentTimestamp))) throw new Error(`RSS Draft has an invalid publication timestamp: ${draft.draftId}`)
+      const currentHtmlContent = await markdownToRssHtml(draft.markdown)
+      const feedItems = [{
+        draftId: draft.draftId,
+        dailyDate: currentDailyDate,
+        htmlContent: currentHtmlContent,
+        description: draft.markdown.replace(/\s+/gu, ' ').trim().slice(0, 200),
+        date: new Date(currentTimestamp),
+        generatedAt: '',
+        current: true,
+      }]
+      const seenDraftIds = new Set([draft.draftId])
+      for (const output of ctx.prismRssOutputs.list({ limit: 100 })) {
+        if (seenDraftIds.has(output.draftId)) continue
+        seenDraftIds.add(output.draftId)
+        const existingDraft = ctx.prismProduction.getDraft(output.draftId)
+        if (!existingDraft || existingDraft.version !== output.draftVersion || existingDraft.sha256 !== output.artifactSha256) continue
+        const dailyDate = rssOutputDate(output)
+        if (dailyDate < oldestDailyDate || dailyDate > currentDailyDate) continue
+        feedItems.push({
+          draftId: output.draftId,
+          dailyDate,
+          htmlContent: output.htmlContent,
+          description: output.markdown.replace(/\s+/gu, ' ').trim().slice(0, 200),
+          date: new Date(output.generatedAt),
+          generatedAt: output.generatedAt,
+          current: false,
+        })
       }
-      const sortedDrafts = [...uniqueDrafts.values()].sort(newestFirst)
-      let feedDrafts = sortedDrafts.slice(0, maxItems)
-      if (!feedDrafts.some(item => item.draftId === draft.draftId)) feedDrafts = [...feedDrafts.slice(0, maxItems - 1), draft].sort(newestFirst)
-      const feedItems = await Promise.all(feedDrafts.map(async item => {
-        const dailyDate = rssDraftDate(item); const yearMonth = dailyDate.slice(0, 7)
-        const link = new URL(`${yearMonth}/${dailyDate}/`, docsUrl).toString()
-        const date = item.approvedAt ?? item.updatedAt
-        if (!Number.isFinite(Date.parse(date))) throw new Error(`RSS Draft has an invalid publication timestamp: ${item.draftId}`)
-        const htmlContent = await markdownToRssHtml(item.markdown)
-        const description = item.markdown.replace(/\s+/gu, ' ').trim().slice(0, 200)
-        return { draftId: item.draftId, dailyDate, link, htmlContent, description, date: new Date(date) }
-      }))
+      feedItems.sort((a, b) => b.dailyDate.localeCompare(a.dailyDate)
+        || Number(b.current) - Number(a.current)
+        || b.generatedAt.localeCompare(a.generatedAt)
+        || a.draftId.localeCompare(b.draftId))
+      feedItems.splice(maxItems)
+      for (const item of feedItems) {
+        const yearMonth = item.dailyDate.slice(0, 7)
+        item.link = new URL(`${yearMonth}/${item.dailyDate}/`, docsUrl).toString()
+      }
       const feed = new RSS({
-        title: 'AI资讯日报 RSS Feed', description: `近 ${maxItems} 天的AI日报`, feed_url: feedUrl.toString(), site_url: siteUrl,
+        title: 'AI资讯日报 RSS Feed', description: `最近 7 天的AI日报`, feed_url: feedUrl.toString(), site_url: siteUrl,
         language: 'zh-cn', pubDate: new Date(), custom_namespaces: {
           content: 'http://purl.org/rss/1.0/modules/content/', atom: 'http://www.w3.org/2005/Atom',
         },

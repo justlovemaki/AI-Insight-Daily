@@ -1034,6 +1034,7 @@ async function routeRequest(ctx, req, res, requestUrl, profileBinding) {
     return jsonResponse(res, 200, {
       records: content.list({ ...query, limit, offset }, recordFilter).map(record => projectContentRecord(record, reviewFor(record))),
       total: content.count(query, recordFilter), limit, offset, categories,
+      ...(ctx.get('prismSourceSettings')?.categoryCatalog ? { categoryCatalog: ctx.get('prismSourceSettings').categoryCatalog() } : {}),
     })
   }
 
@@ -1067,10 +1068,29 @@ async function routeRequest(ctx, req, res, requestUrl, profileBinding) {
     catch (error) { throw imageSettingsError(error) }
   }
 
+  if (method === 'GET' && pathname === `${API_PREFIX}/categories`) {
+    allowQuery(requestUrl.searchParams, [])
+    try { return jsonResponse(res, 200, requireService(ctx, 'prismSourceSettings', 'Category settings').categoryCatalog()) }
+    catch (error) { if (error?.name === 'CategoryError') throw new HttpError(error.status, error.message); throw error }
+  }
+  if (method === 'POST' && pathname === `${API_PREFIX}/categories/mutate`) {
+    allowQuery(requestUrl.searchParams, [])
+    const body = await readJson(req)
+    const editing = ['create', 'update'].includes(body.action)
+    allowFields(body, ['action', 'id', 'expectedRevision', ...(editing ? ['name', 'color', 'order'] : ['confirm'])])
+    if (!['create', 'update', 'archive', 'restore', 'delete'].includes(body.action)) throw new HttpError(400, 'Invalid category action')
+    if (['archive', 'delete'].includes(body.action) && body.confirm !== true) throw new HttpError(400, 'Explicit category confirmation is required')
+    text(body.id, 'id', 64, true)
+    if (typeof body.expectedRevision !== 'string' || !/^[a-f0-9]{64}$/u.test(body.expectedRevision)) throw new HttpError(400, 'Category revision is required')
+    try { return jsonResponse(res, 200, await requireService(ctx, 'prismSourceSettings', 'Category settings').mutateCategory(body)) }
+    catch (error) { if (error?.name === 'CategoryError') throw new HttpError(error.status, error.message); throw error }
+  }
+
   if (method === 'GET' && pathname === `${API_PREFIX}/source-settings`) {
     const settings = requireService(ctx, 'prismSourceSettings', 'Visual source settings')
     return jsonResponse(res, 200, {
       sources: settings.list().map(projectManagedSource),
+      ...(settings.categoryCatalog ? { categoryCatalog: settings.categoryCatalog() } : {}),
       adapters: settings.adapterStates().map(state => ({ type: boundedString(state?.type, 32), enabled: state?.enabled === true })),
       credentialSlots: (await settings.describeCredentialSlots()).map(slot => ({
         id: boundedString(slot?.id, 128), name: boundedString(slot?.name, 128),
